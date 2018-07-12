@@ -1,0 +1,9 @@
+{
+    "debugMode"     : 0,
+    "frameRate"     : 60,
+    "id"            : "geekCanvas",
+    "renderMode"    : 1,
+    "jsList"        : [
+        "src/m_resource_v1.js"
+    ]
+}
