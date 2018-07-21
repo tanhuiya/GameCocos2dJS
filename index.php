@@ -22,21 +22,22 @@ echo "</head>";
 
 <body>
 
-<canvas id="geekCanvas" width="640" height="960"></canvas>
+<canvas id="geekCanvas" width="640" height="1120"></canvas>
 
 
 <script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>
-<script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-class-lib.js" charset=utf-8></script>
 
-<!--<script type="text/javascript" src="src/geek-cocos-class-lib.js" charset=utf-8></script>-->
+
+<script type="text/javascript" src="src/geek-cocos-class-lib.js" charset=utf-8></script>
 <!--<script type="text/javascript" src="src/geek-cocos-v3.9.1.js" charset=utf-8></script>-->
 
 <script type="text/javascript" src="src/geek_app_game_root_v1.js" charset=utf-8></script>
+<script type="text/javascript" src="src/geek_app_game_index_v1.js" charset=utf-8></script>
 
 
 <script type="text/javascript">
     window.onload = function(){
-        g_start_geek_h5("geekCanvas", 640, 960, g_root_layer, true);
+        g_start_geek_h5("geekCanvas", 640, 1020, g_root_layer, true);
     };
 
 </script>

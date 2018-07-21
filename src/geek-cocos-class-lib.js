@@ -275,6 +275,7 @@ var geek_class_lib = cc.Layer.extend({
 
 
 
+
     //var label = geek_lib.f_label_create(this, "微信扫码登录", 32, 970, 150, 1, cc.color.YELLOW, 30, 9);
     f_label_create:function(that, txt, size, px, py, scale, col, level, id)
     {
@@ -617,6 +618,40 @@ var geek_class_lib = cc.Layer.extend({
         nd.setScaleY(scaley);
         nd.x = -230;
         nd.y = -72;
+    },
+
+
+    // tanhui: wanxin game functions
+
+
+    f_btn_size_create:function(that, url, txt, px, py, size, scale, level, id)
+    {
+        var btn = new ccui.Button(url);
+        if(btn)
+        {
+            if(txt != "")
+            {
+                btn.setTitleText(txt);
+            }
+            btn.setContentSize(size);
+            btn.setTouchEnabled(true);
+            btn.x = px;
+            btn.y = py;
+            if(scale)
+                btn.setScale(scale);
+            btn.addTouchEventListener(that.ctl_button_event, that);
+
+            if(id)
+            {
+                that.addChild(btn, level, id);
+            }
+            else
+            {
+                that.addChild(btn, level);
+            }
+        }
+
+        return btn;
     }
 
 });
@@ -640,7 +675,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
 
         cc.view.adjustViewPort(true);
 
-        var show_model =  cc.ResolutionPolicy.SHOW_ALL;
+        var show_model =  cc.ResolutionPolicy.NO_BORDER;
 
         //if(type )
             //show_model =  cc.ResolutionPolicy.FIXED_WIDTH;
@@ -697,6 +732,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
 
 
  */
+
 
 
 
