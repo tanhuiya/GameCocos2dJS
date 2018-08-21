@@ -624,9 +624,9 @@ var geek_class_lib = cc.Layer.extend({
     // tanhui: wanxin game functions
 
 
-    f_btn_size_create:function(that, url, txt, px, py, size, scale, level, id)
+    f_btn_size_create:function(that, txt, px, py, size, bgcolor, scale, level, id)
     {
-        var btn = new ccui.Button(url);
+        var btn = new ccui.Button();
         if(btn)
         {
             if(txt != "")
@@ -637,6 +637,7 @@ var geek_class_lib = cc.Layer.extend({
             btn.setTouchEnabled(true);
             btn.x = px;
             btn.y = py;
+            btn.setColor(bgcolor)
             if(scale)
                 btn.setScale(scale);
             btn.addTouchEventListener(that.ctl_button_event, that);
@@ -675,7 +676,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
 
         cc.view.adjustViewPort(true);
 
-        var show_model =  cc.ResolutionPolicy.NO_BORDER;
+        var show_model =  cc.ResolutionPolicy.SHOW_ALL;
 
         //if(type )
             //show_model =  cc.ResolutionPolicy.FIXED_WIDTH;
