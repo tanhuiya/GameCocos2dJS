@@ -22,7 +22,7 @@ echo "</head>";
 
 <body>
 
-<canvas id="geekCanvas" width="640" height="1120"></canvas>
+<canvas id="geekCanvas" width="675" height="1206"></canvas>
 
 
 <script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>
@@ -37,7 +37,7 @@ echo "</head>";
 
 <script type="text/javascript">
     window.onload = function(){
-        g_start_geek_h5("geekCanvas", 640, 1020, g_root_layer, true);
+        g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
     };
 
 </script>
