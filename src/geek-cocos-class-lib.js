@@ -250,6 +250,7 @@ var geek_class_lib = cc.Layer.extend({
             if(txt != "")
             {
                 btn.setTitleText(txt);
+                btn.setTitleFontSize(24)
                 btn.setContentSize(cc.size(150, 150));
             }
 
@@ -259,7 +260,7 @@ var geek_class_lib = cc.Layer.extend({
             if(scale)
                 btn.setScale(scale);
             btn.addTouchEventListener(that.ctl_button_event, that);
-
+            btn.setAnchorPoint(cc.p(0,1));
             if(id)
             {
                 that.addChild(btn, level, id);
@@ -676,7 +677,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
 
         cc.view.adjustViewPort(true);
 
-        var show_model =  cc.ResolutionPolicy.SHOW_ALL;
+        var show_model =  cc.ResolutionPolicy.FIXED_WIDTH;
 
         //if(type )
             //show_model =  cc.ResolutionPolicy.FIXED_WIDTH;
