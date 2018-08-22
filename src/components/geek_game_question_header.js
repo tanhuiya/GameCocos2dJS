@@ -27,6 +27,9 @@ var g_question_header_node = cc.Node.extend({
         // clippingNode.setPosition(cc.p(head_bg.getBoundingBox().x,head_bg.getBoundingBox().y))
     },
 
+    /**
+     * 题目头部信息
+     */
     setUp:function () {
         var head_bg = geek_lib.f_sprite_create_box(this, res.s_rule, 0, 0, 500, 126, 1, 1, cc.AncorPointTopLeft)
 

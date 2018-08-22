@@ -18,9 +18,9 @@ var g_question_answer_node = cc.Node.extend({
      * @param height scrollview 高度
      */
     setData: function (answers, width, height) {
-        var scrollview = geek_lib.f_create_scroll_view(this,0,0,width, height,width , height,1)
+        var scrollview = geek_lib.f_create_scroll_view(this,0,0,width, height, width , height,1)
         geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointTopLeft)
-
+        // scrollview.setBackGroundImage(res.s_);
         var maxHeight = 200
 
 
@@ -28,7 +28,7 @@ var g_question_answer_node = cc.Node.extend({
         answer_item.setType(width, maxHeight,AnswerType.Text)
         geek_lib.f_set_anchor_point_type(answer_item, cc.AncorPointBottomLeft)
         scrollview.addChild(answer_item, 2, 1)
-        answer_item.setPosition(0, 0)
+        answer_item.setPosition(100, 200)
         console.log(answer_item.getBoundingBox())
         // for (var i = 0; i < answers.length; i++) {
         //     var answer_item = new g_question_answer_item()
