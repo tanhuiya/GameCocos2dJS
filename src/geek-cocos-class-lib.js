@@ -56,7 +56,7 @@ var geek_class_lib = cc.Layer.extend({
     },
 
 
-    f_sprite_create:function(that, pic, px, py, scale, level, id)
+    f_sprite_create:function(that, pic, px, py, scale, level, id, anchor_type)
     {
         var sp = cc.Sprite.create(pic);
         if(sp)
@@ -65,6 +65,7 @@ var geek_class_lib = cc.Layer.extend({
             sp.y = py;
             if(scale)
                 sp.setScale(scale);
+            this.f_set_anchor_point_type(sp, anchor_type)
             if(id)
             {
                 that.addChild(sp, level, id);
@@ -77,7 +78,7 @@ var geek_class_lib = cc.Layer.extend({
         return sp;
     },
 
-    f_sprite_create_box:function(that, pic, px, py, width, height, level, id)
+    f_sprite_create_box:function(that, pic, px, py, width, height, level, id, anchor_type)
     {
         var sp = cc.Sprite.create(pic);
         if(sp)
@@ -91,6 +92,7 @@ var geek_class_lib = cc.Layer.extend({
             sp.setScaleX(scalex);
             sp.setScaleY(scaley);
 
+            this.f_set_anchor_point_type(sp, anchor_type)
 
             if(id)
             {
@@ -242,7 +244,7 @@ var geek_class_lib = cc.Layer.extend({
 
 
     //this.btn1 = geek_lib.f_btn_create(this, "http://www.bestudy360.com/SunApp/left_img.png", "无限学习", g_size.width/2, 500+g_bottom, 1, 30);
-    f_btn_create:function(that, url, txt, px, py, scale, level, id)
+    f_btn_create:function(that, url, txt, px, py, scale, level, id , anchor_type)
     {
         var btn = new ccui.Button(url);
         if(btn)
@@ -260,7 +262,7 @@ var geek_class_lib = cc.Layer.extend({
             if(scale)
                 btn.setScale(scale);
             btn.addTouchEventListener(that.ctl_button_event, that);
-            btn.setAnchorPoint(cc.p(0,1));
+            this.f_set_anchor_point_type(btn, anchor_type)
             if(id)
             {
                 that.addChild(btn, level, id);
@@ -278,7 +280,7 @@ var geek_class_lib = cc.Layer.extend({
 
 
     //var label = geek_lib.f_label_create(this, "微信扫码登录", 32, 970, 150, 1, cc.color.YELLOW, 30, 9);
-    f_label_create:function(that, txt, size, px, py, scale, col, level, id)
+    f_label_create:function(that, txt, size, px, py, scale, col, level, id, anchor_type)
     {
         var label = new cc.LabelTTF(txt, "Arial", size);
         if(label)
@@ -288,7 +290,7 @@ var geek_class_lib = cc.Layer.extend({
             label.setColor(col);
             if(scale)
                 label.setScale(scale);
-
+            this.f_set_anchor_point_type(label, anchor_type)
             if(id)
             {
                 that.addChild(label, level, id);
@@ -623,7 +625,20 @@ var geek_class_lib = cc.Layer.extend({
 
 
     // tanhui: wanxin game functions
-
+    f_set_anchor_point_type:function (that, type) {
+        if (type == cc.AncorPointCenter) {
+            that.setAnchorPoint(cc.p(0.5,0.5))
+        } else if (type == cc.AncorPointTopLeft) {
+            that.setAnchorPoint(cc.p(0,1))
+        } else if (type == cc.AncorPointTopRight) {
+            that.setAnchorPoint(cc.p(1,1))
+        } else if (type == cc.AncorPointBottomLeft) {
+            that.setAnchorPoint(cc.p(0,0))
+        } else if (type == cc.AncorPointBottomRight) {
+            that.setAnchorPoint(cc.p(1, 0))
+        }
+        return that
+    },
 
     f_btn_size_create:function(that, txt, px, py, size, bgcolor, scale, level, id)
     {
@@ -658,7 +673,11 @@ var geek_class_lib = cc.Layer.extend({
 
 });
 
-
+cc.AncorPointCenter = 0;
+cc.AncorPointTopLeft = 1;
+cc.AncorPointTopRight = 2;
+cc.AncorPointBottomLeft = 3;
+cc.AncorPointBottomRight = 4;
 
 function g_load_geek_class(that)
 {

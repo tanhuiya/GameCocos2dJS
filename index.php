@@ -30,9 +30,7 @@ echo "</head>";
 <script type="text/javascript" src="src/geek-cocos-v3.9.1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek-cocos-class-lib.js" charset=utf-8></script>
 
-<script type="text/javascript" src="src/geek_app_game_question_t1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek_app_game_root_v1.js" charset=utf-8></script>
-<script type="text/javascript" src="src/geek_app_game_index_v1.js" charset=utf-8></script>
 
 
 <script type="text/javascript">

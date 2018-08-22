@@ -4,6 +4,10 @@
     "id"            : "geekCanvas",
     "renderMode"    : 1,
     "jsList"        : [
-        "src/m_resource_v1.js"
+        "src/m_resource_v1.js",
+        "src/geek_app_game_question_t1.js",
+        "src/geek_app_game_index_v1.js",
+        "src/components/geek_game_question_header.js",
+        "src/components/geek_game_question_content.js"
     ]
 }
