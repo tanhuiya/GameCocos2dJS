@@ -32,11 +32,11 @@ var g_question_header_node = cc.Node.extend({
 
         var white_circle = geek_lib.f_sprite_create_box(this, res.s_white_circle_big, head_bg.getBoundingBox().width, 1, 126,126,2,4, cc.AncorPointTopRight)
 
-        var progress = cc.ProgressTimer.create(res.s_progress)
-        progress.setPosition(head_bg.getBoundingBox().width, 1)
+        var progress = cc.ProgressTimer.create(cc.Sprite.create(res.s_progress))
+        progress.setPosition(head_bg.getBoundingBox().width, 0)
         progress.setType(cc.ProgressTimer.TYPE_RADIAL)
-        progress.setReverseDirection(true)
-        progress.setAnchorPoint(cc.p(0,1))
+        progress.setAnchorPoint(cc.p(1,1))
+        progress.setPercentage(50)
         this.addChild(progress, 4, 5)
 
         this.time_lable = geek_lib.f_label_create(white_circle, "3",74, white_circle.getBoundingBox().width * 0.5 , white_circle.getBoundingBox().height * 0.5, 1, cc.color.WHITE, 1,1)

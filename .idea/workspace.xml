@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16705620-ef20-4a89-b871-9585284fbf9f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/geek_game_question_answer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/geek_game_question_content.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/geek_game_question_header.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.json" afterPath="$PROJECT_DIR$/project.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek-cocos-class-lib.js" afterPath="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek_app_game_index_v1.js" afterPath="$PROJECT_DIR$/src/geek_app_game_index_v1.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/geek_game_question_answer.js" afterPath="$PROJECT_DIR$/src/components/geek_game_question_answer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/geek_game_question_header.js" afterPath="$PROJECT_DIR$/src/components/geek_game_question_header.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek_app_game_question_t1.js" afterPath="$PROJECT_DIR$/src/geek_app_game_question_t1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek_app_game_root_v1.js" afterPath="$PROJECT_DIR$/src/geek_app_game_root_v1.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/m_resource_v1.js" afterPath="$PROJECT_DIR$/src/m_resource_v1.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,18 +21,8 @@
       <file leaf-file-name="project.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="m_resource_v1.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/m_resource_v1.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+            <state relative-caret-position="198">
+              <caret line="11" column="49" lean-forward="false" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -59,19 +43,21 @@
       <file leaf-file-name="geek_app_game_question_t1.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/geek_app_game_question_t1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+            <state relative-caret-position="546">
+              <caret line="43" column="40" lean-forward="true" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="geek_game_question_answer.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="geek_game_question_answer.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/geek_game_question_answer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="180">
+              <caret line="12" column="23" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#42#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,18 +77,18 @@
       <file leaf-file-name="geek-cocos-class-lib.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="260">
-              <caret line="282" column="4" lean-forward="false" selection-start-line="282" selection-start-column="4" selection-end-line="282" selection-end-column="4" />
+            <state relative-caret-position="521">
+              <caret line="296" column="13" lean-forward="true" selection-start-line="296" selection-start-column="13" selection-end-line="296" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="geek_game_question_header.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="geek_game_question_header.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/geek_game_question_header.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+            <state relative-caret-position="388">
+              <caret line="36" column="54" lean-forward="true" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
               </folding>
@@ -113,18 +99,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="35" column="29" lean-forward="false" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="geek-cocos-v3.9.1.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/geek-cocos-v3.9.1.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="27212" column="50" lean-forward="false" selection-start-line="27212" selection-start-column="20" selection-end-line="27212" selection-end-column="50" />
+            <state relative-caret-position="372">
+              <caret line="27" column="40" lean-forward="false" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -141,9 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>m</find>
-      <find>m_resou</find>
-      <find>m_resour</find>
       <find>m_resourc</find>
       <find>m_resource</find>
       <find>lo</find>
@@ -171,6 +144,9 @@
       <find>f_set_anchor_point_type</find>
       <find>AncorPointCenter</find>
       <find>_type</find>
+      <find>scrollview</find>
+      <find>f_btn_cre</find>
+      <find>f_label_create</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -181,16 +157,16 @@
       <list>
         <option value="$PROJECT_DIR$/src/gee_app_game_question_t1.js" />
         <option value="$PROJECT_DIR$/src/m_resource_v1.js" />
-        <option value="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/src/geek_app_game_index_v1.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_root_v1.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_content_text.js" />
-        <option value="$PROJECT_DIR$/project.json" />
-        <option value="$PROJECT_DIR$/src/components/geek_game_question_answer.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_content.js" />
-        <option value="$PROJECT_DIR$/src/geek_app_game_question_t1.js" />
+        <option value="$PROJECT_DIR$/project.json" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_header.js" />
+        <option value="$PROJECT_DIR$/src/geek_app_game_question_t1.js" />
+        <option value="$PROJECT_DIR$/src/components/geek_game_question_answer.js" />
       </list>
     </option>
   </component>
@@ -406,7 +382,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65525000" />
+    <option name="totallyTimeSpent" value="68780000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1715" y="-165" width="1600" height="877" extended-state="0" />
@@ -454,16 +430,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/geek_app_game_index_v1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="492">
-          <caret line="32" column="96" lean-forward="false" selection-start-line="32" selection-start-column="96" selection-end-line="32" selection-end-column="96" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -753,32 +719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/geek_app_game_index_v1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#42#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="282" column="4" lean-forward="false" selection-start-line="282" selection-start-column="4" selection-end-line="282" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/geek-cocos-v3.9.1.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -787,18 +727,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="35" column="29" lean-forward="false" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/m_resource_v1.js">
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
-          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <caret line="2438" column="0" lean-forward="false" selection-start-line="2438" selection-start-column="0" selection-end-line="2438" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -813,26 +745,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/geek_app_game_question_t1.js">
+    <entry file="file://$PROJECT_DIR$/src/m_resource_v1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+        <state relative-caret-position="260">
+          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/geek_game_question_answer.js">
+    <entry file="file://$PROJECT_DIR$/project.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="198">
+          <caret line="11" column="49" lean-forward="false" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="27" column="40" lean-forward="false" selection-start-line="27" selection-start-column="40" selection-end-line="27" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="521">
+          <caret line="296" column="13" lean-forward="true" selection-start-line="296" selection-start-column="13" selection-end-line="296" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geek_app_game_question_t1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="43" column="40" lean-forward="true" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geek_app_game_index_v1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/geek_game_question_header.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="42" column="0" lean-forward="true" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+        <state relative-caret-position="388">
+          <caret line="36" column="54" lean-forward="true" selection-start-line="36" selection-start-column="54" selection-end-line="36" selection-end-column="54" />
+          <folding>
+            <element signature="e#0#42#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/geek_game_question_answer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="23" lean-forward="false" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>

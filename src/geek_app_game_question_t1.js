@@ -32,6 +32,20 @@ var g_question_1_layer = cc.Layer.extend({
         content.setPosition(cc.p(0, g_size.height - 166))
         content.setUp(ContentType.Text)
 
+        var content_height = content.getHeight()
+
+
+        var submit_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
+
+        var answer_y_max = content.getPosition().y - content_height - 50
+        var answer_y_min = 100
+        var scroll_height = answer_y_max - answer_y_min
+        var answer_node = new g_question_answer_node()
+        this.addChild(answer_node, 2, 4)
+        // answer_node.setUp()
+        answer_node.setPosition(0, content.getPosition().y - content_height - 50)
+        var questions = ["44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444"];
+        answer_node.setData(questions,g_size.width - 50 * 2, scroll_height)
 
     }
 })
