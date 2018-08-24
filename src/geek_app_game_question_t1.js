@@ -23,6 +23,9 @@ var g_question_1_layer = cc.Layer.extend({
         node.setUp()
         node.setPosition(cc.p(44, g_size.height - 20))
 
+        console.log(node.getContentSize())
+        console.log(node.getBoundingBox())
+        console.log(1111)
         // 停止答题按钮
         var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 20 - 72,1, 3, 3, cc.AncorPointCenter)
 
@@ -35,7 +38,7 @@ var g_question_1_layer = cc.Layer.extend({
         var content_height = content.getHeight()
 
 
-        var submit_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
+        var submit_btn = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
 
         var answer_y_max = content.getPosition().y - content_height - 50
         var answer_y_min = 100
@@ -44,8 +47,16 @@ var g_question_1_layer = cc.Layer.extend({
         this.addChild(answer_node, 2, 4)
         // answer_node.setUp()
         answer_node.setPosition(0, content.getPosition().y - content_height - 50)
-        var questions = ["44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444"];
-        answer_node.setData(questions,g_size.width - 50 * 2, scroll_height)
+        var questions = ["44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444"];
+        answer_node.setData(questions,g_size.width, scroll_height)
+
+        // var color_layer = cc.LayerColor.create(cc.color.WHITE, 200, 200)
+        // geek_lib.f_set_anchor_point_type(color_layer, cc.AncorPointCenter)
+        // color_layer.setPosition(200,300)
+        // // color_layer.setOpacity(0)
+        // this.addChild(color_layer, 100, 100)
+        //
+        // var submit_btn = geek_lib.f_btn_create(color_layer, res.s_game_start, "", 100, 50,1,4,4,cc.AncorPointCenter)
 
     }
 })
