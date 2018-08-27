@@ -24,7 +24,8 @@ var res = {
     s_default_avator:     path + "default_avator.png",
     s_submit:     path + "submit_btn.png",
     s_text_bg:      path + "text_bg.png",
-    s_text_image_bg: path + "text_image_bg.png"
+    s_text_image_bg: path + "text_image_bg.png",
+    s_close: path  + "close.png"
 };
 
 
@@ -50,6 +51,7 @@ var m_resources = [
     res.s_default_avator,
     res.s_submit,
     res.s_text_bg,
-    res.s_text_image_bg
+    res.s_text_image_bg,
+    res.s_close
 ];
 

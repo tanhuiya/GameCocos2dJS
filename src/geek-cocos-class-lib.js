@@ -636,6 +636,14 @@ var geek_class_lib = cc.Layer.extend({
             that.setAnchorPoint(cc.p(0,0))
         } else if (type == cc.AncorPointBottomRight) {
             that.setAnchorPoint(cc.p(1, 0))
+        } else if (type == cc.AncorPointMidLeft) {
+            that.setAnchorPoint(cc.p(0, 0.5))
+        } else if (type == cc.AncorPointMidRight) {
+            that.setAnchorPoint(cc.p(1, 0.5))
+        } else if (type == cc.AncorPointTopMid) {
+            that.setAnchorPoint(cc.p(0.5, 1))
+        } else if (type == cc.AncorPointBottomMid) {
+            that.setAnchorPoint(cc.p(0.5, 0))
         }
         return that
     },
@@ -669,6 +677,37 @@ var geek_class_lib = cc.Layer.extend({
         }
 
         return btn;
+    },
+
+    /**
+     *
+     * @param that 父节点
+     * @param res 图片
+     * @param px x
+     * @param py y
+     * @param radius 半径
+     * @param level
+     * @param id
+     * @returns {*}
+     */
+    f_circle_sprite_create: function (that, res, px, py, radius, level, id) {
+        var stencil = new cc.DrawNode()
+        stencil.drawCircle(cc.p(0,0), radius, 360, 100, false, cc.color(0,255,255,255))
+        var clippingNode = new cc.ClippingNode();
+        clippingNode.setStencil(stencil)
+        clippingNode.setInverted(false);
+        clippingNode.setAlphaThreshold(0);
+        clippingNode.setPosition(px, py)
+
+        if (res){
+            geek_lib.f_sprite_create_box(clippingNode, res, 0, 0, radius * 2, radius * 2, 1,2, cc.AncorPointCenter)
+        }
+        if (id){
+            that.addChild(clippingNode, level, id)
+        } else {
+            that.addChild(clippingNode, level)
+        }
+        return clippingNode
     }
 
 });
@@ -678,6 +717,10 @@ cc.AncorPointTopLeft = 1;
 cc.AncorPointTopRight = 2;
 cc.AncorPointBottomLeft = 3;
 cc.AncorPointBottomRight = 4;
+cc.AncorPointMidLeft = 5;
+cc.AncorPointMidRight = 6;
+cc.AncorPointTopMid = 7;
+cc.AncorPointBottomMid = 8;
 
 function g_load_geek_class(that)
 {
