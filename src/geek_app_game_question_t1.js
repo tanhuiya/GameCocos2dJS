@@ -31,12 +31,12 @@ var g_question_1_layer = cc.Layer.extend({
         var content = new g_question_content_node()
         this.addChild(content, 2, 3)
         content.setPosition(cc.p(0, g_size.height - 166))
-        content.setUp(ContentType.Text)
-        // content.setUp(ContentType.Text_Picture)
+        // content.setUp(ContentType.Text)
+        content.setUp(ContentType.Text_Picture)
 
 
         var content_height = content.getHeight()
-        console.log(content.getBoundingBox())
+
 
         // 提交答案按钮
         var submit_btn = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
@@ -45,14 +45,13 @@ var g_question_1_layer = cc.Layer.extend({
         var answer_y_max = content.getPosition().y - content_height - 50
         var answer_y_min = 100
         var scroll_height = answer_y_max - answer_y_min
-        var answer_node = new g_question_answer_node()
-        this.addChild(answer_node, 2, 4)
-        this.answer_node_ = answer_node
-        answer_node.setPosition(0, content.getPosition().y - content_height - 50)
+
         // mock data
         var questions = ["44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444"];
-        answer_node.setData(questions,g_size.width, scroll_height)
-
+        var answer_node = new g_question_answer_node(questions,g_size.width, scroll_height )
+        this.addChild(answer_node, 2, 4)
+        this.answer_node_ = answer_node
+        answer_node.setPosition(0, 100)
 
     },
 

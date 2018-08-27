@@ -25,7 +25,7 @@ var AnswerType = {
  * 答题框组件
  * @type {*}
  */
-var g_question_answer_node = cc.Node.extend({
+var g_question_answer_node = cc.LayerColor.extend({
 
     /**
      * 设置答题框
@@ -33,16 +33,18 @@ var g_question_answer_node = cc.Node.extend({
      * @param width scrollview 宽度
      * @param height scrollview 高度
      */
-    setData: function (answers, width, height) {
+    ctor: function (answers, width, height) {
+        this._super(cc.color(255,255,255,0), width, height)
         var type = AnswerType.Text
-
         var maxItemHeight = type == AnswerType.Text ? TextBgHeight : TextImageBgHeight + ItemMargin * 2
         var innerHeight = answers.length * maxItemHeight
         //scrollview 顶部偏移
         var heightOffset = height > innerHeight ? height - innerHeight : 0
-
+        console.log(heightOffset)
         var scrollview = geek_lib.f_create_scroll_view(this, 0, 0, width, height, width, innerHeight,1)
-        geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointTopLeft)
+        geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointBottomLeft)
+
+
         for (var i = 0; i < answers.length ; i++) {
             var item = new g_question_answer_item()
             var back = item.setType(width, maxItemHeight,type)
@@ -50,6 +52,7 @@ var g_question_answer_node = cc.Node.extend({
             back.setPosition((g_size.width - width) * 0.5, innerHeight - (i+1)* maxItemHeight + heightOffset)
             item.setData(answers[i])
         }
+        scrollview.scrollToTop(0.1)
     }
 })
 
@@ -90,14 +93,22 @@ var g_question_answer_item = cc.Node.extend({
         var m_this = this
         var AnswerOnClickListener = cc.EventListener.create({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches : true,
+            swallowTouches : false,
+            moved: false,
             onTouchBegan : function (touch,event){
+                // console.log("begin")
+                this.moved = false
                 var target = event.getCurrentTarget();
                 var locationInNode = target.convertToNodeSpace(touch.getLocation());
                 if(!cc.rectContainsPoint(target.getBoundingBox(), locationInNode))return false;
                 return true
             },
-            onTouchEnded: function () {
+            onTouchMoved: function () {
+                // console.log("moved")
+                this.moved = true
+            },
+            onTouchEnded: function (touch,event) {
+                if (this.moved) return
                 m_this.selected(!m_this.getSelected())
             }
         });
