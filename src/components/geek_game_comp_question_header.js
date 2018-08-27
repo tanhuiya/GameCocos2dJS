@@ -7,26 +7,6 @@ var g_question_header_node = cc.Node.extend({
         this._super()
     },
 
-    drawCircle:function () {
-        // var stencil = new cc.DrawNode()
-        // stencil.drawCircle(cc.p(0,0), 60, 360, 100, false, cc.color(0,255,255,255))
-        // var clippingNode = new cc.ClippingNode();
-        // clippingNode.setStencil(stencil)
-        // clippingNode.setInverted(false);
-        // clippingNode.setAlphaThreshold(0);
-        // clippingNode.setAnchorPoint(cc.p(0.5,0.5))
-        // 创建一个大于圆圈的图片精灵，添加在裁切功能的Node上（头像）
-        // var playerHeadIcon = new cc.Sprite(res.s_head);
-        // clippingNode.addChild(playerHeadIcon,1,2);
-        // playerHeadIcon.setPositionX(5)
-
-        // 将剪切node添加到容器中（例如：this）
-        // this.addChild(clippingNode,2,2);
-
-        // clippingNode.setAnchorPoint(cc.p(0,1))
-        // clippingNode.setPosition(cc.p(head_bg.getBoundingBox().x,head_bg.getBoundingBox().y))
-    },
-
     /**
      * 题目头部信息
      */

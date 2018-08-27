@@ -65,6 +65,7 @@ var g_question_answer_item = cc.Node.extend({
      * @param width item 宽度
      * @param height item 高度
      * @param type AnswerType
+     * @returns layer
      */
     setType:function (width, height, type) {
         var back = cc.LayerColor.create(cc.color(0,0,0,0), width, height)
@@ -80,9 +81,30 @@ var g_question_answer_item = cc.Node.extend({
             bg_height = TextImageBgHeight
         }
         var topMargin =  (height - bg_height) * 0.5
-        var content = geek_lib.f_sprite_create_box(back, content_image, 0, topMargin, width, bg_height , 1, 1, cc.AncorPointBottomLeft)
+        var leftMargin = 50
+        var content = geek_lib.f_sprite_create_box(back, content_image, leftMargin, topMargin, width - 2 * leftMargin, bg_height , 1, 1, cc.AncorPointBottomLeft)
+        var select_img = geek_lib.f_sprite_create_box(back, res.s_right, 50 + 40 , height * 0.5, 36, 36, 3,3, cc.AncorPointCenter)
+        this.select_img_ = select_img
+        this.selected(false)
+
+        var m_this = this
+        var AnswerOnClickListener = cc.EventListener.create({
+            event : cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches : true,
+            onTouchBegan : function (touch,event){
+                var target = event.getCurrentTarget();
+                var locationInNode = target.convertToNodeSpace(touch.getLocation());
+                if(!cc.rectContainsPoint(target.getBoundingBox(), locationInNode))return false;
+                return true
+            },
+            onTouchEnded: function () {
+                m_this.selected(!m_this.getSelected())
+            }
+        });
+        cc.eventManager.addListener(AnswerOnClickListener, content);
         return back
     },
+
 
     /**
      * 设置答案内容
@@ -91,7 +113,23 @@ var g_question_answer_item = cc.Node.extend({
     setData:function (data) {
         if (this.type_ == AnswerType.Text) {
             var size = this.backLayer_.getBoundingBox()
-            geek_lib.f_label_create(this.backLayer_, data, 36, size.width* 0.5, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointCenter)
+            geek_lib.f_label_create(this.backLayer_, data, 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
         }
+    },
+
+    /**
+     * 设置答案选中
+     */
+    selected: function (select) {
+        this.selected_ = select
+        this.select_img_.setVisible(this.selected_)
+    },
+
+    /**
+     * 获取答案是否选中
+     * @returns bool
+     */
+    getSelected: function () {
+        return this.selected_
     }
 })
