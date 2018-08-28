@@ -40,7 +40,6 @@ var g_question_answer_node = cc.LayerColor.extend({
         var innerHeight = answers.length * maxItemHeight
         //scrollview 顶部偏移
         var heightOffset = height > innerHeight ? height - innerHeight : 0
-        console.log(heightOffset)
         var scrollview = geek_lib.f_create_scroll_view(this, 0, 0, width, height, width, innerHeight,1)
         geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointBottomLeft)
 

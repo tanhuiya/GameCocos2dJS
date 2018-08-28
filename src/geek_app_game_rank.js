@@ -44,6 +44,34 @@ var g_app_game_rank = cc.Layer.extend({
             title: "猜猜下面是那个",
             school: "合肥第六中学",
             score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
+        },{
+            title: "猜猜下面是那个",
+            school: "合肥第六中学",
+            score: "390",
         }]
         var list_node = new g_app_game_rank_list_node(g_size.width, list_top_y - list_bottom_y, mockData)
         list_node.setUp()

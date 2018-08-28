@@ -14,7 +14,7 @@ var g_app_game_rank_list_node = cc.LayerColor.extend({
      * @param dataArr 数据源
      */
     ctor: function (width, height, dataArr) {
-        this._super(cc.color.YELLOW, width, height)
+        this._super(cc.color(255,255,255,0), width, height)
         this.width_ = width
         this.height_ = height
         this.dataArr_ = dataArr
@@ -25,8 +25,11 @@ var g_app_game_rank_list_node = cc.LayerColor.extend({
      */
     setUp:function () {
         var scrollView_width = this.width_ - 10 * 4
-        var scrollView = geek_lib.f_create_scroll_view(this, 10 * 2, 0, scrollView_width, this.height_, scrollView_width, this.height_,1 )
         var innerHeight = this.dataArr_.length * ListItemHeight
+        var scrollView = geek_lib.f_create_scroll_view(this, 10 * 2, 0, scrollView_width, this.height_, scrollView_width, innerHeight,1 )
+        scrollView.setBackGroundImage(res.s_activity_bg)
+        scrollView.setBackGroundImageScale9Enabled(true)
+        scrollView.setBackGroundImageCapInsets(cc.rect(30, 30 ,1, 1))
         //scrollview 顶部偏移
         var heightOffset = this.height_ > innerHeight ? this.height_ - innerHeight : 0
         for (var i = 0; i < this.dataArr_.length; i++ ){
@@ -50,7 +53,7 @@ var ListItemHeight = 60 * 2
  */
 var g_app_game_rank_list_item = cc.LayerColor.extend({
     ctor: function (index, width, height, data) {
-        this._super(cc.color.WHITE, width, height)
+        this._super(cc.color(255,255,255,0), width, height)
         this.width_ = width
         this.height_ = height
         this.data_ = data
