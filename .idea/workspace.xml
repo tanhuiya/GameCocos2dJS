@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="16705620-ef20-4a89-b871-9585284fbf9f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.json" afterPath="$PROJECT_DIR$/project.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek-cocos-class-lib.js" afterPath="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek_app_game_activity_record.js" afterPath="$PROJECT_DIR$/src/geek_app_game_activity_record.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib/XHttp.js" afterPath="$PROJECT_DIR$/src/lib/XHttp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib/XTimer.js" afterPath="$PROJECT_DIR$/src/lib/XTimer.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,49 +26,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="geek_app_game_introduce.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/geek_app_game_introduce.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="22" column="61" selection-start-line="21" selection-start-column="8" selection-end-line="22" selection-end-column="61" />
-              <folding>
-                <element signature="e#0#42#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="geek_game_comp_question_content.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/geek_game_comp_question_content.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="geek-cocos-class-lib.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12672">
-              <caret line="705" column="16" selection-start-line="705" selection-start-column="16" selection-end-line="705" selection-end-column="16" />
-              <folding>
-                <marker date="1535549276841" expanded="true" signature="8562:8727" ph="{...}" />
-                <marker date="1535549276841" expanded="true" signature="18493:18500" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="geek_app_game_question_t1.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/geek_app_game_question_t1.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
+            <state relative-caret-position="-2925">
+              <caret line="467" column="30" selection-start-line="467" selection-start-column="30" selection-end-line="467" selection-end-column="30" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -71,40 +39,28 @@
       <file leaf-file-name="geek_app_game_activity_record.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/geek_app_game_activity_record.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="91" column="14" selection-start-line="88" selection-start-column="11" selection-end-line="91" selection-end-column="14" />
+            <state relative-caret-position="361">
+              <caret line="105" column="37" selection-start-line="105" selection-start-column="37" selection-end-line="105" selection-end-column="37" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="geek_app_game_over.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/geek_app_game_over.js">
+      <file leaf-file-name="XHttp.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lib/XHttp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
-              <folding>
-                <element signature="e#0#42#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="geek_game_comp_over.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/geek_game_comp_over.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="29" column="25" selection-start-line="29" selection-start-column="25" selection-end-line="29" selection-end-column="25" />
+            <state relative-caret-position="55">
+              <caret line="23" column="55" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="geek-cocos-v3.9.1.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/geek-cocos-v3.9.1.js">
+      <file leaf-file-name="XTimer.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/lib/XTimer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="794574">
-              <caret line="44143" column="0" selection-start-line="44143" selection-start-column="0" selection-end-line="44143" selection-end-column="0" />
+            <state relative-caret-position="324">
+              <caret line="18" column="23" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -113,18 +69,8 @@
       <file leaf-file-name="project.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="geek_app_game_index_v1.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/geek_app_game_index_v1.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="882">
-              <caret line="51" column="6" selection-start-line="34" selection-start-column="4" selection-end-line="51" selection-end-column="6" />
+            <state relative-caret-position="342">
+              <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
               <folding />
             </state>
           </provider>
@@ -181,7 +127,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/gee_app_game_question_t1.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_content_text.js" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_header.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_content.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_result_error.js" />
@@ -194,15 +139,18 @@
         <option value="$PROJECT_DIR$/src/geek_app_game_index_v1.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_rank.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_rank_list.js" />
-        <option value="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_question_over.js" />
         <option value="$PROJECT_DIR$/docker_wx/nginx/logs/account-access.log" />
         <option value="$PROJECT_DIR$/src/components/geek_game_comp_qustion_header.js" />
-        <option value="$PROJECT_DIR$/project.json" />
         <option value="$PROJECT_DIR$/src/geek_app_game_over.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_comp_over.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_comp_question_content.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_question_t1.js" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/project.json" />
+        <option value="$PROJECT_DIR$/src/lib/XTimer.js" />
+        <option value="$PROJECT_DIR$/src/lib/XHttp.js" />
+        <option value="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_activity_record.js" />
       </list>
     </option>
@@ -273,6 +221,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WXGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WXGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -389,12 +355,12 @@
       <workItem from="1534852770658" duration="179000" />
       <workItem from="1534854335358" duration="4905000" />
       <workItem from="1535116604123" duration="26286000" />
-      <workItem from="1483242637161" duration="213000" />
+      <workItem from="1483242637161" duration="2710000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100954000" />
+    <option name="totallyTimeSpent" value="103451000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -405,19 +371,19 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32866243" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -459,22 +425,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/geek-cocos-v3.9.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="794574">
-          <caret line="44143" column="0" selection-start-line="44143" selection-start-column="0" selection-end-line="44143" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/geek_app_game_index_v1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="32" column="96" selection-start-line="32" selection-start-column="96" selection-end-line="32" selection-end-column="96" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -507,10 +457,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4392">
           <caret line="244" column="4" selection-start-line="244" selection-start-column="4" selection-end-line="244" selection-end-column="4" />
-          <folding>
-            <marker date="1535549276841" expanded="true" signature="8562:8727" ph="{...}" />
-            <marker date="1535549276841" expanded="true" signature="18493:18500" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -526,6 +473,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="702">
           <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -569,10 +517,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5058">
           <caret line="281" column="35" selection-start-line="281" selection-start-column="27" selection-end-line="281" selection-end-column="35" />
-          <folding>
-            <marker date="1535549276841" expanded="true" signature="8562:8727" ph="{...}" />
-            <marker date="1535549276841" expanded="true" signature="18493:18500" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -588,6 +533,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="702">
           <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -632,13 +578,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="2438" column="0" selection-start-line="2438" selection-start-column="0" selection-end-line="2438" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -740,17 +679,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12672">
-          <caret line="705" column="16" selection-start-line="705" selection-start-column="16" selection-end-line="705" selection-end-column="16" />
-          <folding>
-            <marker date="1535549276841" expanded="true" signature="8562:8727" ph="{...}" />
-            <marker date="1535549276841" expanded="true" signature="18493:18500" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/geek_game_comp_question_content.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
@@ -764,7 +692,7 @@
         <state relative-caret-position="666">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -795,14 +723,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/project.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="17" column="34" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/geek_app_game_index_v1.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="882">
@@ -811,10 +731,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="325">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/project.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="47" selection-start-line="19" selection-start-column="47" selection-end-line="19" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib/XTimer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="23" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib/XHttp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="23" column="55" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2925">
+          <caret line="467" column="30" selection-start-line="467" selection-start-column="30" selection-end-line="467" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/geek_app_game_activity_record.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="91" column="14" selection-start-line="88" selection-start-column="11" selection-end-line="91" selection-end-column="14" />
+        <state relative-caret-position="361">
+          <caret line="105" column="37" selection-start-line="105" selection-start-column="37" selection-end-line="105" selection-end-column="37" />
           <folding />
         </state>
       </provider>

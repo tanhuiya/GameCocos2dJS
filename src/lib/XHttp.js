@@ -30,15 +30,15 @@ var XHttp = {
                 }
             }
         }
-        XTimer.add(timeout , 1 , function(){
-            if(xhr.readyState == 4 && xhr.status == 200){
-                return;
-            }else{
-                xhr.abort();
-                xhr = null;
-                fail_func();
-            }
-        })
+        // XTimer.add(timeout , 1 , function(){
+        //     if(xhr.readyState == 4 && xhr.status == 200){
+        //         return;
+        //     }else{
+        //         xhr.abort();
+        //         xhr = null;
+        //         fail_func();
+        //     }
+        // })
         xhr.open("POST", url);
         xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded;"); 
         var data_json = this.formatData(data);
@@ -63,5 +63,3 @@ var XHttp = {
         return res
     }
 };
-
-module.exports = XHttp;

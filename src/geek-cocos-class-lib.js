@@ -465,7 +465,7 @@ var geek_class_lib = cc.Layer.extend({
      */
     f_network_post_json:function (that, url, data, then_do, error_do)
     {
-        XHttp.PostWithTimeout(that, url, data, function (response) {
+        XHttp.PostWithTimeout(url, data, function (response) {
             if (then_do) {
                 then_do(response)
             }

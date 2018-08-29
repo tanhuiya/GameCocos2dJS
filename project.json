@@ -17,8 +17,6 @@
         "src/components/geek_game_comp_question_answer.js",
         "src/components/geek_game_comp_question_result.js",
         "src/components/geek_game_comp_rank_list.js",
-        "src/components/geek_game_comp_over.js",
-        "src/lib/XHttp.js",
-        "src/lib/XTimer.js"
+        "src/components/geek_game_comp_over.js"
     ]
 }

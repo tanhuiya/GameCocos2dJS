@@ -27,6 +27,9 @@ echo "</head>";
 
 <!--<script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>-->
 
+
+<script type="text/javascript" src="src/lib/XHttp.js" charset=utf-8></script>
+<script type="text/javascript" src="src/lib/XTimer.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek-cocos-v3.9.1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek-cocos-class-lib.js" charset=utf-8></script>
 

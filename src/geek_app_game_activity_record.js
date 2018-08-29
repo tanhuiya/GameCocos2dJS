@@ -86,10 +86,16 @@ var g_game_introduce_layer = cc.Layer.extend({
     },
 
     loadPhoneCode: function () {
-        // geek_lib.f_network_post_json(this, uri.sendSms, {phone: this.phone_edit_.getText(), )
-        // XHttp.PostWithTimeout(uri.sendSms, {phone: this.phone_edit_.getText()},function () {
-        //
-        // },)
+        geek_lib.f_network_post_json(
+            this,
+            uri.sendSms,
+            {
+                phone: this.phone_edit_.getText()
+            },
+            function (response) {
+                console.log(response)
+            }, null
+        );
     },
 
     /**
@@ -100,6 +106,13 @@ var g_game_introduce_layer = cc.Layer.extend({
         cc.eventManager.addListener({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan : function (touch,event){
+                var target = event.getCurrentTarget();
+                // target --> item , target.parent --> activity
+                var locationInNode = target.parent.convertToNodeSpace(touch.getLocation());
+                var rect = target.getBoundingBox();
+                if (!cc.rectContainsPoint(rect, locationInNode)) {
+                    return false;
+                }
                 return true
             },
             onTouchEnded: function (touch,event) {
@@ -191,6 +204,10 @@ var g_game_introduce_layer = cc.Layer.extend({
     }
 })
 
+/**
+ * 年级/班级 item
+ * @type {any}
+ */
 var g_game_comp_select_item = cc.LayerColor.extend({
     ctor:function (pos_x, pos_y, width, height, title) {
         this._super(cc.color(255,33,55,0), width, height)
@@ -201,6 +218,7 @@ var g_game_comp_select_item = cc.LayerColor.extend({
         var size = this.getBoundingBox()
         geek_lib.f_imageview_create(this, res.s_edit_box, 0, 0, 1, 1, 2,cc.AncorPointBottomLeft)
         var label = geek_lib.f_label_create(this, placeholder, 28, 5, size.height * 0.5, 1, DisableColor, 1, 1, cc.AncorPointMidLeft)
+        label.height = 57 * 2
         // var name_edit = geek_lib.f_edit_create(this, 0, 0, size.width, size.height, 28, 28,res.s_edit_box,placeholder,20)
         // geek_lib.f_set_anchor_point_type(name_edit, cc.AncorPointBottomLeft)
         geek_lib.f_imageview_create(this, res.s_arrow, size.width - 20, size.height * 0.5, 1, 2, 3, cc.AncorPointCenter)
@@ -208,15 +226,20 @@ var g_game_comp_select_item = cc.LayerColor.extend({
         cc.eventManager.addListener(cc.EventListener.create({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan : function (touch,event){
-                // var target = event.getCurrentTarget();
-                // var locationInNode = target.convertToNodeSpace(touch.getLocation());
+                var target = event.getCurrentTarget();
+                // target --> item , target.parent --> activity
+                var locationInNode = target.parent.convertToNodeSpace(touch.getLocation());
+                var rect = target.getBoundingBox();
+                if (!cc.rectContainsPoint(rect, locationInNode)) {
+                    return false;
+                }
                 return true
             },
             onTouchEnded: function (touch,event) {
                 // captch clicked
                 console.log("clicked")
             }
-        }), label);
+        }), this);
     },
 
 })

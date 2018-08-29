@@ -53,5 +53,3 @@ var XTimer = {
 
     hdl_list: []
 };
-
-module.exports = XTimer;
