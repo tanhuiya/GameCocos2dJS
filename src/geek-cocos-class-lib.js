@@ -363,10 +363,12 @@ var geek_class_lib = cc.Layer.extend({
         var ss_edit = new cc.EditBox(cc.size(width, height), new cc.Scale9Sprite(pic_url));
         ss_edit.x = px;
         ss_edit.y = py;
+        ss_edit.setFont("Arial", fontsize)
         ss_edit.setFontSize(fontsize);
         ss_edit.setFontColor(cc.color(0,0,0));
         ss_edit.setPlaceHolder(input_txt);
-        ss_edit.setPlaceholderFont("Paint Boy", holderfontsize);
+        ss_edit.setPlaceholderFont("Arial", holderfontsize);
+        ss_edit.setPlaceholderFontColor(cc.hexToColor("#4A4A4A"))
         ss_edit.setDelegate(that);
         ss_edit.setMaxLength(max_lenght);
         that.addChild(ss_edit);
@@ -648,35 +650,27 @@ var geek_class_lib = cc.Layer.extend({
         return that
     },
 
-    f_btn_size_create:function(that, txt, px, py, size, bgcolor, scale, level, id)
+    f_imageview_create:function(that, res, px, py, scale, level, id, anchor)
     {
-        var btn = new ccui.Button();
-        if(btn)
-        {
-            if(txt != "")
-            {
-                btn.setTitleText(txt);
-            }
-            btn.setContentSize(size);
-            btn.setTouchEnabled(true);
-            btn.x = px;
-            btn.y = py;
-            btn.setColor(bgcolor)
-            if(scale)
-                btn.setScale(scale);
-            btn.addTouchEventListener(that.ctl_button_event, that);
+        var img = ccui.ImageView.create(res)
 
-            if(id)
-            {
-                that.addChild(btn, level, id);
-            }
-            else
-            {
-                that.addChild(btn, level);
-            }
+
+        if(img) {
+            img.setPosition(px, py)
+        }
+        if (anchor){
+            geek_lib.f_set_anchor_point_type(img, anchor)
+        }
+        if (scale) {
+            img.setScale(scale)
+        }
+        if (id) {
+            that.addChild(img, level, id)
+        } else {
+            that.addChild(img, level)
         }
 
-        return btn;
+        return img;
     },
 
     /**

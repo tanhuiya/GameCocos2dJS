@@ -25,11 +25,23 @@ var res = {
     s_submit:     path + "submit_btn.png",
     s_text_bg:      path + "text_bg.png",
     s_text_image_bg: path + "text_image_bg.png",
-    s_close: path  + "close.png"
+    s_close: path  + "close.png",
+    s_common_btn: path + "common_btn.png",
+    s_edit_box: path + "edit_box_bg.png",
+    s_login_delete: path + "login_delete_icon.png",
+    s_save_record: path + "save_record.png",
+    s_arrow: path + "arrow.png",
+    s_v_line: path + "v_line.png"
 };
 
 
 var m_resources = [
+    res.s_v_line,
+    res.s_arrow,
+    res.s_edit_box,
+    res.s_login_delete,
+    res.s_save_record,
+    res.s_common_btn,
     res.s_tiaozhan,
     res.s_rank,
     res.s_rule,
