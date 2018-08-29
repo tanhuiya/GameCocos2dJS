@@ -4,6 +4,7 @@
     "id"            : "geekCanvas",
     "renderMode"    : 1,
     "jsList"        : [
+        "src/geek_app_uri.js",
         "src/m_resource_v1.js",
         "src/geek_app_game_question_t1.js",
         "src/geek_app_game_index_v1.js",
@@ -16,6 +17,8 @@
         "src/components/geek_game_comp_question_answer.js",
         "src/components/geek_game_comp_question_result.js",
         "src/components/geek_game_comp_rank_list.js",
-        "src/components/geek_game_comp_over.js"
+        "src/components/geek_game_comp_over.js",
+        "src/lib/XHttp.js",
+        "src/lib/XTimer.js"
     ]
 }

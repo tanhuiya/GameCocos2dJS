@@ -85,6 +85,13 @@ var g_game_introduce_layer = cc.Layer.extend({
         save_btn.setTitleFontSize(38)
     },
 
+    loadPhoneCode: function () {
+        geek_lib.f_network_post_json(this, uri.sendSms, {phone: this.phone_edit_.getText(), )
+        XHttp.PostWithTimeout(uri.sendSms, {phone: this.phone_edit_.getText()},function () {
+
+        },)
+    },
+
     /**
      * 点击获取验证码
      */
@@ -100,6 +107,7 @@ var g_game_introduce_layer = cc.Layer.extend({
                 if (!that.fetchCode_) {
                     that.fetchCode_ = true
                     that.resetTimer()
+                    that.loadPhoneCode()
                     geek_lib.f_timer_start(that, that.g_hand_timer_pro, 1, true)
                 }
             }

@@ -455,18 +455,25 @@ var geek_class_lib = cc.Layer.extend({
         cc.loader.loadJson(url, callback);
     },
 
-
-    f_network_get_json_jq:function (url, v1, v2, v3, callback)
+    /**
+     * post 请求
+     * @param that
+     * @param url
+     * @param data json 数据
+     * @param then_do 成果回调
+     * @param error_do 失败回调
+     */
+    f_network_post_json:function (that, url, data, then_do, error_do)
     {
-        $.ajax({
-            type:'POST',
-            url: url,
-            datatype: "json",
-            data:{val1:v1, val2:v2, val3:v3},
-            success:function(data){
-
+        XHttp.PostWithTimeout(that, url, data, function (response) {
+            if (then_do) {
+                then_do(response)
             }
-        });
+        },function () {
+            if (error_do) {
+                error_do()
+            }
+        },10)
 
     },
 
