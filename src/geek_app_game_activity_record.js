@@ -86,10 +86,10 @@ var g_game_introduce_layer = cc.Layer.extend({
     },
 
     loadPhoneCode: function () {
-        geek_lib.f_network_post_json(this, uri.sendSms, {phone: this.phone_edit_.getText(), )
-        XHttp.PostWithTimeout(uri.sendSms, {phone: this.phone_edit_.getText()},function () {
-
-        },)
+        // geek_lib.f_network_post_json(this, uri.sendSms, {phone: this.phone_edit_.getText(), )
+        // XHttp.PostWithTimeout(uri.sendSms, {phone: this.phone_edit_.getText()},function () {
+        //
+        // },)
     },
 
     /**
