@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="16705620-ef20-4a89-b871-9585284fbf9f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/geek_game_comp_action_sheet.js" afterPath="$PROJECT_DIR$/src/components/geek_game_comp_action_sheet.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek-cocos-class-lib.js" afterPath="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/geek_app_game_activity_record.js" afterPath="$PROJECT_DIR$/src/geek_app_game_activity_record.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js" afterPath="$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,8 +34,8 @@
       <file leaf-file-name="geek_app_game_activity_record.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/geek_app_game_activity_record.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="157" column="17" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
+            <state relative-caret-position="252">
+              <caret line="146" column="24" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
               <folding>
                 <element signature="e#0#42#0" expanded="false" />
               </folding>
@@ -60,8 +58,8 @@
       <file leaf-file-name="geek_game_comp_rank_list.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="78" column="9" selection-start-line="73" selection-start-column="8" selection-end-line="78" selection-end-column="9" />
+            <state relative-caret-position="162">
+              <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -80,8 +78,8 @@
       <file leaf-file-name="geek-cocos-v3.9.1.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/geek-cocos-v3.9.1.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="11816" column="41" selection-start-line="11816" selection-start-column="20" selection-end-line="11816" selection-end-column="41" />
+            <state relative-caret-position="504">
+              <caret line="35062" column="20" selection-start-line="35062" selection-start-column="20" selection-end-line="35062" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -140,7 +138,6 @@
         <option value="$PROJECT_DIR$/src/geek-cocos-v3.9.1.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_question_t1.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_comp_question_answer.js" />
-        <option value="$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_root_v1.js" />
         <option value="$PROJECT_DIR$/src/m_resource_v1.js" />
         <option value="$PROJECT_DIR$/src/geek_app_uri.js" />
@@ -155,6 +152,7 @@
         <option value="$PROJECT_DIR$/src/geek-cocos-class-lib.js" />
         <option value="$PROJECT_DIR$/src/components/geek_game_comp_action_sheet.js" />
         <option value="$PROJECT_DIR$/src/geek_app_game_activity_record.js" />
+        <option value="$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js" />
       </list>
     </option>
   </component>
@@ -351,12 +349,12 @@
       <workItem from="1535596187879" duration="1952000" />
       <workItem from="1535612763143" duration="8516000" />
       <workItem from="1535621925013" duration="2430000" />
-      <workItem from="1535636651072" duration="5625000" />
+      <workItem from="1535636651072" duration="6134000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145361000" />
+    <option name="totallyTimeSpent" value="145870000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
@@ -673,14 +671,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="78" column="9" selection-start-line="73" selection-start-column="8" selection-end-line="78" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/geek-cocos-class-lib.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="414">
@@ -697,10 +687,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/geek_game_comp_rank_list.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/geek-cocos-v3.9.1.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="11816" column="41" selection-start-line="11816" selection-start-column="20" selection-end-line="11816" selection-end-column="41" />
+        <state relative-caret-position="504">
+          <caret line="35062" column="20" selection-start-line="35062" selection-start-column="20" selection-end-line="35062" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -717,8 +715,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/geek_app_game_activity_record.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="157" column="17" selection-start-line="157" selection-start-column="17" selection-end-line="157" selection-end-column="17" />
+        <state relative-caret-position="252">
+          <caret line="146" column="24" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
