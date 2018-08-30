@@ -12,7 +12,6 @@ var g_index_layer = cc.Layer.extend({
      */
     init: function () {
         this._super()
-
         g_index = this
         var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         var bg_y = bg.getBoundingBox().height

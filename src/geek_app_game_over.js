@@ -2,6 +2,10 @@
  * Created by tanhui on 2018/8/25.
  */
 
+/**
+ * 游戏结束页面
+ * @type {any}
+ */
 var g_game_over_layer = cc.Layer.extend({
     init: function () {
         this._super()

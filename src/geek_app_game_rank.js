@@ -2,6 +2,10 @@
  * Created by tanhui on 2018/8/25.
  */
 
+/**
+ * 排行榜
+ * @type {any}
+ */
 var g_app_game_rank = cc.Layer.extend({
     init: function () {
         this._super()

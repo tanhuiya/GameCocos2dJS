@@ -358,7 +358,7 @@ var geek_class_lib = cc.Layer.extend({
 
 
     //this.edit_1 = g_class.g_create_edit(this,970,350,400,50, 28,28,res.s_white,"请输入内容",20);
-    f_edit_create:function(that, px, py, width, height, fontsize, holderfontsize,  pic_url, input_txt, max_lenght)
+    f_edit_create:function(that, px, py, width, height, fontsize, holderfontsize,  pic_url, input_txt, max_lenght, level)
     {
         var ss_edit = new cc.EditBox(cc.size(width, height), new cc.Scale9Sprite(pic_url));
         ss_edit.x = px;
@@ -371,7 +371,7 @@ var geek_class_lib = cc.Layer.extend({
         ss_edit.setPlaceholderFontColor(cc.hexToColor("#4A4A4A"))
         ss_edit.setDelegate(that);
         ss_edit.setMaxLength(max_lenght);
-        that.addChild(ss_edit);
+        that.addChild(ss_edit, level);
 
         return ss_edit;
     },
@@ -460,7 +460,7 @@ var geek_class_lib = cc.Layer.extend({
      * @param that
      * @param url
      * @param data json 数据
-     * @param then_do 成果回调
+     * @param then_do 成功回调
      * @param error_do 失败回调
      */
     f_network_post_json:function (that, url, data, then_do, error_do)

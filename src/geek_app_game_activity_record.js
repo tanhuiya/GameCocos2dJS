@@ -63,19 +63,23 @@ var g_game_introduce_layer = cc.Layer.extend({
         /**
          * 学校
          */
-        var school_edit = geek_lib.f_edit_create(that, size.width * 0.5, size.height - 330 * 2, 656, 57 *2, 28, 28,res.s_edit_box,"学校",30)
+        var school_edit = geek_lib.f_edit_create(that, size.width * 0.5, size.height - 330 * 2, 656, 57 *2, 28, 28,res.s_edit_box,"学校",30, 2)
         geek_lib.f_set_anchor_point_type(school_edit, cc.AncorPointBottomMid)
 
         /**
          * 年级
          */
-        var grade_edit = new g_game_comp_select_item(marign_x, size.height - 390 * 2, 656, 57 *2, "年级")
+        var grade_edit = new g_game_comp_select_item(marign_x, size.height - 390 * 2, 656, 57 *2, "年级", function () {
+            that.showSheet(SheetType.SheetGrade)
+        })
         this.addChild(grade_edit, 1, 9)
 
         /**
          * 班级
          */
-        var class_edit = new g_game_comp_select_item(marign_x, size.height - 450 * 2, 656, 57 *2, "班级")
+        var class_edit = new g_game_comp_select_item(marign_x, size.height - 450 * 2, 656, 57 *2, "班级", function () {
+            that.showSheet(SheetType.SheetClass)
+        })
         this.addChild(class_edit, 1, 10)
 
         /**
@@ -83,8 +87,33 @@ var g_game_introduce_layer = cc.Layer.extend({
          */
         var save_btn = geek_lib.f_btn_create(that, res.s_save_record, "保存", size.width * 0.5, size.height - 470 * 2, 1, 1,3, cc.AncorPointTopMid)
         save_btn.setTitleFontSize(38)
+
     },
 
+    /**
+     * 显示选择框
+     */
+    showSheet:function (type) {
+        var back = cc.LayerColor.create(cc.color(112,112,112,150))
+        this.addChild(back, 9)
+
+        // return
+
+        var sheet = new g_app_game_action_sheet(MockData.ClassData, type)
+        sheet.setPosition(0, -800)
+        geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)
+        this.addChild(sheet, 10, 10)
+        sheet.setCallback(function (isSelect, data) {
+            back.removeFromParent()
+            sheet.removeFromParent()
+        })
+        var move1 = cc.moveTo(0.3, cc.p(0, 0));
+        sheet.runAction(cc.sequence(move1));
+    },
+
+    /**
+     * api获取验证码
+     */
     loadPhoneCode: function () {
         geek_lib.f_network_post_json(
             this,
@@ -93,8 +122,16 @@ var g_game_introduce_layer = cc.Layer.extend({
                 phone: this.phone_edit_.getText()
             },
             function (response) {
-                console.log(response)
-            }, null
+                if (response.returnCode == 1) {
+                    console.log("111")
+                    geek_lib.g_notice("发送成功", 5)
+                } else {
+                    console.log("000")
+                    geek_lib.g_notice(response.msg, 15)
+                }
+            }, function () {
+                console.log("error")
+            }
         );
     },
 
@@ -137,7 +174,6 @@ var g_game_introduce_layer = cc.Layer.extend({
             switch (sender) {
                 case this.phone_cancel_:
                     this.phone_edit_.setText("")
-                    this.phone_edit_.setFocus(true)
                     break;
                 case this.name_cancel_:
                     this.name_edit_.setText("")
@@ -209,8 +245,9 @@ var g_game_introduce_layer = cc.Layer.extend({
  * @type {any}
  */
 var g_game_comp_select_item = cc.LayerColor.extend({
-    ctor:function (pos_x, pos_y, width, height, title) {
+    ctor:function (pos_x, pos_y, width, height, title, func) {
         this._super(cc.color(255,33,55,0), width, height)
+        this.selectCallback_ = func
         this.draw(title)
         this.setPosition(pos_x, pos_y)
     },
@@ -222,7 +259,7 @@ var g_game_comp_select_item = cc.LayerColor.extend({
         // var name_edit = geek_lib.f_edit_create(this, 0, 0, size.width, size.height, 28, 28,res.s_edit_box,placeholder,20)
         // geek_lib.f_set_anchor_point_type(name_edit, cc.AncorPointBottomLeft)
         geek_lib.f_imageview_create(this, res.s_arrow, size.width - 20, size.height * 0.5, 1, 2, 3, cc.AncorPointCenter)
-
+        var that = this
         cc.eventManager.addListener(cc.EventListener.create({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan : function (touch,event){
@@ -236,8 +273,9 @@ var g_game_comp_select_item = cc.LayerColor.extend({
                 return true
             },
             onTouchEnded: function (touch,event) {
-                // captch clicked
-                console.log("clicked")
+                if (that.selectCallback_){
+                    that.selectCallback_()
+                }
             }
         }), this);
     },
