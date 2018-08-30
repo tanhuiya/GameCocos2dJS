@@ -26,7 +26,7 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
      */
     ctor: function (dataArr, type) {
         var total = SheetTailHeigth + SheetHeadHeigth + SheetScrollHeight
-        this._super(cc.color(255,255,255), g_size.width, total)
+        this._super(cc.color.WHITE, g_size.width, total)
         this.width_ = g_size.width
         this.dataArr_ = dataArr
         this.type_ = type
@@ -156,9 +156,21 @@ var g_game_comp_scrollview_item = cc.LayerColor.extend({
         var image_x = this.label_.getBoundingBox().x + this.label_.getBoundingBox().width + 40
         this.icon_ = geek_lib.f_sprite_create_box(this, res.s_login_delete, image_x, this.height_ * 0.5, 30, 30, 1, 2, cc.AncorPointMidLeft)
         this.icon_.setVisible(false)
+
+        var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), g_size.width, 0.6)
+        geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointBottomLeft)
+        this.addChild(blackline,2)
+        blackline.setPosition(0, 0)
+        if (this.index_ == 0 ){
+            var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), g_size.width, 0.6)
+            geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointBottomLeft)
+            this.addChild(blackline,3)
+            blackline.setPosition(0, this.height_ - 1)
+        }
     },
 
     event: function () {
+        var that = this
         cc.eventManager.addListener(cc.EventListener.create({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan : function (touch,event){
@@ -172,7 +184,7 @@ var g_game_comp_scrollview_item = cc.LayerColor.extend({
                 return true
             },
             onTouchEnded: function (touch,event) {
-                console.log("qweqewr")
+                console.log(that.index_)
             }
         }), this);
     }
