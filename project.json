@@ -13,12 +13,14 @@
         "src/geek_app_game_rank.js",
         "src/geek_app_game_over.js",
         "src/geek_app_game_activity_record.js",
+        "src/components/core/geek_game_comp_core_tableview.js",
+        "src/components/core/geek_game_comp_tip.js",
         "src/components/geek_game_comp_question_header.js",
         "src/components/geek_game_comp_question_content.js",
         "src/components/geek_game_comp_question_answer.js",
         "src/components/geek_game_comp_question_result.js",
-        "src/components/geek_game_comp_rank_list.js",
         "src/components/geek_game_comp_over.js",
-        "src/components/geek_game_comp_action_sheet.js"
+        "src/components/geek_game_comp_action_sheet.js",
+        "src/components/geek_game_comp_rank_cell.js"
     ]
 }

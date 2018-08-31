@@ -31,11 +31,23 @@ var res = {
     s_login_delete: path + "login_delete_icon.png",
     s_save_record: path + "save_record.png",
     s_arrow: path + "arrow.png",
-    s_v_line: path + "v_line.png"
+    s_v_line: path + "v_line.png",
+    s_tip_bg: path + "tip_bg.png",
+    s_tip_content_1: path + "tip_content_1.png",
+    s_tip_content_2: path + "tip_content_2.png",
+    s_tip_close:    path + "tip_close.png",
+    s_home_bg:      path + "home_bg.png",
+    s_purpose:      path + "purpose.png"
 };
 
 
 var m_resources = [
+    res.s_purpose,
+    res.s_home_bg,
+    res.s_tip_close,
+    res.s_tip_bg,
+    res.s_tip_content_1,
+    res.s_tip_content_2,
     res.s_v_line,
     res.s_arrow,
     res.s_edit_box,

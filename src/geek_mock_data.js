@@ -3,6 +3,57 @@
  */
 
 var MockData = {
+    UserID: "123456",
+    Activity: "68b1443f8bf949b5af4552a024d0cb7f",
     ClassData: ["一班","一班","一班","一班","一班","一班","一班","一班"],
     GradeData: ["一年级","一年级","一年级","一年级"],
+    RankData:  [{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    },{
+        title: "猜猜下面是那个",
+        school: "合肥第六中学",
+        score: "390",
+    }]
 }

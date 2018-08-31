@@ -11,7 +11,7 @@ var g_question_header_node = cc.Node.extend({
      * 题目头部信息
      */
     setUp:function () {
-        var head_bg = geek_lib.f_sprite_create_box(this, res.s_rule, 0, 0, 500, 126, 1, 1, cc.AncorPointTopLeft)
+        var head_bg = geek_lib.f_sprite_create_box(this, res.s_purpose, 0, 0, 500, 126, 1, 1, cc.AncorPointTopLeft)
 
         var white_circle = geek_lib.f_sprite_create_box(this, res.s_white_circle_big, head_bg.getBoundingBox().width, 1, 126,126,2,4, cc.AncorPointTopRight)
 

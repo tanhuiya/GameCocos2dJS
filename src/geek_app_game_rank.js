@@ -28,59 +28,9 @@ var g_app_game_rank = cc.Layer.extend({
 
         var list_bottom_y = 75 * 2
         var list_top_y = g_size.height - 55 * 2
-        var mockData = [{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        },{
-            title: "猜猜下面是那个",
-            school: "合肥第六中学",
-            score: "390",
-        }]
-        var list_node = new g_app_game_rank_list_node(g_size.width, list_top_y - list_bottom_y, mockData)
-        list_node.setUp()
+        var list_node = g_app_game_list_view.create(cc.size(g_size.width - 40, list_top_y - list_bottom_y), MockData.RankData, g_app_game_rank_cell,res.s_activity_bg)
         this.addChild(list_node, 1)
-        list_node.setPosition(0, list_bottom_y)
+        list_node.setPosition(20, list_bottom_y)
     },
 
     /**

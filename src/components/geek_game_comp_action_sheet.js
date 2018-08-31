@@ -32,7 +32,7 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
         this.type_ = type
         this.draw()
         this.drawScrollviewItem()
-        this.swallowEvent()
+        // this.swallowEvent()
     },
 
     /**
@@ -75,16 +75,16 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
         scrollView.scrollToTop(0.1)
     },
 
-    swallowEvent:function () {
-        cc.eventManager.addListener({
-            event : cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches : true,
-            onTouchBegan : function (touch,event){
-                console.log(11111)
-                return true
-            },
-        }, this);
-    },
+    // swallowEvent:function () {
+    //     cc.eventManager.addListener({
+    //         event : cc.EventListener.TOUCH_ONE_BY_ONE,
+    //         swallowTouches : true,
+    //         onTouchBegan : function (touch,event){
+    //             console.log(11111)
+    //             return true
+    //         },
+    //     }, this);
+    // },
 
     /**
      * 关闭

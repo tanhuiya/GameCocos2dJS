@@ -6,7 +6,7 @@
  * 域名
  * @type {string}
  */
-var domain = "http://120.27.163.33:8081"
+var domain = "http://game.k12c.com"
 
 /**
  * uri 定义

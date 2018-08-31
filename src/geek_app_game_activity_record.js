@@ -9,7 +9,7 @@ var TimeToWaite = 6
  * 信息录入界面
  * @type {any}
  */
-var g_game_introduce_layer = cc.Layer.extend({
+var g_game_activity_record_layer = cc.Layer.extend({
 
     fetchCode_: false,
     seconds_: 0,

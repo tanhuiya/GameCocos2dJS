@@ -2,13 +2,31 @@
  * Created by tanhui on 2018/8/21.
  */
 
+var QuestionTimeLimitType = {
+    Unlimit: 1,
+    All: 2,
+    Single: 3 ,
+}
+
 /**
  * 答题页面
  * @type {any}
  */
 var g_question_1_layer = cc.Layer.extend({
-    init: function () {
+    // 问题
+    questions_: [],
+    // 限时时间
+    questionTime_ : 0,
+    // 限时类型
+    questionTimeType_: QuestionTimeLimitType.Unlimit,
+    // 当前问题索引
+    currentIndex_: 0,
+
+    init: function (startData) {
         this._super()
+        this.questions_ = startData.questions
+        this.questionTime_ = startData.questiontime
+        this.questionTimeType_ = startData.questionTimeType
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.drawRect()
     },
@@ -27,32 +45,39 @@ var g_question_1_layer = cc.Layer.extend({
         var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 20 - 72,1, 3, 3, cc.AncorPointCenter)
         this.stop_btn_ = stop_btn
 
-        // 设置问题内容
-        var content = new g_question_content_node()
-        this.addChild(content, 2, 3)
-        content.setPosition(cc.p(0, g_size.height - 166))
-        // content.setUp(ContentType.Text)
-        content.setUp(ContentType.Text_Picture)
-
-
-        var content_height = content.getHeight()
-
-
         // 提交答案按钮
         var submit_btn = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
         this.submit_btn_ = submit_btn
 
-        var answer_y_max = content.getPosition().y - content_height - 50
-        var answer_y_min = 100
-        var scroll_height = answer_y_max - answer_y_min
+        this.drawQuestion(this.currentIndex_)
+    },
 
-        // mock data
-        var questions = ["44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444","44444444444444444444"];
-        var answer_node = new g_question_answer_node(questions,g_size.width, scroll_height )
-        this.addChild(answer_node, 2, 4)
+    /**
+     * 绘制问题区域
+     * @param idx 问题 index
+     */
+    drawQuestion: function (idx) {
+        var questionData = this.questions_[idx]
+        var container_top = 166
+        var container_bottom = 100
+        var container_height = g_size.height - container_top - container_bottom
+        var container = cc.LayerColor.create(cc.color(255,255,255, 0), g_size.width , container_height )
+        this.addChild(container, 2)
+        container.setPosition(0, container_bottom)
+
+        // 设置问题内容
+        var content = new g_question_content_node()
+        container.addChild(content, 2, 3)
+        content.setPosition(cc.p(0, container_height))
+        content.setUp(questionData.question_material_type, questionData)
+        var content_height = content.getHeight()
+
+        // 绘制答案
+        var scroll_height = container_height - content_height - 50
+        var answer_node = new g_question_answer_node(questionData.options,g_size.width, scroll_height, questionData.question_type)
+        container.addChild(answer_node, 2, 4)
         this.answer_node_ = answer_node
-        answer_node.setPosition(0, 100)
-
+        answer_node.setPosition(0, 0)
     },
 
     /**

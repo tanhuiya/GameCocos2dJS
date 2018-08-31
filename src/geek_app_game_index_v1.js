@@ -3,6 +3,16 @@
  */
 
 /**
+ * 1 可继续作答，2 达到总次数，3 到达单日上限
+ * @type {{StateAllow: number, StateOverTotal: number, StateOverToday: number}}
+ */
+var QuestionStatePermission = {
+    StateAllow: 1,
+    StateOverTotal: 2,
+    StateOverToday: 3,
+}
+
+/**
  * 首页
  * @type {any}
  */
@@ -24,11 +34,13 @@ var g_index_layer = cc.Layer.extend({
 
         var music_btn = geek_lib.f_btn_create(this, res.s_music, "", rank_btn.getBoundingBox().x - 14 - 50, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
+        geek_lib.f_sprite_create_box(this, res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6)
 
-        start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 6)
+        start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
 
         this.addRichLabel()
+
     },
 
     /**
@@ -54,8 +66,7 @@ var g_index_layer = cc.Layer.extend({
      * 开始游戏
      */
     startGame: function () {
-        this.removeFromParent();
-        geek_lib.f_layer_create(g_root, g_question_1_layer, 0, 0)
+        this.apiStartGame()
     },
 
     /**
@@ -91,6 +102,54 @@ var g_index_layer = cc.Layer.extend({
                     break;
             }
         }
-    }
+    },
 
+    /**
+     * 判断开始游戏的信息
+     * @param startData
+     */
+    gotoQuestion: function (startData) {
+        if (startData.countState == QuestionStatePermission.StateAllow) {
+            this.removeFromParent();
+            geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+        } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
+            geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")
+        } else if (startData.countState == QuestionStatePermission.StateOverToday) {
+            geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏今日次数限制")
+        }
+    },
+
+
+    // ---- network
+
+    /**
+     * 获取游戏信息
+     */
+    apiStartGame: function () {
+        var that = this
+        geek_lib.f_network_post_json(
+            this,
+            uri.startPlay,
+            {
+                activityId: MockData.Activity,
+                userId: MockData.UserID
+            },
+            function (response) {
+                // console.log(response)
+                if (response.startData) {
+                    that.gotoQuestion(response.startData)
+                } else {
+                    that.errorHandler("startData 数据为空")
+                }
+
+            }
+        )
+    },
+
+    /**
+     * 通用错误处理
+     */
+    errorHandler: function (msg) {
+
+    },
 })

@@ -466,12 +466,28 @@ var geek_class_lib = cc.Layer.extend({
     f_network_post_json:function (that, url, data, then_do, error_do)
     {
         XHttp.PostWithTimeout(url, data, function (response) {
-            if (then_do) {
-                then_do(response)
+            var json_data = JSON.parse(response)
+            if (json_data.returnCode == 1) {
+                if (then_do) {
+                    then_do(json_data.data)
+                }
+            } else {
+                if (error_do) {
+                    error_do(json_data.msg)
+                } else {
+                    if (that.errorHandler){
+                        that.errorHandler(msg)
+                    }
+                }
             }
+
         },function () {
             if (error_do) {
                 error_do()
+            } else {
+                if (that.errorHandler){
+                    that.errorHandler()
+                }
             }
         },10)
 
@@ -633,7 +649,14 @@ var geek_class_lib = cc.Layer.extend({
     },
 
 
-    // tanhui: wanxin game functions
+    // ------ tanhui: wanxin game functions ----
+
+    /**
+     * 设置锚点
+     * @param that
+     * @param type
+     * @returns {*}
+     */
     f_set_anchor_point_type:function (that, type) {
         if (type == cc.AncorPointCenter) {
             that.setAnchorPoint(cc.p(0.5,0.5))
@@ -657,11 +680,21 @@ var geek_class_lib = cc.Layer.extend({
         return that
     },
 
+    /**
+     * 创建 Imageview
+     * @param that
+     * @param res
+     * @param px
+     * @param py
+     * @param scale
+     * @param level
+     * @param id
+     * @param anchor
+     * @returns {res}
+     */
     f_imageview_create:function(that, res, px, py, scale, level, id, anchor)
     {
         var img = ccui.ImageView.create(res)
-
-
         if(img) {
             img.setPosition(px, py)
         }
@@ -709,6 +742,17 @@ var geek_class_lib = cc.Layer.extend({
             that.addChild(clippingNode, level)
         }
         return clippingNode
+    },
+
+    /**
+     * 显示提示消息 （皖新指定）geek_lib.f_show_custom_tip(this, res.s_tip_content_1, "今日次数用完")
+     * @param that
+     * @param res
+     * @param text
+     */
+    f_show_custom_tip: function (that, res, text) {
+        var tip = new g_game_comp_tip_layer(res, text)
+        that.addChild(tip, 999)
     }
 
 });

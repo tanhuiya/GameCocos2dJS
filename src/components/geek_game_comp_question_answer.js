@@ -20,39 +20,55 @@ var AnswerType = {
     TextImage:2
 }
 
+/**
+ * 1 单选题 2 多选题 3 判断题
+ * @type {{Single: number, Multi: number, Judge: number}}
+ */
+var AnswerSelectType = {
+    Single: 1,
+    Multi: 2,
+    Judge: 3,
+}
 
 /**
  * 答题框组件
  * @type {*}
  */
 var g_question_answer_node = cc.LayerColor.extend({
-
+    selectType_ :AnswerSelectType.Single,
+    selections_: [],
     /**
      * 设置答题框
      * @param answers 答案数据
      * @param width scrollview 宽度
      * @param height scrollview 高度
      */
-    ctor: function (answers, width, height) {
+    ctor: function (answers, width, height, selectType) {
         this._super(cc.color(255,255,255,0), width, height)
+        this.selectType_ = selectType
         var type = AnswerType.Text
+
+
+        // var listView = g_app_game_list_view.create(size, dataArr, cell_func, bg)
+        
         var maxItemHeight = type == AnswerType.Text ? TextBgHeight : TextImageBgHeight + ItemMargin * 2
         var innerHeight = answers.length * maxItemHeight
         //scrollview 顶部偏移
         var heightOffset = height > innerHeight ? height - innerHeight : 0
         var scrollview = geek_lib.f_create_scroll_view(this, 0, 0, width, height, width, innerHeight,1)
         geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointBottomLeft)
-
-
         for (var i = 0; i < answers.length ; i++) {
             var item = new g_question_answer_item()
-            var back = item.setType(width, maxItemHeight,type)
+            var back = item.setType(width, maxItemHeight,type, answers[i])
             scrollview.addChild(back, 2, i + 1)
             back.setPosition((g_size.width - width) * 0.5, innerHeight - (i+1)* maxItemHeight + heightOffset)
-            item.setData(answers[i])
         }
         scrollview.scrollToTop(0.1)
-    }
+    },
+
+    selecedAtIndex: function (idx) {
+
+    },
 })
 
 
@@ -69,7 +85,7 @@ var g_question_answer_item = cc.Node.extend({
      * @param type AnswerType
      * @returns layer
      */
-    setType:function (width, height, type) {
+    setType:function (width, height, type, option) {
         var back = cc.LayerColor.create(cc.color(0,0,0,0), width, height)
         this.backLayer_ = back
         this.type_ = type
@@ -89,6 +105,8 @@ var g_question_answer_item = cc.Node.extend({
         this.select_img_ = select_img
         this.selected(false)
 
+        this.setData(option)
+
         var m_this = this
         var AnswerOnClickListener = cc.EventListener.create({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -103,7 +121,6 @@ var g_question_answer_item = cc.Node.extend({
                 return true
             },
             onTouchMoved: function () {
-                // console.log("moved")
                 this.moved = true
             },
             onTouchEnded: function (touch,event) {
@@ -123,7 +140,7 @@ var g_question_answer_item = cc.Node.extend({
     setData:function (data) {
         if (this.type_ == AnswerType.Text) {
             var size = this.backLayer_.getBoundingBox()
-            geek_lib.f_label_create(this.backLayer_, data, 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+            geek_lib.f_label_create(this.backLayer_, data.optionContent, 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
         }
     },
 
