@@ -48,9 +48,6 @@ var g_question_answer_node = cc.LayerColor.extend({
         this.selectType_ = selectType
         var type = AnswerType.Text
 
-
-        // var listView = g_app_game_list_view.create(size, dataArr, cell_func, bg)
-        
         var maxItemHeight = type == AnswerType.Text ? TextBgHeight : TextImageBgHeight + ItemMargin * 2
         var innerHeight = answers.length * maxItemHeight
         //scrollview 顶部偏移

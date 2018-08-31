@@ -45,6 +45,7 @@ var g_question_1_layer = cc.Layer.extend({
         var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 20 - 72,1, 3, 3, cc.AncorPointCenter)
         this.stop_btn_ = stop_btn
 
+
         // 提交答案按钮
         var submit_btn = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
         this.submit_btn_ = submit_btn
@@ -78,6 +79,7 @@ var g_question_1_layer = cc.Layer.extend({
         container.addChild(answer_node, 2, 4)
         this.answer_node_ = answer_node
         answer_node.setPosition(0, 0)
+
     },
 
     /**

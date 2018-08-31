@@ -14,14 +14,16 @@ var g_app_game_list_view = cc.LayerColor.extend({
      * @param dataArr   数据源
      * @param cell_func cell type
      * @param bg        背景图片
+     * @param cellHeight 高度
      * @returns {*}
      */
-    ctor: function (size, dataArr, cell_func, bg) {
+    ctor: function (size, dataArr, cell_func, bg, cellHeight) {
         this._super(cc.color(255,255,255,0), size.width, size.height)
         this.width_ = size.width
         this.height_ = size.height
         this.dataArr_ = dataArr
         this.cell_func_ = cell_func
+        this.cellHeight_ = cellHeight
         this.setUp(bg)
     },
 
@@ -29,13 +31,14 @@ var g_app_game_list_view = cc.LayerColor.extend({
      * 设置布局
      */
     setUp:function (bg) {
-        var bg = ccui.ImageView.create(bg)
-        bg.setScale9Enabled(true)
-        bg.setCapInsets(cc.rect(60, 60 ,1, 1))
-        bg.setContentSize(this.width_, this.height_)
-        bg.setPosition(this.width_ * 0.5, this.height_ * 0.5)
-        this.addChild(bg, 1, 1)
-
+        if (bg){
+            var bg = ccui.ImageView.create(bg)
+            bg.setScale9Enabled(true)
+            bg.setCapInsets(cc.rect(60, 60 ,1, 1))
+            bg.setContentSize(this.width_, this.height_)
+            bg.setPosition(this.width_ * 0.5, this.height_ * 0.5)
+            this.addChild(bg, 1, 1)
+        }
         var tableView = new cc.TableView(this, cc.size(this.width_, this.height_))
         tableView.setBounceable(false)
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
@@ -63,7 +66,7 @@ var g_app_game_list_view = cc.LayerColor.extend({
      * @returns {{width, height}}
      */
     tableCellSizeForIndex: function (table, idx) {
-        return cc.size(this.width_, this.cell_func_.getHeight());
+        return cc.size(this.width_, this.cellHeight_);
     },
 
     /**
@@ -75,7 +78,7 @@ var g_app_game_list_view = cc.LayerColor.extend({
     tableCellAtIndex: function (table, idx) {
         var cell = table.dequeueCell();
         if (!cell) {
-            cell = new this.cell_func_(this.width_, this.cell_func_.getHeight());
+            cell = new this.cell_func_(this.width_, this.cellHeight_);
         }
         cell.setData(idx, this.dataArr_[idx])
         return cell;
@@ -98,9 +101,10 @@ var g_app_game_list_view = cc.LayerColor.extend({
  * @param dataArr   数据源
  * @param cell_func cell type
  * @param bg        背景图片
+ * @param cellHeight 高度
  * @returns {*}
  */
-g_app_game_list_view.create = function (size, dataArr, cell_func, bg) {
-    return new g_app_game_list_view(size, dataArr, cell_func, bg)
+g_app_game_list_view.create = function (size, dataArr, cell_func, bg, cellHeight) {
+    return new g_app_game_list_view(size, dataArr, cell_func, bg, cellHeight)
 }
 
