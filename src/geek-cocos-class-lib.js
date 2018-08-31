@@ -363,7 +363,7 @@ var geek_class_lib = cc.Layer.extend({
         var ss_edit = new cc.EditBox(cc.size(width, height), new cc.Scale9Sprite(pic_url));
         ss_edit.x = px;
         ss_edit.y = py;
-        ss_edit.setFont("Arial", fontsize)
+        // ss_edit.setFont("Arial", fontsize)
         ss_edit.setFontSize(fontsize);
         ss_edit.setFontColor(cc.color(0,0,0));
         ss_edit.setPlaceHolder(input_txt);

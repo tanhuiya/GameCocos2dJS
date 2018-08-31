@@ -31,18 +31,19 @@ var g_game_introduce_layer = cc.Layer.extend({
 
         {// 姓名
             geek_lib.f_imageview_create(that, res.s_edit_box,marign_x, size.height - 150 * 2, 1, 1, 2,cc.AncorPointBottomLeft)
-            var name_edit = geek_lib.f_edit_create(that, marign_x, size.height - 150 * 2, 656 - 100, 57 * 2, 28, 28, null, "您的姓名", 20)
+            var name_edit = geek_lib.f_edit_create(that, marign_x, size.height - 150 * 2, 656 - 100, 57 * 2, 28, 28, null, "您的姓名", 20, 1)
             geek_lib.f_set_anchor_point_type(name_edit, cc.AncorPointBottomLeft)
             var name_cancel = geek_lib.f_btn_create(that, res.s_login_delete, "", 333 * 2, size.height - 120 * 2, 1, 2, 3, cc.AncorPointCenter)
             name_cancel.setVisible(false)
             name_cancel.setSwallowTouches(true)
             this.name_cancel_ = name_cancel
             this.name_edit_ = name_edit
+
         }
 
         {// 手机号
             geek_lib.f_imageview_create(that, res.s_edit_box,marign_x, size.height - 210 * 2, 1, 1, 2,cc.AncorPointBottomLeft)
-            var phone_edit = geek_lib.f_edit_create(that, marign_x, size.height - 210 * 2, 656 - 100, 57 * 2, 28, 28, null, "手机号码", 20)
+            var phone_edit = geek_lib.f_edit_create(that, marign_x, size.height - 210 * 2, 656 - 100, 57 * 2, 28, 28, null, "手机号码", 15, 1)
             geek_lib.f_set_anchor_point_type(phone_edit, cc.AncorPointBottomLeft)
             var phone_cancel = geek_lib.f_btn_create(that, res.s_login_delete, "", 333 * 2, size.height - 180 * 2, 1, 2, 3, cc.AncorPointCenter)
             phone_cancel.setVisible(false)
@@ -52,11 +53,12 @@ var g_game_introduce_layer = cc.Layer.extend({
 
         {// 验证码
             geek_lib.f_imageview_create(that, res.s_edit_box,marign_x, size.height - 270 * 2, 1, 1, 2,cc.AncorPointBottomLeft)
-            var captcha_edit = geek_lib.f_edit_create(that, marign_x, size.height - 270 * 2, 656 - 300, 57 *2, 28, 28, null,"验证码",4)
+            var captcha_edit = geek_lib.f_edit_create(that, marign_x, size.height - 270 * 2, 656 - 300, 57 *2, 28, 28, null,"验证码", 4, 1)
             geek_lib.f_set_anchor_point_type(captcha_edit, cc.AncorPointBottomLeft)
             geek_lib.f_imageview_create(that, res.s_v_line,230 * 2, size.height - 242 * 2, 1, 1, 2,cc.AncorPointMidLeft)
             var captch_label = geek_lib.f_label_create(that, "获取验证码", 28, 240 * 2, size.height - 242 * 2, 1, cc.hexToColor("#117AF5"), 1, 3, cc.AncorPointMidLeft)
             this.captch_label_ = captch_label
+            this.captcha_edit_ = captcha_edit
             this.captchaClickEvent()
         }
 
@@ -65,6 +67,7 @@ var g_game_introduce_layer = cc.Layer.extend({
          */
         var school_edit = geek_lib.f_edit_create(that, size.width * 0.5, size.height - 330 * 2, 656, 57 *2, 28, 28,res.s_edit_box,"学校",30, 2)
         geek_lib.f_set_anchor_point_type(school_edit, cc.AncorPointBottomMid)
+        this.school_edit_ = school_edit
 
         /**
          * 年级
@@ -96,19 +99,43 @@ var g_game_introduce_layer = cc.Layer.extend({
     showSheet:function (type) {
         var back = cc.LayerColor.create(cc.color(112,112,112,150))
         this.addChild(back, 9)
-
-        // return
-
         var sheet = new g_app_game_action_sheet(MockData.ClassData, type)
-        sheet.setPosition(0, -800)
+        sheet.setPosition(0, 0)
         geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)
-        this.addChild(sheet, 10, 10)
+        this.addChild(sheet, 9999, 10)
+        var that = this
         sheet.setCallback(function (isSelect, data) {
             back.removeFromParent()
             sheet.removeFromParent()
+            that.recoverCocosBug()
         })
         var move1 = cc.moveTo(0.3, cc.p(0, 0));
         sheet.runAction(cc.sequence(move1));
+
+        this.fixCocosEditBoxBug(sheet.getBoundingBox().height)
+    },
+
+    /**
+     *恢复EditBox 显示
+     */
+    recoverCocosBug: function () {
+        this.school_edit_.setVisible(true)
+        this.captcha_edit_.setVisible(true)
+    },
+    /**
+     * EditBox 层级过高， 临时解决方案， 隐藏sheet 下部的editbox
+     * @param belowHeight
+     */
+    fixCocosEditBoxBug:function (belowHeight) {
+        console.log(belowHeight)
+        if (this.captcha_edit_.getBoundingBox().y + this.captcha_edit_.getBoundingBox().height * 0.5 < belowHeight) {
+            this.captcha_edit_.setVisible(false)
+        }
+
+        console.log(this.school_edit_.getBoundingBox().y + this.school_edit_.getBoundingBox().height * 0.5 )
+        if (this.school_edit_.getBoundingBox().y + this.school_edit_.getBoundingBox().height * 0.5 < belowHeight) {
+            this.school_edit_.setVisible(false)
+        }
     },
 
     /**
@@ -259,6 +286,7 @@ var g_game_comp_select_item = cc.LayerColor.extend({
         // var name_edit = geek_lib.f_edit_create(this, 0, 0, size.width, size.height, 28, 28,res.s_edit_box,placeholder,20)
         // geek_lib.f_set_anchor_point_type(name_edit, cc.AncorPointBottomLeft)
         geek_lib.f_imageview_create(this, res.s_arrow, size.width - 20, size.height * 0.5, 1, 2, 3, cc.AncorPointCenter)
+
         var that = this
         cc.eventManager.addListener(cc.EventListener.create({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,

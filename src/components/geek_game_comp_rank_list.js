@@ -24,19 +24,33 @@ var g_app_game_rank_list_node = cc.LayerColor.extend({
      * 设置布局
      */
     setUp:function () {
-        var scrollView_width = this.width_ - 10 * 4
-        var innerHeight = this.dataArr_.length * ListItemHeight
-        var scrollView = geek_lib.f_create_scroll_view(this, 10 * 2, 0, scrollView_width, this.height_, scrollView_width, innerHeight,1 )
-        scrollView.setBackGroundImage(res.s_activity_bg)
-        scrollView.setBackGroundImageScale9Enabled(true)
-        scrollView.setBackGroundImageCapInsets(cc.rect(30, 30 ,1, 1))
-        //scrollview 顶部偏移
-        var heightOffset = this.height_ > innerHeight ? this.height_ - innerHeight : 0
-        for (var i = 0; i < this.dataArr_.length; i++ ){
-            var item = new g_app_game_rank_list_item(i, scrollView_width, ListItemHeight, this.dataArr_[i])
-            scrollView.addChild(item, 3, i + 1)
-            item.setPosition(0, innerHeight - (i+1)* ListItemHeight + heightOffset)
-        }
+
+        var tableView = new cc.TableView(this, cc.size(this.width_, this.height_))
+        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
+        tableView.setPosition(10 * 2, 0)
+        tableView.setDelegate(this)
+        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN)
+        this.addChild(tableView)
+
+        //更新tableview
+        tableView.reloadData()
+        tableView.setBackGroundImage(res.s_activity_bg)
+        tableView.setBackGroundImageScale9Enabled(true)
+        tableView.setBackGroundImageCapInsets(cc.rect(60, 60 ,1, 1))
+
+        // var scrollView_width = this.width_ - 10 * 4
+        // var innerHeight = this.dataArr_.length * ListItemHeight
+        // var scrollView = geek_lib.f_create_scroll_view(this, 10 * 2, 0, scrollView_width, this.height_, scrollView_width, innerHeight,1 )
+        // scrollView.setBackGroundImage(res.s_activity_bg)
+        // scrollView.setBackGroundImageScale9Enabled(true)
+        // scrollView.setBackGroundImageCapInsets(cc.rect(30, 30 ,1, 1))
+        // //scrollview 顶部偏移
+        // var heightOffset = this.height_ > innerHeight ? this.height_ - innerHeight : 0
+        // for (var i = 0; i < this.dataArr_.length; i++ ){
+        //     var item = new g_app_game_rank_list_item(i, scrollView_width, ListItemHeight, this.dataArr_[i])
+        //     scrollView.addChild(item, 3, i + 1)
+        //     item.setPosition(0, innerHeight - (i+1)* ListItemHeight + heightOffset)
+        // }
     },
 
 })
