@@ -24,12 +24,15 @@ var g_question_content_node = cc.Node.extend({
      * @param type
      */
     setUp:function (type, questionData) {
+        var text = "设置题目类型设置题目类型设置题目类型设置题目类型设置题目类型设置题目textttextt类型"
         this.heigth_ = 0
-        var text = questionData.question_title
+        var textHeight = 300
+        // var text = questionData.question_title
         if (type == ContentType.Text) {
-            var text_label = geek_lib.f_label_create(this, text, 36 , 50, 0, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopLeft)
+            var text_label = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
             text_label.setDimensions(g_size.width - 100, 0)
-            this.height_ = text_label.getContentSize().height
+            // 文字类型固定高度300
+            this.height_ = textHeight
         } else if (type == ContentType.Text_Picture) {
             var music_btn = geek_lib.f_btn_create(this, res.s_music, "", 32 * 2, 0, 1, 1, 4, cc.AncorPointTopLeft)
             var image = geek_lib.f_sprite_create_box(this, res.s_head, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)

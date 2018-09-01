@@ -2,6 +2,8 @@
  * Created by tanhui on 2018/8/30.
  */
 
+
+
 var MockData = {
     UserID: "123456",
     Activity: "68b1443f8bf949b5af4552a024d0cb7f",
@@ -56,4 +58,9 @@ var MockData = {
         school: "合肥第六中学",
         score: "390",
     }]
+}
+
+var g_game_user = {
+    userID: MockData.UserID,
+    activity: MockData.Activity
 }

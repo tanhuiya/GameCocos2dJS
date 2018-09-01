@@ -36,6 +36,7 @@ var AnswerSelectType = {
  */
 var g_question_answer_node = cc.LayerColor.extend({
     selectType_ :AnswerSelectType.Single,
+    answers_: [],
     selections_: [],
     /**
      * 设置答题框
@@ -46,6 +47,7 @@ var g_question_answer_node = cc.LayerColor.extend({
     ctor: function (answers, width, height, selectType) {
         this._super(cc.color(255,255,255,0), width, height)
         this.selectType_ = selectType
+        this.answersMap_ = []
         var type = AnswerType.Text
 
         var maxItemHeight = type == AnswerType.Text ? TextBgHeight : TextImageBgHeight + ItemMargin * 2
@@ -55,17 +57,52 @@ var g_question_answer_node = cc.LayerColor.extend({
         var scrollview = geek_lib.f_create_scroll_view(this, 0, 0, width, height, width, innerHeight,1)
         geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointBottomLeft)
         for (var i = 0; i < answers.length ; i++) {
-            var item = new g_question_answer_item()
-            var back = item.setType(width, maxItemHeight,type, answers[i])
+            var option = answers[i]
+            var item = new g_question_answer_item(this, i)
+            var back = item.setType(width, maxItemHeight,type, option)
             scrollview.addChild(back, 2, i + 1)
             back.setPosition((g_size.width - width) * 0.5, innerHeight - (i+1)* maxItemHeight + heightOffset)
+            this.answersMap_.push({"id": option.questionOptionId, "cell": item})
         }
+
+        var submit_btn = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
+        this.submit_btn_ = submit_btn
+
         scrollview.scrollToTop(0.1)
     },
 
-    selecedAtIndex: function (idx) {
-
+    /**
+     * 答案被选中
+     * @param id
+     */
+    selecedAtIndex: function (id) {
+        if (this.selectType_ == AnswerSelectType.Single) {
+            this.selections_ = [id]
+        } else if (this.selectType_ == AnswerSelectType.Multi){
+            if (this.selections_.indexOf(id) < 0) {
+                this.selections_.push(id)
+            }
+        } else if (this.selectType_ == AnswerSelectType.Judge){
+            this.selections_ = [id]
+        }
+        for (var i = 0; i < this.answersMap_.length; i++) {
+            var option = this.answersMap_[i]
+            var cell = option.cell
+            if (this.selections_.indexOf(option.id) > -1){
+                cell.selected(true)
+            } else {
+                cell.selected(false)
+            }
+        }
     },
+
+    /**
+     * 获取答案
+     * @returns {Array}
+     */
+    getAnswers: function () {
+        return this.selections_
+    }
 })
 
 
@@ -74,6 +111,17 @@ var g_question_answer_node = cc.LayerColor.extend({
  * @type {*}
  */
 var g_question_answer_item = cc.Node.extend({
+    parent_: null,
+    index_: 0,
+    /**
+     * ctor
+     * @param parent
+     * @param index
+     */
+    ctor: function (parent, index) {
+        this.parent_ = parent
+        this.index_ = index
+    },
 
     /**
      * 设置答案选项类型
@@ -122,7 +170,7 @@ var g_question_answer_item = cc.Node.extend({
             },
             onTouchEnded: function (touch,event) {
                 if (this.moved) return
-                m_this.selected(!m_this.getSelected())
+                m_this.parent_.selecedAtIndex(option.questionOptionId)
             }
         });
         cc.eventManager.addListener(AnswerOnClickListener, content);

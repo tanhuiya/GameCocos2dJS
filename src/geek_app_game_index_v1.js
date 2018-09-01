@@ -40,7 +40,7 @@ var g_index_layer = cc.Layer.extend({
         this.start_btn_ = start_btn
 
         this.addRichLabel()
-
+        this.apiGameState()
     },
 
     /**
@@ -123,6 +123,32 @@ var g_index_layer = cc.Layer.extend({
     // ---- network
 
     /**
+     * 判断活动开始状态
+     */
+    apiGameState: function () {
+        var that = this
+        var param = {
+            activityId: g_game_user.activity
+        }
+        geek_lib.f_network_post_json(
+            this,
+            uri.activityState,
+            param,
+            function (data) {
+                if (data.activityState != 1) {
+                    geek_lib.f_show_custom_tip(that, res.s_tip_content_1, "活动已结束")
+                }
+            })
+    },
+
+    /**
+     * 获取首页数据
+     */
+    apiHomeData: function () {
+
+    },
+
+    /**
      * 获取游戏信息
      */
     apiStartGame: function () {
@@ -131,8 +157,8 @@ var g_index_layer = cc.Layer.extend({
             this,
             uri.startPlay,
             {
-                activityId: MockData.Activity,
-                userId: MockData.UserID
+                activityId: g_game_user.activity,
+                userId: g_game_user.userID
             },
             function (response) {
                 // console.log(response)
