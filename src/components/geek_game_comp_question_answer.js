@@ -15,7 +15,7 @@ var ItemMargin = 10
  * 答案选项类型
  * @type {{Text: number, TextImage: number}}
  */
-var AnswerType = {
+var AnswerOptionType = {
     Text: 1,
     TextImage:2
 }
@@ -35,65 +35,146 @@ var AnswerSelectType = {
  * @type {*}
  */
 var g_question_answer_node = cc.LayerColor.extend({
+    /**
+     * 单选 双选
+     */
     selectType_ :AnswerSelectType.Single,
+    /**
+     * 选项类型
+     */
+    optionType_: AnswerOptionType.Text,
+    /**
+     * 所有选项
+     */
     answers_: [],
+    /**
+     * 所有选择的cell idx
+     */
     selections_: [],
+    /**
+     * 提交按钮高度
+     */
+    left_height_: 0,
+    /**
+     * 提交按钮回调
+     * @private
+     */
+    submitCallback_: function () {},
+
     /**
      * 设置答题框
      * @param answers 答案数据
      * @param width scrollview 宽度
      * @param height scrollview 高度
+     * @param selectType 题目类型
      */
     ctor: function (answers, width, height, selectType) {
         this._super(cc.color(255,255,255,0), width, height)
         this.selectType_ = selectType
         this.answersMap_ = []
-        var type = AnswerType.Text
+        this.answers_ = answers
+        this.width_ = width
+        this.height_ = height
+        // mock
 
-        var maxItemHeight = type == AnswerType.Text ? TextBgHeight : TextImageBgHeight + ItemMargin * 2
-        var innerHeight = answers.length * maxItemHeight
-        //scrollview 顶部偏移
-        var heightOffset = height > innerHeight ? height - innerHeight : 0
-        var scrollview = geek_lib.f_create_scroll_view(this, 0, 0, width, height, width, innerHeight,1)
-        geek_lib.f_set_anchor_point_type(scrollview, cc.AncorPointBottomLeft)
-        for (var i = 0; i < answers.length ; i++) {
-            var option = answers[i]
-            var item = new g_question_answer_item(this, i)
-            var back = item.setType(width, maxItemHeight,type, option)
-            scrollview.addChild(back, 2, i + 1)
-            back.setPosition((g_size.width - width) * 0.5, innerHeight - (i+1)* maxItemHeight + heightOffset)
-            this.answersMap_.push({"id": option.questionOptionId, "cell": item})
-        }
+        var type = AnswerOptionType.Text
+        this.optionType_ = type
+        this.cellHeight_ = type == AnswerOptionType.Text ? TextBgHeight : TextImageBgHeight
 
-        var submit_btn = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 50,1,4,4,cc.AncorPointCenter)
-        this.submit_btn_ = submit_btn
-
-        scrollview.scrollToTop(0.1)
+        var left = height - answers.length * this.cellHeight_
+        left = left < 100 ? 100 : left
+        this.left_height_ = left
+        this.setUp()
     },
 
     /**
-     * 答案被选中
-     * @param id
+     * 设置布局UI
      */
-    selecedAtIndex: function (id) {
-        if (this.selectType_ == AnswerSelectType.Single) {
-            this.selections_ = [id]
-        } else if (this.selectType_ == AnswerSelectType.Multi){
-            if (this.selections_.indexOf(id) < 0) {
-                this.selections_.push(id)
+    setUp: function () {
+        var tableView = new cc.TableView(this, cc.size(this.width_, this.height_))
+        tableView.setBounceable(false)
+        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
+        tableView.setPosition(0, 0)
+        tableView.setDelegate(this)
+        // cell 顺序从上到下排列
+        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN)
+        this.addChild(tableView, 2, 2)
+        tableView.reloadData()
+    },
+
+
+    /**
+     * 设置点击cell后的回调函数
+     * @param table
+     * @param cell
+     */
+    tableCellTouched: function (table, cell) {
+        if (cell.getIdx() == this.answers_.length) return
+
+        var index = cell.getIdx()
+
+        if (this.selectType_ == AnswerSelectType.Multi){
+            if (this.selections_.indexOf(index) < 0) {
+                this.selections_.push(index)
+            }
+        } else if (this.selectType_ == AnswerSelectType.Single) {
+            this.selections_ = [index]
+            if (this.lastCell_){
+                this.lastCell_.selected(false)
             }
         } else if (this.selectType_ == AnswerSelectType.Judge){
-            this.selections_ = [id]
-        }
-        for (var i = 0; i < this.answersMap_.length; i++) {
-            var option = this.answersMap_[i]
-            var cell = option.cell
-            if (this.selections_.indexOf(option.id) > -1){
-                cell.selected(true)
-            } else {
-                cell.selected(false)
+            this.selections_ = [index]
+            if (this.lastCell_){
+                this.lastCell_.selected(false)
             }
         }
+        cell.selected(true)
+        this.lastCell_ = cell
+        console.log("cell touched at index: " + cell.getIdx());
+        console.log("ids " + this.selections_);
+
+    },
+
+    /**
+     * 设置cell大小
+     * @param table
+     * @param idx
+     * @returns {{width, height}}
+     */
+    tableCellSizeForIndex: function (table, idx) {
+        if (idx == this.answers_.length){
+            // 提交按钮
+            return cc.size(this.width_, this.left_height_)
+        } else {
+            return cc.size(this.width_, this.cellHeight_)
+        }
+    },
+
+    /**
+     * 添加Cell
+     * @param table
+     * @param idx
+     * @returns {*}
+     */
+    tableCellAtIndex: function (table, idx) {
+        var cell = table.dequeueCell();
+        if (!cell) {
+            cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_);
+        }
+        cell.setDelegate(this)
+        cell.setData(idx, this.answers_[idx], idx == this.answers_.length)
+        cell.selected(this.selections_.indexOf(idx) > -1)
+        return cell;
+    },
+
+    /**
+     * 设置cell个数
+     * @param table
+     * @returns {*}
+     */
+    numberOfCellsInTableView: function (table) {
+        // 添加提交按钮
+        return this.answers_.length + 1
     },
 
     /**
@@ -101,91 +182,92 @@ var g_question_answer_node = cc.LayerColor.extend({
      * @returns {Array}
      */
     getAnswers: function () {
-        return this.selections_
-    }
+        var selectionIDS = []
+        for (var i = 0; i < this.answers_.length; i++) {
+            if (this.selections_.indexOf(i) > -1) {
+                var option = this.answers_[i]
+                selectionIDS.push(option.questionOptionId)
+            }
+        }
+        return selectionIDS
+    },
+
+    /**
+     * 提交答案按钮
+     */
+    submit: function () {
+        if (this.submitCallback_){
+            this.submitCallback_()
+        }
+    },
 })
 
 
 /**
- * 答题选项组件
- * @type {*}
+ * option cell
+ * @type {any}
  */
-var g_question_answer_item = cc.Node.extend({
-    parent_: null,
-    index_: 0,
-    /**
-     * ctor
-     * @param parent
-     * @param index
-     */
-    ctor: function (parent, index) {
-        this.parent_ = parent
-        this.index_ = index
+var g_question_answer_cell = cc.TableViewCell.extend({
+
+    optionType_: AnswerOptionType.Text,
+    option_ : null,
+    delegate_: null,
+
+    ctor: function (width, height, type) {
+        this._super()
+        this.width_ = width
+        this.height_ = height
+        this.optionType_ = type
+        this.setLayout(type)
     },
 
     /**
-     * 设置答案选项类型
-     * @param width item 宽度
-     * @param height item 高度
-     * @param type AnswerType
-     * @returns layer
+     * 设置代理
      */
-    setType:function (width, height, type, option) {
-        var back = cc.LayerColor.create(cc.color(0,0,0,0), width, height)
+    setDelegate: function (del) {
+        this.delegate_ = del
+    },
+
+    /**
+     * 设置item 布局
+     */
+    setLayout:function (type) {
+        var back = cc.LayerColor.create(cc.color(0,0,0,0), this.width_, this.height_)
+        this.addChild(back, 1)
         this.backLayer_ = back
-        this.type_ = type
         var content_image = null
         var bg_height = 0
-        if (type == AnswerType.Text) {
+        if (type == AnswerOptionType.Text) {
             content_image = res.s_text_bg
             bg_height = TextBgHeight
         } else {
             content_image = res.s_text_image_bg
             bg_height = TextImageBgHeight
         }
-        var topMargin =  (height - bg_height) * 0.5
+        var topMargin =  (this.height_ - bg_height) * 0.5
         var leftMargin = 50
-        var content = geek_lib.f_sprite_create_box(back, content_image, leftMargin, topMargin, width - 2 * leftMargin, bg_height , 1, 1, cc.AncorPointBottomLeft)
-        var select_img = geek_lib.f_sprite_create_box(back, res.s_right, 50 + 40 , height * 0.5, 36, 36, 3,3, cc.AncorPointCenter)
+        var content = geek_lib.f_sprite_create_box(back, content_image, leftMargin, topMargin, this.width_ - 2 * leftMargin, bg_height , 1, 1, cc.AncorPointBottomLeft)
+        var select_img = geek_lib.f_sprite_create_box(back, res.s_right, 50 + 40 , this.height_ * 0.5, 36, 36, 3,3, cc.AncorPointCenter)
         this.select_img_ = select_img
         this.selected(false)
+        if (type == AnswerOptionType.Text) {
+            var size = this.backLayer_.getBoundingBox()
+            this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+        }
 
-        this.setData(option)
-
-        var m_this = this
-        var AnswerOnClickListener = cc.EventListener.create({
-            event : cc.EventListener.TOUCH_ONE_BY_ONE,
-            swallowTouches : false,
-            moved: false,
-            onTouchBegan : function (touch,event){
-                // console.log("begin")
-                this.moved = false
-                var target = event.getCurrentTarget();
-                var locationInNode = target.convertToNodeSpace(touch.getLocation());
-                if(!cc.rectContainsPoint(target.getBoundingBox(), locationInNode))return false;
-                return true
-            },
-            onTouchMoved: function () {
-                this.moved = true
-            },
-            onTouchEnded: function (touch,event) {
-                if (this.moved) return
-                m_this.parent_.selecedAtIndex(option.questionOptionId)
-            }
-        });
-        cc.eventManager.addListener(AnswerOnClickListener, content);
-        return back
+        this.submit_btn_ = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)
+        this.submit_btn_.setVisible(false)
     },
 
-
-    /**
-     * 设置答案内容
-     * @param data
-     */
-    setData:function (data) {
-        if (this.type_ == AnswerType.Text) {
-            var size = this.backLayer_.getBoundingBox()
-            geek_lib.f_label_create(this.backLayer_, data.optionContent, 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+    setData: function (index, data, isFooter) {
+        if (isFooter) {
+            this.submit_btn_.setVisible(true)
+            this.backLayer_.setVisible(false)
+        } else {
+            this.submit_btn_.setVisible(false)
+            this.backLayer_.setVisible(true)
+            this.option_ = data
+            geek_lib.f_label_change_txt(this.text_label_, data.optionContent)
         }
     },
 
@@ -198,10 +280,16 @@ var g_question_answer_item = cc.Node.extend({
     },
 
     /**
-     * 获取答案是否选中
-     * @returns bool
+     * 按钮被点击的回调
+     * @param sender 事件相应者
+     * @param type  事件类型
      */
-    getSelected: function () {
-        return this.selected_
-    }
+    ctl_button_event: function (sender, type) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
+            if (this.delegate_){
+                this.delegate_.submit()
+            }
+        }
+    },
 })
+

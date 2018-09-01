@@ -39,19 +39,23 @@ var g_index_layer = cc.Layer.extend({
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
 
-        this.addRichLabel()
+        this.addRichLabel(0)
         this.apiGameState()
+        this.apiHomeData()
     },
 
     /**
      * 添加富文本，当前参加人数
      */
-    addRichLabel: function () {
+    addRichLabel: function (num) {
+        if (this.richLabel_ ){
+            this.richLabel_.removeFromParent(true)
+        }
         var richText = new ccui.RichText()
         richText.ignoreContentAdaptWithSize(false);
         richText.setContentSize(cc.size(g_size.width, 100));
         var prefix = new ccui.RichElementText(7, cc.color(255,255,255), 255, "当前已有 ", "Helvetica", 30)
-        var number = new ccui.RichElementText(8, cc.color(130,89,89), 255, "40", "Helvetica", 34)
+        var number = new ccui.RichElementText(8, cc.color(130,89,89), 255, num + "", "Helvetica", 34)
         var sufix = new ccui.RichElementText(9, cc.color(255,255,255), 255, " 人参加", "Helvetica", 30)
         richText.pushBackElement(prefix)
         richText.pushBackElement(number)
@@ -60,6 +64,7 @@ var g_index_layer = cc.Layer.extend({
         richText.setTextHorizontalAlignment(cc.TEXT_ALIGNMENT_CENTER)
         richText.setPosition(g_size.width * 0.5, this.start_btn_.getBoundingBox().y + 130)
         this.addChild(richText,2,10)
+        this.richLabel_ = richText
     },
 
     /**
@@ -145,7 +150,19 @@ var g_index_layer = cc.Layer.extend({
      * 获取首页数据
      */
     apiHomeData: function () {
-
+        var that = this
+        var param = {
+            activityId: g_game_user.activity
+        }
+        geek_lib.f_network_post_json(
+            this,
+            uri.home,
+            param,
+            function (data) {
+                if (data.numOfUser) {
+                    that.addRichLabel(data.numOfUser)
+                }
+            })
     },
 
     /**

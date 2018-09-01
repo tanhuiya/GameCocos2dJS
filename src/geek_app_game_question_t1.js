@@ -85,10 +85,16 @@ var g_question_1_layer = cc.Layer.extend({
 
         // 绘制答案
         var scroll_height = container_height - content_height - 30
+        // var data = ["adfaafad","adfaafad","adfaafad","adfaafad","adfaafad","adfaafad","adfaafad","adfaafad"]
         var answer_node = new g_question_answer_node(questionData.options,g_size.width, scroll_height, questionData.question_type)
         container.addChild(answer_node, 2, 4)
         this.answer_node_ = answer_node
         answer_node.setPosition(0, 0)
+        var that = this
+        // 设置提交答案按钮
+        answer_node.submitCallback_ = function () {
+            that.apiSubmitAnswer()
+        }
     },
 
     /**
@@ -125,14 +131,6 @@ var g_question_1_layer = cc.Layer.extend({
     },
 
     /**
-     * 提交答案
-     */
-    submitAnswer: function () {
-        this.apiSubmitAnswer()
-        // this.showResult(QustionResultType.Error)
-    },
-
-    /**
      * 切换下一题
      */
     nextQuestion: function () {
@@ -162,9 +160,6 @@ var g_question_1_layer = cc.Layer.extend({
     ctl_button_event: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             switch (sender) {
-                case this.submit_btn_:
-                    this.submitAnswer()
-                    break;
                 case this.stop_btn_:
                     this.stopGame()
                     break;

@@ -2,7 +2,7 @@
 var path = "res/";
 
 var res = {
-
+    s_video: path + "longge.mp4",
     s_background : path + "background.png",
     s_rank:     path + "rank.png",
     s_rule:     path + "rule.png",
@@ -37,11 +37,18 @@ var res = {
     s_tip_content_2: path + "tip_content_2.png",
     s_tip_close:    path + "tip_close.png",
     s_home_bg:      path + "home_bg.png",
-    s_purpose:      path + "purpose.png"
+    s_purpose:      path + "purpose.png",
+    s_audio_1:      path + "audio_1.png",
+    s_audio_2:      path + "audio_2.png",
+    s_audio_bg:     path + "audio_bg.png",
 };
 
 
 var m_resources = [
+    res.s_video,
+    res.s_audio_bg,
+    res.s_audio_1,
+    res.s_audio_2,
     res.s_purpose,
     res.s_home_bg,
     res.s_tip_close,
