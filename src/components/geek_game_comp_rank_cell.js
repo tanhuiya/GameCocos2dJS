@@ -39,13 +39,12 @@ var g_app_game_rank_cell = cc.TableViewCell.extend({
     },
 
     setData: function (index, data) {
-        geek_lib.f_label_change_txt(this.index_label_, index + 1 + "")
-        geek_lib.f_label_change_txt(this.title_label_, data.title)
-        geek_lib.f_label_change_txt(this.school_label_, data.school)
-        geek_lib.f_label_change_txt(this.score_label_, data.score)
+        geek_lib.f_label_change_txt(this.index_label_, data.order + "")
+        geek_lib.f_label_change_txt(this.title_label_, data.user_id)
+        geek_lib.f_label_change_txt(this.school_label_, data.channel_name)
+        geek_lib.f_label_change_txt(this.score_label_, data.question_sum_score)
         this.backline_.setVisible(index > 0)
     }
-
 })
 
 /**

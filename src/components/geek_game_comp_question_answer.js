@@ -77,7 +77,7 @@ var g_question_answer_node = cc.LayerColor.extend({
         this.height_ = height
         // mock
 
-        var type = AnswerOptionType.Text
+        var type = AnswerOptionType.TextImage
         this.optionType_ = type
         this.cellHeight_ = type == AnswerOptionType.Text ? TextBgHeight : TextImageBgHeight
 
@@ -253,6 +253,10 @@ var g_question_answer_cell = cc.TableViewCell.extend({
         if (type == AnswerOptionType.Text) {
             var size = this.backLayer_.getBoundingBox()
             this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+        } else if (type == AnswerOptionType.TextImage) {
+            var size = this.backLayer_.getBoundingBox()
+            geek_lib.f_imageview_box_create(this.backLayer_, res.s_audio_bg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
+            this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 80, 100, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
         }
 
         this.submit_btn_ = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)

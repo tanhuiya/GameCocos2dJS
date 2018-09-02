@@ -7,7 +7,7 @@
  * @type {any}
  */
 var g_app_game_list_view = cc.LayerColor.extend({
-
+    tableView_: null,
     /**
      * 构造函数
      * @param size      tableview 大小
@@ -40,7 +40,7 @@ var g_app_game_list_view = cc.LayerColor.extend({
             this.addChild(bg, 1, 1)
         }
         var tableView = new cc.TableView(this, cc.size(this.width_, this.height_))
-        tableView.setBounceable(false)
+        // tableView.setBounceable(false)
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
         tableView.setPosition(0, 0)
         tableView.setDelegate(this)
@@ -48,6 +48,7 @@ var g_app_game_list_view = cc.LayerColor.extend({
         tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN)
         this.addChild(tableView, 2, 2)
         tableView.reloadData()
+        this.tableView_ = tableView
     },
 
     /**
@@ -91,6 +92,15 @@ var g_app_game_list_view = cc.LayerColor.extend({
      */
     numberOfCellsInTableView: function (table) {
         return this.dataArr_.length;
+    },
+
+    /**
+     * 更新列表数据
+     * @param dataArr
+     */
+    setData: function (dataArr) {
+        this.dataArr_ = dataArr
+        this.tableView_.reloadData()
     }
 
 })

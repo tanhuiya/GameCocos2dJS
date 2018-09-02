@@ -18,9 +18,10 @@
         "src/components/geek_game_comp_question_header.js",
         "src/components/geek_game_comp_question_content.js",
         "src/components/geek_game_comp_question_answer.js",
-        "src/components/geek_game_comp_question_result.js",
+        "src/components/geek_game_comp_question_resolve.js",
         "src/components/geek_game_comp_over.js",
         "src/components/geek_game_comp_action_sheet.js",
-        "src/components/geek_game_comp_rank_cell.js"
+        "src/components/geek_game_comp_rank_cell.js",
+        "src/lib/Func.js"
     ]
 }

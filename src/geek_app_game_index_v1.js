@@ -13,10 +13,22 @@ var QuestionStatePermission = {
 }
 
 /**
+ * 活动类型， 答题 or 测评
+ * @type {{Answer: number, Evalution: number}}
+ */
+var ActivityType = {
+    Answer: 1,
+    Evalution: 2
+}
+
+/**
  * 首页
  * @type {any}
  */
 var g_index_layer = cc.Layer.extend({
+
+    activityType_: ActivityType.Answer,
+
     /**
      * 页面初始化
      */
@@ -30,6 +42,7 @@ var g_index_layer = cc.Layer.extend({
         this.rule_btn_ = rule_btn
         // 排名
         var rank_btn = geek_lib.f_btn_create(this, res.s_rank, "", g_size.width - 32 - 82 , g_size.height, 1, 1, 3, cc.AncorPointTopLeft)
+        // rank_btn.setVisible(false)
         this.rank_btn_ = rank_btn
 
         var music_btn = geek_lib.f_btn_create(this, res.s_music, "", rank_btn.getBoundingBox().x - 14 - 50, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)

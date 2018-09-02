@@ -252,7 +252,7 @@ var geek_class_lib = cc.Layer.extend({
             if(txt != "")
             {
                 btn.setTitleText(txt);
-                btn.setTitleFontSize(24)
+                btn.setTitleFontSize(40)
                 btn.setContentSize(cc.size(150, 150));
             }
 
@@ -692,12 +692,51 @@ var geek_class_lib = cc.Layer.extend({
      * @param anchor
      * @returns {res}
      */
+    f_imageview_box_create:function(that, res, px, py, width, height, level, id, anchor)
+    {
+        var img = ccui.ImageView.create(res)
+        if(img) {
+            img.setPosition(px, py)
+
+            var scalex = width/img.getContentSize().width;
+            var scaley = height/img.getContentSize().height;
+
+            img.setScaleX(scalex);
+            img.setScaleY(scaley);
+        }
+
+        if (anchor){
+            geek_lib.f_set_anchor_point_type(img, anchor)
+        }
+
+        if (id) {
+            that.addChild(img, level, id)
+        } else {
+            that.addChild(img, level)
+        }
+
+        return img;
+    },
+
+    /**
+     * 创建 Imageview
+     * @param that
+     * @param res
+     * @param px
+     * @param py
+     * @param scale
+     * @param level
+     * @param id
+     * @param anchor
+     * @returns {res}
+     */
     f_imageview_create:function(that, res, px, py, scale, level, id, anchor)
     {
         var img = ccui.ImageView.create(res)
         if(img) {
             img.setPosition(px, py)
         }
+
         if (anchor){
             geek_lib.f_set_anchor_point_type(img, anchor)
         }
@@ -729,12 +768,13 @@ var geek_class_lib = cc.Layer.extend({
         stencil.drawCircle(cc.p(0,0), radius, 360, 100, false, cc.color(0,255,255,255))
         var clippingNode = new cc.ClippingNode();
         clippingNode.setStencil(stencil)
-        clippingNode.setInverted(false);
-        clippingNode.setAlphaThreshold(0);
+        clippingNode.setInverted(false)
+        clippingNode.setAlphaThreshold(0)
         clippingNode.setPosition(px, py)
 
         if (res){
-            geek_lib.f_sprite_create_box(clippingNode, res, 0, 0, radius * 2, radius * 2, 1,2, cc.AncorPointCenter)
+            geek_lib.f_imageview_box_create(clippingNode, res, 0, 0, radius * 2, radius * 2, 2, 2, cc.AncorPointCenter )
+            // geek_lib.f_sprite_create_box(clippingNode, res, 0, 0, radius * 2, radius * 2, 1,2, cc.AncorPointCenter)
         }
         if (id){
             that.addChild(clippingNode, level, id)

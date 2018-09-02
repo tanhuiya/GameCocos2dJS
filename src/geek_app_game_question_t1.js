@@ -29,8 +29,12 @@ var g_question_1_layer = cc.Layer.extend({
     init: function (startData) {
         this._super()
         this.questions_ = startData.questions
-        this.questionTime_ = startData.questiontime
-        this.questionTimeType_ = startData.questionTimeType
+        // this.questionTime_ = startData.questiontime
+        // this.questionTimeType_ = startData.questionTimeType
+
+        this.questionTime_ = 112
+        this.questionTimeType_ = QuestionTimeLimitType.Single
+
         this.isResolve_ = startData.isResolve
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.drawRect()
@@ -42,7 +46,7 @@ var g_question_1_layer = cc.Layer.extend({
      */
     drawRect: function () {
         // 设置头
-        var node = new g_question_header_node()
+        var node = new g_question_header_node(this.questions_.length)
         this.addChild(node,2,2)
         node.setUp()
         node.setPosition(cc.p(44, g_size.height - 20))
@@ -67,6 +71,7 @@ var g_question_1_layer = cc.Layer.extend({
             this.container_.removeFromParent(true)
             this.container_ = null
         }
+        this.headNode_.setQuestionIndex(this.currentIndex_ + 1)
         var questionData = this.questions_[idx]
         var container_top = 170
         var container_bottom = 0
@@ -106,6 +111,7 @@ var g_question_1_layer = cc.Layer.extend({
             this.headNode_.setTimeVisible(false)
         } else {
             this.headNode_.setTimeVisible(true)
+            this.headNode_.setTotal(this.questionTime_)
             geek_lib.f_timer_start(this, this.updateTimeBack, 1, true)
         }
     },
@@ -115,7 +121,7 @@ var g_question_1_layer = cc.Layer.extend({
      */
     updateTimeBack: function () {
         this.questionTime_ = this.questionTime_ - 1
-        if (this.questionTime_ > 0){
+        if (this.questionTime_ >= 0){
             this.headNode_.updateTime(this.questionTime_)
         } else {
             geek_lib.f_timer_stop(this, this.updateTimeBack)
@@ -131,25 +137,57 @@ var g_question_1_layer = cc.Layer.extend({
     },
 
     /**
-     * 切换下一题
+     * 提及成功
      */
-    nextQuestion: function () {
-        this.currentIndex_++
-        this.drawQuestion(this.currentIndex_)
+    submitParser: function (data) {
+        var next = data.nextData
+        if (next.iscorrect == 1) {
+            // 回答正确
+            if (this.isResolve_) {
+                this.showResolve(QustionResolveType.Success)
+            } else {
+                this.nextQuestion()
+            }
+        } else {
+            if (this.isResolve_) {
+                this.showResolve(QustionResolveType.Error)
+            } else {
+                this.nextQuestion()
+            }
+        }
+
     },
 
     /**
-     * 显示结果
+     * 显示解析页
      */
-    showResult: function (type) {
+    showResolve: function (type) {
         this.answer_node_.setVisible(false)
         var data = {
             type: type,
             data: "你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发"
         }
-        var result_node = geek_lib.f_layer_create_data(this, g_question_result_node, data, 3, 5)
-        result_node.setPosition(0 ,50 * 2)
+        var that = this
+        var result_node = new g_question_result_node(
+            data,
+            function () {
+                // stop
+                that.stopGame()
+            }, function () {
+                // next
+                that.nextQuestion()
+            })
+        result_node.setPosition(0 ,0)
+        this.addChild(result_node, 5)
         geek_lib.f_set_anchor_point_type(result_node, cc.AncorPointBottomLeft)
+    },
+
+    /**
+     * 切换下一题
+     */
+    nextQuestion: function () {
+        this.currentIndex_++
+        this.drawQuestion(this.currentIndex_)
     },
 
     /**
@@ -185,10 +223,8 @@ var g_question_1_layer = cc.Layer.extend({
             params,
             function (data) {
                 if (data.nextData) {
-                    var next = data.nextData
-                    if (next.iscorrect == 1) {
-                        that.nextQuestion()
-                    }
+                    that.submitParser(data)
+
                 } else {
                     that.errorHandler("缺少nextData数据")
                 }

@@ -5,9 +5,11 @@
 var g_question_header_node = cc.Node.extend({
     progress_: null,
     white_circle_: null,
-
-    init: function () {
+    totalSecond_: 0,
+    numberOfQuestion_: 0,
+    ctor: function (numberOfQuestion) {
         this._super()
+        this.numberOfQuestion_ = numberOfQuestion
     },
 
     /**
@@ -22,14 +24,16 @@ var g_question_header_node = cc.Node.extend({
         progress.setPosition(0, 0)
         progress.setType(cc.ProgressTimer.TYPE_RADIAL)
         progress.setAnchorPoint(cc.p(0,0))
-        progress.setPercentage(50)
+        progress.setReverseProgress(true)
+        progress.setPercentage(100)
         white_circle.addChild(progress, 4, 5)
+        this.progress_ = progress
 
-        this.time_lable = geek_lib.f_label_create(white_circle, "3",74, white_circle.getBoundingBox().width * 0.5 , white_circle.getBoundingBox().height * 0.5, 1, cc.color.WHITE, 1,1)
+        this.time_lable = geek_lib.f_label_create(white_circle, "",74, white_circle.getBoundingBox().width * 0.5 , white_circle.getBoundingBox().height * 0.5, 1, cc.color.WHITE, 1,1)
 
-        var title_label = geek_lib.f_label_create(this, "第一题（1/20）", 28, 126, -14, 1, cc.color.WHITE, 2,2 , cc.AncorPointTopLeft)
-
-        var score_label = geek_lib.f_label_create(this, "380分", 48, 126, -54, 1, cc.color.WHITE, 2,3, cc.AncorPointTopLeft)
+        var title_label = geek_lib.f_label_create(this, "第一题（1/" + this.numberOfQuestion_ +"）", 28, 126, -14, 1, cc.color.WHITE, 2,2 , cc.AncorPointTopLeft)
+        this.title_label_ = title_label
+        var score_label = geek_lib.f_label_create(this, "0 分", 48, 126, -54, 1, cc.color.WHITE, 2,3, cc.AncorPointTopLeft)
 
         var white_bg = geek_lib.f_sprite_create_box(this, res.s_white_bg, 60, 0 - head_bg.getBoundingBox().height * 0.5, 100, 100, 2, 4, cc.AncorPointCenter)
 
@@ -45,10 +49,34 @@ var g_question_header_node = cc.Node.extend({
     },
 
     /**
+     * 设置总时常
+     */
+    setTotal: function (total) {
+        this.totalSecond_ = total
+        this.updateTime(total)
+    },
+
+    /**
      * 更新倒计时
      * @param time
      */
     updateTime: function (time) {
+        if (time > 99) {
+            this.time_lable.setFontSize(60)
+        } else {
+            this.time_lable.setFontSize(74)
+        }
         this.time_lable.setString(time + "")
+        var rate = time * 1.0 / this.totalSecond_
+        this.progress_.setPercentage(rate * 100)
+    },
+
+    /**
+     * 设置第几题标题
+     */
+    setQuestionIndex: function (num) {
+        var chineseIndex = ArabiSimplified(num)
+        var title = "第" + chineseIndex + "题 (" + num + "/" + this.numberOfQuestion_ + ")"
+        this.title_label_.setString(title)
     }
 })
