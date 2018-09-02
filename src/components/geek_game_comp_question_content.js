@@ -20,6 +20,7 @@ var ContentType = {
 var g_question_content_node = cc.Node.extend({
     heigth_: 0,
     animating_: false,
+    content_type_: ContentType.Text,
     /**
      * 设置题目类型
      * @param type
@@ -29,6 +30,7 @@ var g_question_content_node = cc.Node.extend({
         this.heigth_ = 0
         var textHeight = 300
         var text = questionData.question_title
+        this.content_type_ = type
         if (type == ContentType.Text) {
             var text_label = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
             text_label.setDimensions(g_size.width - 100, 0)
@@ -56,41 +58,63 @@ var g_question_content_node = cc.Node.extend({
             this.addChild(player, 1, 1)
             player.setContentSize(395, 290)
             player.setPosition(g_size.width * 0.5, -145)
-            var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.9, -145, 60, 50, 999, 2, cc.AncorPointCenter)
+            var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.5, -145, 60, 50, 999, 2, cc.AncorPointCenter)
             this.addListner(icon)
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + player.getBoundingBox().height + margin
             this.videoPlayer_ = player
+            player.setVisible(false)
+            player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
+                console.log("play over")
+                player.setVisible(false)
+            })
         }
     },
 
+    /**
+     * 播放音乐
+     */
+    startMusic: function () {
+        var url = "http://s2-cdn.oneitfarm.com/njpivllfr63mk8pikayc4uro5gqu0td2/8e009aee4ff0981231325e8fc52e7cad.mp3"
+        cc.audioEngine.playMusic(url, true)
+    },
+
+    /**
+     * 添加播放按钮回调
+     * @param icon
+     */
     addListner: function (icon) {
         var that = this
         cc.eventManager.addListener({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
             onTouchBegan : function (touch,event){
-                var target = event.getCurrentTarget();
+                var target = event.getCurrentTarget()
                 // target --> item , target.parent --> activity
-                var locationInNode = target.parent.convertToNodeSpace(touch.getLocation());
-                var rect = target.getBoundingBox();
+                var locationInNode = target.parent.convertToNodeSpace(touch.getLocation())
+                var rect = target.getBoundingBox()
                 if (!cc.rectContainsPoint(rect, locationInNode)) {
-                    return false;
+                    return false
                 }
                 return true
             },
             onTouchEnded: function (touch,event) {
                 // // captch clicked
-                // that.videoPlayer_.play()
-                // return
-                if (!that.animating_) {
-                    that.addAnimateFrame(icon)
-                } else {
-                    that.stopAnimate(icon)
+                if (that.content_type_ == ContentType.Text_Audio) {
+                    if (!that.animating_) {
+                        that.addAnimateFrame(icon)
+                        that.startMusic()
+                    } else {
+                        that.stopAnimate(icon)
+                    }
+                    that.animating_ = !that.animating_
+                } else if (that.content_type_ == ContentType.Text_Video) {
+                    that.videoPlayer_.setVisible(true)
+                    that.videoPlayer_.play()
+                    return
                 }
-                that.animating_ = !that.animating_
             }
-        }, icon);
+        }, icon)
     },
 
     stopAnimate: function (sp) {
@@ -98,14 +122,14 @@ var g_question_content_node = cc.Node.extend({
     },
 
     addAnimateFrame: function (sp) {
-        var animation = new cc.Animation();
-        animation.addSpriteFrameWithFile(res.s_audio_1);
-        animation.addSpriteFrameWithFile(res.s_audio_2);
+        var animation = new cc.Animation()
+        animation.addSpriteFrameWithFile(res.s_audio_1)
+        animation.addSpriteFrameWithFile(res.s_audio_2)
         //设置帧动画属性
-        animation.setDelayPerUnit(2.0 / 4);       //每一帧停留的时间
-        animation.setRestoreOriginalFrame(true);   //播放完后回到第一帧
-        var animate = new cc.Animate(animation);
-        sp.runAction(new cc.RepeatForever(animate));
+        animation.setDelayPerUnit(2.0 / 4)        //每一帧停留的时间
+        animation.setRestoreOriginalFrame(true)   //播放完后回到第一帧
+        var animate = new cc.Animate(animation)
+        sp.runAction(new cc.RepeatForever(animate))
     },
 
     /**

@@ -53,11 +53,10 @@ var g_question_1_layer = cc.Layer.extend({
         this.headNode_ = node
 
         // 停止答题按钮
-        var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 20 - 72,1, 3, 3, cc.AncorPointCenter)
+        var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 18,1, 3, 3, cc.AncorPointTopMid)
         this.stop_btn_ = stop_btn
 
         // 提交答案按钮
-
 
         this.drawQuestion(this.currentIndex_)
     },
@@ -85,6 +84,7 @@ var g_question_1_layer = cc.Layer.extend({
         var content = new g_question_content_node()
         container.addChild(content, 2, 3)
         content.setPosition(cc.p(0, container_height))
+        // content.setUp(ContentType.Text_Video,questionData)
         content.setUp(questionData.question_material_type, questionData)
         var content_height = content.getHeight()
 
