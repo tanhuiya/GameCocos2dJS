@@ -27,8 +27,6 @@ var ActivityType = {
  */
 var g_index_layer = cc.Layer.extend({
 
-    activityType_: ActivityType.Answer,
-
     effectPath_: null,
 
     introData_: null,
@@ -97,22 +95,36 @@ var g_index_layer = cc.Layer.extend({
      * 显示游戏简介
      */
     showIntroduce: function () {
-        geek_lib.f_layer_create_data(this, g_game_introduce_layer, this.introData_, 10, 10)
+        if (this.introData_){
+            geek_lib.f_layer_create_data(this, g_game_introduce_layer, this.introData_, 10, 10)
+        }
     },
 
     /**
      * 显示排行榜
      */
     showRankList:function () {
+        if (g_game_info.isAnswer() && !g_game_info.isRecorded_) {
+            this.showRecordList()
+            return
+        }
         geek_lib.f_layer_create_data(this, g_app_game_rank, null, 10, 10)
+    },
+
+    /**
+     * 信息录入
+     */
+    showRecordList: function () {
+        geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
     },
 
     /**
      * 背景音乐设置
      */
     toggleEffects: function () {
-        geek_lib.f_toggle_back_music(this.effectPath_)
+        geek_lib.f_toggle_back_music()
     },
+
 
     /**
      * 解析首页数据
@@ -123,13 +135,14 @@ var g_index_layer = cc.Layer.extend({
         }
         if (data.musicUrl) {
             this.effectPath_ = data.musicUrl
+            geek_lib.f_set_effect_path(this.effectPath_)
             // geek_lib.f_play_back_music(data.musicUrl)
         }
         if (data.introButton) {
             this.introData_ = data.introButton
         }
-        this.activityType_ = data.activityType
-        this.rank_btn_.setVisible(this.activityType_ == ActivityType.Answer)
+        g_game_info.activityType_ = data.activityType
+        this.rank_btn_.setVisible(g_game_info.isAnswer())
     },
 
     /**
@@ -164,7 +177,7 @@ var g_index_layer = cc.Layer.extend({
 
 
         if (startData.countState == QuestionStatePermission.StateAllow) {
-            this.removeFromParent();
+            // this.removeFromParent();
             geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
         } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")

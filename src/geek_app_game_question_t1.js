@@ -132,8 +132,54 @@ var g_question_1_layer = cc.Layer.extend({
      * 结束游戏
      */
     stopGame: function () {
+        var that = this
+        geek_lib.f_network_post_json(
+            this,
+            uri.questionFinish,
+            {
+                userId: g_game_user.userID,
+                activityId: g_game_user.activity
+            },
+            function (response) {
+                that.stopGameParser(response)
+            })
+    },
+
+    /**
+     * 结束游戏解析
+     * @param data
+     */
+    stopGameParser: function (data) {
+        var finishData = data.finishData
+        // 答题结束
+        if (g_game_info.isAnswer()) {
+            // 结束页
+            this.gotoFinishLayer(finishData)
+        } else {
+            // 是否录入信息
+            if (!g_game_info.isRecorded_) {
+                this.goRecordList()
+            } else {
+                this.gotoFinishLayer(finishData)
+            }
+        }
+    },
+
+    /**
+     * 去解析页
+     */
+    goRecordList: function () {
+        this.removeFromParent(true)
+        geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+    },
+
+    /**
+     * 去结束页
+     * @param data
+     */
+    gotoFinishLayer: function (finishData) {
         this.removeFromParent()
-        geek_lib.f_layer_create_data(g_root, g_game_over_layer, null, 1, 3)
+        geek_lib.f_layer_create_data(g_root, g_game_over_layer, finishData, 1, 3)
     },
 
     /**
@@ -187,7 +233,11 @@ var g_question_1_layer = cc.Layer.extend({
      */
     nextQuestion: function () {
         this.currentIndex_++
-        this.drawQuestion(this.currentIndex_)
+        if (this.currentIndex_ == this.questions_.length) {
+            this.stopGame()
+        } else {
+            this.drawQuestion(this.currentIndex_)
+        }
     },
 
     /**

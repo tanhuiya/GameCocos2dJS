@@ -37,14 +37,12 @@ var g_question_content_node = cc.Node.extend({
             // 文字类型固定高度300
             this.height_ = textHeight
         } else if (type == ContentType.Text_Picture) {
-            var music_btn = geek_lib.f_btn_create(this, res.s_music, "", 32 * 2, 0, 1, 1, 4, cc.AncorPointTopLeft)
             var image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
         }
         else if (type == ContentType.Text_Audio) {
-            var music_btn = geek_lib.f_btn_create(this, res.s_music, "", 32 * 2, 0, 1, 1, 4, cc.AncorPointTopLeft)
             var image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
             this.addListner(icon)
@@ -53,7 +51,6 @@ var g_question_content_node = cc.Node.extend({
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
         }
         else if (type == ContentType.Text_Video) {
-            var music_btn = geek_lib.f_btn_create(this, res.s_music, "", 32 * 2, 0, 1, 1, 4, cc.AncorPointTopLeft)
             var player = new ccui.VideoPlayer(res.s_video)
             this.addChild(player, 1, 1)
             player.setContentSize(395, 290)
@@ -70,6 +67,8 @@ var g_question_content_node = cc.Node.extend({
                 player.setVisible(false)
             })
         }
+        this.music_btn_ = geek_lib.f_btn_create(this, res.s_music, "", 32 * 2, 0, 1, 1, 4, cc.AncorPointTopLeft)
+
     },
 
     /**
@@ -108,9 +107,11 @@ var g_question_content_node = cc.Node.extend({
                         that.stopAnimate(icon)
                     }
                     that.animating_ = !that.animating_
+                    geek_lib.f_pause_effect()
                 } else if (that.content_type_ == ContentType.Text_Video) {
                     that.videoPlayer_.setVisible(true)
                     that.videoPlayer_.play()
+                    geek_lib.f_pause_effect()
                     return
                 }
             }
@@ -130,6 +131,21 @@ var g_question_content_node = cc.Node.extend({
         animation.setRestoreOriginalFrame(true)   //播放完后回到第一帧
         var animate = new cc.Animate(animation)
         sp.runAction(new cc.RepeatForever(animate))
+    },
+
+    /**
+     * 按钮被点击的回调
+     * @param sender 事件相应者
+     * @param type  事件类型
+     */
+    ctl_button_event: function (sender, type) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
+            switch (sender) {
+                case this.music_btn_:
+                    geek_lib.f_toggle_back_music()
+                    break;
+            }
+        }
     },
 
     /**

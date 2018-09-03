@@ -77,7 +77,7 @@ var g_question_answer_node = cc.LayerColor.extend({
         this.height_ = height
         // mock
 
-        var type = AnswerOptionType.TextImage
+        var type = AnswerOptionType.Text
         this.optionType_ = type
         this.cellHeight_ = type == AnswerOptionType.Text ? TextBgHeight : TextImageBgHeight
 
@@ -247,7 +247,7 @@ var g_question_answer_cell = cc.TableViewCell.extend({
         var topMargin =  (this.height_ - bg_height) * 0.5
         var leftMargin = 50
         var content = geek_lib.f_sprite_create_box(back, content_image, leftMargin, topMargin, this.width_ - 2 * leftMargin, bg_height , 1, 1, cc.AncorPointBottomLeft)
-        var select_img = geek_lib.f_sprite_create_box(back, res.s_right, 50 + 40 , this.height_ - 60, 36, 36, 3,3, cc.AncorPointCenter)
+        var select_img = geek_lib.f_sprite_create_box(back, res.s_right, 50 + 40 , this.height_ - 68, 36, 36, 3,3, cc.AncorPointCenter)
         this.select_img_ = select_img
         this.selected(false)
         if (type == AnswerOptionType.Text) {

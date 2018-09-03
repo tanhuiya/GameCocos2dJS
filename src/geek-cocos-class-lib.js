@@ -476,7 +476,7 @@ var geek_class_lib = cc.Layer.extend({
                     error_do(json_data.msg)
                 } else {
                     if (that.errorHandler){
-                        that.errorHandler(msg)
+                        that.errorHandler(json_data.msg)
                     }
                 }
             }
@@ -836,9 +836,9 @@ var geek_class_lib = cc.Layer.extend({
     /**
      * 停止播放背景
      */
-    f_toggle_back_music: function (path) {
-        if (!this.audio_) {
-            this.f_play_back_music(path)
+    f_toggle_back_music: function () {
+        if (!this.audio_ && this.effect_path_) {
+            this.f_play_back_music(this.effect_path_)
         } else {
             if (this.effect_play_ ) {
                 cc.audioEngine.pauseEffect(this.audio_)
@@ -847,6 +847,25 @@ var geek_class_lib = cc.Layer.extend({
                 cc.audioEngine.resumeEffect(this.audio_)
                 this.effect_play_ = true
             }
+        }
+    },
+
+    /**
+     * 设置音效路径
+     */
+    f_set_effect_path: function (path) {
+        this.effect_path_ = path
+    },
+
+    f_pause_effect: function () {
+        if (this.audio_) {
+            cc.audioEngine.pauseEffect(this.audio_)
+        }
+    },
+
+    f_resume_effect: function () {
+        if (this.audio_) {
+            cc.audioEngine.resumeEffect(this.audio_)
         }
     },
 

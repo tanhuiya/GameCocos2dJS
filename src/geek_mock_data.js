@@ -62,5 +62,25 @@ var MockData = {
 
 var g_game_user = {
     userID: MockData.UserID,
-    activity: MockData.Activity
+    activity: MockData.Activity,
+}
+
+var g_game_info = {
+    /**
+     * 活动类型
+     */
+    activityType_: 1,
+
+    /**
+     * 是否录入过信息
+     */
+    isRecorded_: false,
+    /**
+     * 是否是问答
+     * @returns {boolean}
+     */
+    isAnswer: function () {
+        return this.activityType_ != ActivityType.Answer
+    },
+
 }

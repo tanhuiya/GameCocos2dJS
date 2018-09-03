@@ -9,10 +9,14 @@ var TimeToWaite = 6
  * 信息录入界面
  * @type {any}
  */
-var g_game_activity_record_layer = cc.Layer.extend({
+var g_game_activity_record_layer = cc.LayerColor.extend({
 
     fetchCode_: false,
     seconds_: 0,
+
+    ctor: function () {
+        this._super(cc.color(255,255,255))
+    },
 
     init: function () {
         this._super()
@@ -235,7 +239,7 @@ var g_game_activity_record_layer = cc.Layer.extend({
                     this.name_edit_.setText("")
                     break;
                 case this.close_btn_:
-                    // this.removeFromParent()
+                    this.removeFromParent()
                     break;
             }
         }
