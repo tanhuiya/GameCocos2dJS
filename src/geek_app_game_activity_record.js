@@ -91,6 +91,8 @@ var g_game_activity_record_layer = cc.Layer.extend({
         var save_btn = geek_lib.f_btn_create(that, res.s_save_record, "保存", size.width * 0.5, size.height - 470 * 2, 1, 1,3, cc.AncorPointTopMid)
         save_btn.setTitleFontSize(38)
 
+        this.apiGetClassData()
+        this.apiGetGradeData()
     },
 
     /**
@@ -137,6 +139,33 @@ var g_game_activity_record_layer = cc.Layer.extend({
             this.school_edit_.setVisible(false)
         }
     },
+
+    /**
+     * 获取班级列表
+     */
+    apiGetClassData: function () {
+        var param = {
+            activityGradeId: 1
+        }
+        var that = this
+        geek_lib.f_network_post_json(this, uri.classList, param, function (response) {
+
+        })
+    },
+
+    /**
+     * 获取年级列表
+     */
+    apiGetGradeData: function () {
+        var param = {
+            channelId: 1
+        }
+        var that = this
+        geek_lib.f_network_post_json(this, uri.gradeList, param, function (response) {
+
+        })
+    },
+
 
     /**
      * api获取验证码

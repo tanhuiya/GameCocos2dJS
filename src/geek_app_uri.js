@@ -45,4 +45,14 @@ var uri = {
      * 游戏排行
      */
     rank:           domain + "/front/activity/rank",
+
+    /**
+     * 班级列表
+     */
+    classList:      domain + "/front/user/getActivityClassList",
+
+    /**
+     * 年级列表
+     */
+    gradeList:      domain + "/front/user/getActivityGradeList",
 }
