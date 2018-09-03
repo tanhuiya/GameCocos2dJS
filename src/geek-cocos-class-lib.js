@@ -252,7 +252,7 @@ var geek_class_lib = cc.Layer.extend({
             if(txt != "")
             {
                 btn.setTitleText(txt);
-                btn.setTitleFontSize(40)
+                btn.setTitleFontSize(28)
                 btn.setContentSize(cc.size(150, 150));
             }
 
@@ -793,7 +793,62 @@ var geek_class_lib = cc.Layer.extend({
     f_show_custom_tip: function (that, res, text) {
         var tip = new g_game_comp_tip_layer(res, text)
         that.addChild(tip, 999)
-    }
+    },
+
+    /**
+     * 更新图片
+     * @param sp
+     * @param res
+     */
+    f_update_texture: function (sp, res) {
+        var rect = sp.getBoundingBox()
+        var org_scaleX = sp.getScaleX()
+        var org_scaleY = sp.getScaleY()
+        console.log(org_scaleX, org_scaleY)
+        // console.log(rect)
+        var texture = cc.textureCache.addImage(res)
+
+        var scaleX = texture.width / rect.width
+        var scaleY = texture.height / rect.height
+        sp.setScale(scaleX, scaleY)
+        console.log(sp.getBoundingBox())
+        sp.setTexture(texture)
+        sp.setScale(org_scaleX, org_scaleY)
+        console.log(sp.getBoundingBox())
+        // sp.setTextureRect(cc.rect(0, 0, rect.width, rect.height))
+        // cc.spriteFrameCache.addSpriteFrame("aaaa",res)
+
+        // var spf = cc.spriteFrameCache.getSpriteFrame("aaaa")
+        // var spf = cc.SpriteFrame.create(res, cc.rect(0, 0, rect.width, rect.height))
+        // sp.setSpriteFrame(spf)
+        // console.log(sp.getBoundingBox())
+    },
+
+    /**
+     * 播放背景音乐
+     * @param path
+     */
+    f_play_back_music: function (path) {
+        this.audio_ = cc.audioEngine.playEffect(path, true)
+        this.effect_play_ = true
+    },
+
+    /**
+     * 停止播放背景
+     */
+    f_toggle_back_music: function (path) {
+        if (!this.audio_) {
+            this.f_play_back_music(path)
+        } else {
+            if (this.effect_play_ ) {
+                cc.audioEngine.pauseEffect(this.audio_)
+                this.effect_play_ = false
+            } else {
+                cc.audioEngine.resumeEffect(this.audio_)
+                this.effect_play_ = true
+            }
+        }
+    },
 
 });
 

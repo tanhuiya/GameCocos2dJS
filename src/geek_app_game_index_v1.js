@@ -29,6 +29,10 @@ var g_index_layer = cc.Layer.extend({
 
     activityType_: ActivityType.Answer,
 
+    effectPath_: null,
+
+    introData_: null,
+
     /**
      * 页面初始化
      */
@@ -46,8 +50,10 @@ var g_index_layer = cc.Layer.extend({
         this.rank_btn_ = rank_btn
 
         var music_btn = geek_lib.f_btn_create(this, res.s_music, "", rank_btn.getBoundingBox().x - 14 - 50, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
+        this.music_btn_ = music_btn
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
-        geek_lib.f_sprite_create_box(this, res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6)
+        var homebg = geek_lib.f_sprite_create_box(this, res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6)
+        // geek_lib.f_update_texture(homebg, res.s_head)
 
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
@@ -91,7 +97,7 @@ var g_index_layer = cc.Layer.extend({
      * 显示游戏简介
      */
     showIntroduce: function () {
-        geek_lib.f_layer_create_data(this, g_game_introduce_layer, null, 10, 10)
+        geek_lib.f_layer_create_data(this, g_game_introduce_layer, this.introData_, 10, 10)
     },
 
     /**
@@ -99,6 +105,31 @@ var g_index_layer = cc.Layer.extend({
      */
     showRankList:function () {
         geek_lib.f_layer_create_data(this, g_app_game_rank, null, 10, 10)
+    },
+
+    /**
+     * 背景音乐设置
+     */
+    toggleEffects: function () {
+        geek_lib.f_toggle_back_music(this.effectPath_)
+    },
+
+    /**
+     * 解析首页数据
+     */
+    parserHomeData: function (data) {
+        if (data.numOfUser) {
+            this.addRichLabel(data.numOfUser)
+        }
+        if (data.musicUrl) {
+            this.effectPath_ = data.musicUrl
+            // geek_lib.f_play_back_music(data.musicUrl)
+        }
+        if (data.introButton) {
+            this.introData_ = data.introButton
+        }
+        this.activityType_ = data.activityType
+        this.rank_btn_.setVisible(this.activityType_ == ActivityType.Answer)
     },
 
     /**
@@ -118,6 +149,9 @@ var g_index_layer = cc.Layer.extend({
                 case this.rank_btn_:
                     this.showRankList()
                     break;
+                case this.music_btn_:
+                    this.toggleEffects()
+                    break;
             }
         }
     },
@@ -127,6 +161,8 @@ var g_index_layer = cc.Layer.extend({
      * @param startData
      */
     gotoQuestion: function (startData) {
+
+
         if (startData.countState == QuestionStatePermission.StateAllow) {
             this.removeFromParent();
             geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
@@ -172,9 +208,7 @@ var g_index_layer = cc.Layer.extend({
             uri.home,
             param,
             function (data) {
-                if (data.numOfUser) {
-                    that.addRichLabel(data.numOfUser)
-                }
+                that.parserHomeData(data)
             })
     },
 
