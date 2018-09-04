@@ -5,12 +5,14 @@
 
 var DisableColor = cc.hexToColor("#4A4A4A")
 var TimeToWaite = 6
+
 /**
  * 信息录入界面
  * @type {any}
  */
 var g_game_activity_record_layer = cc.LayerColor.extend({
-
+    classArr_: [],
+    gradeArr_: [],
     fetchCode_: false,
     seconds_: 0,
 
@@ -105,15 +107,25 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
     showSheet:function (type) {
         var back = cc.LayerColor.create(cc.color(112,112,112,150))
         this.addChild(back, 9)
-        var sheet = new g_app_game_action_sheet(MockData.ClassData, type)
+        var sheet = null
+        if (type == SheetType.SheetClass) {
+            sheet = new g_app_game_action_sheet(this.classArr_, type)
+        } else {
+            sheet = new g_app_game_action_sheet(this.gradeArr_, type)
+        }
         sheet.setPosition(0, 0)
         geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)
         this.addChild(sheet, 9999, 10)
         var that = this
         sheet.setCallback(function (isSelect, data) {
-            back.removeFromParent()
-            sheet.removeFromParent()
+            back.removeFromParent(true)
+            sheet.removeFromParent(true)
             that.recoverCocosBug()
+            if (isSelect && data) {
+                if (type == SheetType.SheetGrade) {
+                    that.apiGetClassData(data.id)
+                }
+            }
         })
         var move1 = cc.moveTo(0.3, cc.p(0, 0));
         sheet.runAction(cc.sequence(move1));
@@ -147,13 +159,25 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
     /**
      * 获取班级列表
      */
-    apiGetClassData: function () {
+    apiGetClassData: function (id) {
+        if (id == null) return
         var param = {
-            activityGradeId: 1
+            activityGradeId: id
         }
         var that = this
         geek_lib.f_network_post_json(this, uri.classList, param, function (response) {
-
+            if (response.activityClassList) {
+                var activityClassList = response.activityClassList
+                var arr = []
+                for (var i = 0; i < activityClassList.length; i++) {
+                    var option = activityClassList[i]
+                    arr.push({
+                        name: option.className,
+                        id: option.activityClassId
+                    })
+                }
+                that.classArr_ = arr
+            }
         })
     },
 
@@ -162,11 +186,22 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
      */
     apiGetGradeData: function () {
         var param = {
-            channelId: 1
+            channelId: g_game_user.channelID,
         }
         var that = this
         geek_lib.f_network_post_json(this, uri.gradeList, param, function (response) {
-
+            if (response.activityGradeList) {
+                var activityGradeList = response.activityGradeList
+                var arr = []
+                for (var i = 0; i < activityGradeList.length; i++) {
+                    var option = activityGradeList[i]
+                    arr.push({
+                        name: option.gradeName,
+                        id: option.activityGradeId
+                    })
+                }
+                that.gradeArr_ = arr
+            }
         })
     },
 

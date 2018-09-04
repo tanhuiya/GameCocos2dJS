@@ -7,6 +7,7 @@
 var MockData = {
     UserID: "123456",
     Activity: "68b1443f8bf949b5af4552a024d0cb7f",
+    channelID: 1111111111,
     ClassData: ["一班","一班","一班","一班","一班","一班","一班","一班"],
     GradeData: ["一年级","一年级","一年级","一年级"],
     RankData:  [{
@@ -63,6 +64,7 @@ var MockData = {
 var g_game_user = {
     userID: MockData.UserID,
     activity: MockData.Activity,
+    channelID: MockData.channelID,
 }
 
 var g_game_info = {

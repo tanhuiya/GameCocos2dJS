@@ -21,6 +21,8 @@ var SheetType = {
  * @type {any}
  */
 var g_app_game_action_sheet = cc.LayerColor.extend({
+    items_: [],
+    lastIndex_: -1,
     /**
      * 构造函数
      */
@@ -69,22 +71,31 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
         var heightOffset = SheetScrollHeight > InnerHeight ? SheetScrollHeight - InnerHeight : 0
         for (var i = 0; i < this.dataArr_.length; i++ ){
             var item = new g_game_comp_scrollview_item(i, this.dataArr_[i], SheetItemHeight)
+            item.delegate_ = this
             scrollView.addChild(item, 3, i + 1)
             item.setPosition(0, InnerHeight - (i+1)* SheetItemHeight  + heightOffset)
+            this.items_.push(item)
         }
         scrollView.scrollToTop(0.1)
     },
 
-    // swallowEvent:function () {
-    //     cc.eventManager.addListener({
-    //         event : cc.EventListener.TOUCH_ONE_BY_ONE,
-    //         swallowTouches : true,
-    //         onTouchBegan : function (touch,event){
-    //             console.log(11111)
-    //             return true
-    //         },
-    //     }, this);
-    // },
+
+    /**
+     * index 被选中
+     * @param index
+     */
+    onSelect: function (index) {
+        for (var i = 0; i < this.items_.length; i++) {
+            var item = this.items_[i]
+            if (i == this.lastIndex_) {
+                item.setSelect(false)
+            }
+            if (i == index) {
+                item.setSelect(true)
+            }
+        }
+        this.lastIndex_ = index
+    },
 
     /**
      * 关闭
@@ -99,8 +110,8 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
      * 确认选择
      */
     confirm: function () {
-        if (this.callBack_) {
-            this.callBack_(true, null)
+        if (this.callBack_ && this.lastIndex_ > -1) {
+            this.callBack_(true, this.dataArr_[this.lastIndex_])
         }
     },
 
@@ -126,6 +137,8 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
 var g_game_comp_scrollview_item = cc.LayerColor.extend({
     height_: 0,
     data_: null,
+    index_: 0,
+    delegate_: null,
     /**
      * 构造函数
      */
@@ -141,10 +154,10 @@ var g_game_comp_scrollview_item = cc.LayerColor.extend({
     setSelect: function (selectd) {
         if (selectd) {
             this.icon_.setVisible(true)
-            this.label_.setFontColor(cc.color.BLACK)
+            this.label_.setColor(cc.color.BLACK)
         } else {
             this.icon_.setVisible(false)
-            this.label_.setFontColor(cc.color(112,112,112))
+            this.label_.setColor(cc.color(112,112,112))
         }
     },
 
@@ -152,7 +165,7 @@ var g_game_comp_scrollview_item = cc.LayerColor.extend({
      * 绘制item
      */
     draw:function () {
-        this.label_ = geek_lib.f_label_create(this, this.data_, 36, g_size.width * 0.5, this.height_ * 0.5, 1, cc.color.BLACK, 1, 1, cc.AncorPointCenter)
+        this.label_ = geek_lib.f_label_create(this, this.data_.name, 36, g_size.width * 0.5, this.height_ * 0.5, 1, cc.color(112,112,112), 1, 1, cc.AncorPointCenter)
         var image_x = this.label_.getBoundingBox().x + this.label_.getBoundingBox().width + 40
         this.icon_ = geek_lib.f_sprite_create_box(this, res.s_login_delete, image_x, this.height_ * 0.5, 30, 30, 1, 2, cc.AncorPointMidLeft)
         this.icon_.setVisible(false)
@@ -185,6 +198,9 @@ var g_game_comp_scrollview_item = cc.LayerColor.extend({
             },
             onTouchEnded: function (touch,event) {
                 console.log(that.index_)
+                if (that.delegate_) {
+                    that.delegate_.onSelect(that.index_)
+                }
             }
         }), this);
     }
