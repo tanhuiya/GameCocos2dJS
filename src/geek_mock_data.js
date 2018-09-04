@@ -6,7 +6,8 @@
 
 var MockData = {
     UserID: "123456",
-    Activity: "68b1443f8bf949b5af4552a024d0cb7f",
+    Activity: "d315324316d04805a649477fc44a8832",
+    // Activity: "68b1443f8bf949b5af4552a024d0cb7f",
     channelID: 1111111111,
     ClassData: ["一班","一班","一班","一班","一班","一班","一班","一班"],
     GradeData: ["一年级","一年级","一年级","一年级"],
@@ -76,13 +77,13 @@ var g_game_info = {
     /**
      * 是否录入过信息
      */
-    isRecorded_: false,
+    isRecorded_: true,
     /**
      * 是否是问答
      * @returns {boolean}
      */
     isAnswer: function () {
-        return this.activityType_ != ActivityType.Answer
+        return this.activityType_ == ActivityType.Answer
     },
 
 }

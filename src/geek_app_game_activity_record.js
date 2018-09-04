@@ -3,7 +3,7 @@
  */
 
 
-var DisableColor = cc.hexToColor("#4A4A4A")
+var DisableColor = cc.hexToColor("#8A8A8A")
 var TimeToWaite = 6
 
 /**
@@ -15,6 +15,8 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
     gradeArr_: [],
     fetchCode_: false,
     seconds_: 0,
+    lastGradeID_: -1,
+    lastClassID_: -1,
 
     ctor: function () {
         this._super(cc.color(255,255,255))
@@ -31,6 +33,16 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
     drawRect: function () {
         var that = this
         var size = g_size
+
+        {
+            var bg = ccui.ImageView.create(res.s_activity_bg)
+            bg.setScale9Enabled(true)
+            bg.setCapInsets(cc.rect(60, 60 ,1, 1))
+            bg.setContentSize(g_size)
+            bg.setPosition(this.width_ * 0.5, this.height_ * 0.5)
+            this.addChild(bg, 1, 1)
+        }
+
         var marign_x = (size.width - 656) * 0.5
         this.close_btn_ = geek_lib.f_btn_create(that, res.s_login_delete, "", size.width - 60, size.height - 60, 1, 2, 1, cc.AncorPointCenter)
         geek_lib.f_label_create(that, "活动平台信息录入", 56, size.width * 0.5, size.height - 60, 1, cc.hexToColor("#117AF5"), 1, 1, cc.AncorPointTopMid)
@@ -82,6 +94,7 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
             that.showSheet(SheetType.SheetGrade)
         })
         this.addChild(grade_edit, 1, 9)
+        this.grade_edit_ = grade_edit
 
         /**
          * 班级
@@ -90,12 +103,14 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
             that.showSheet(SheetType.SheetClass)
         })
         this.addChild(class_edit, 1, 10)
+        this.class_edit_ = class_edit
 
         /**
          * 保存按钮
          */
         var save_btn = geek_lib.f_btn_create(that, res.s_save_record, "保存", size.width * 0.5, size.height - 470 * 2, 1, 1,3, cc.AncorPointTopMid)
         save_btn.setTitleFontSize(38)
+        this.submit_btn_ = save_btn
 
         this.apiGetClassData()
         this.apiGetGradeData()
@@ -105,32 +120,43 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
      * 显示选择框
      */
     showSheet:function (type) {
-        var back = cc.LayerColor.create(cc.color(112,112,112,150))
-        this.addChild(back, 9)
+
         var sheet = null
         if (type == SheetType.SheetClass) {
-            sheet = new g_app_game_action_sheet(this.classArr_, type)
+            sheet = new g_app_game_action_sheet(this.classArr_, type, this.lastClassID_)
         } else {
-            sheet = new g_app_game_action_sheet(this.gradeArr_, type)
+            sheet = new g_app_game_action_sheet(this.gradeArr_, type, this.lastGradeID_)
         }
         sheet.setPosition(0, 0)
         geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)
         this.addChild(sheet, 9999, 10)
         var that = this
-        sheet.setCallback(function (isSelect, data) {
-            back.removeFromParent(true)
+        sheet.setCallback(function (index) {
             sheet.removeFromParent(true)
             that.recoverCocosBug()
-            if (isSelect && data) {
-                if (type == SheetType.SheetGrade) {
-                    that.apiGetClassData(data.id)
-                }
+            if (index < 0) return
+
+            if (type == SheetType.SheetGrade) {
+                var data = that.gradeArr_[index]
+                if (that.lastGradeID_ == data.id) return
+                that.apiGetClassData(data.id)
+                that.grade_edit_.setText(data.name)
+                that.lastGradeID_ = data.id
+                // 重置classid
+                that.class_edit_.setText(null)
+                that.lastClassID_ = -1
+            } else {
+                var data = that.classArr_[index]
+                if (that.lastClassID_ == data.id) return
+                that.lastClassID_ = data.id
+                that.class_edit_.setText(data.name)
             }
+
         })
         var move1 = cc.moveTo(0.3, cc.p(0, 0));
         sheet.runAction(cc.sequence(move1));
 
-        this.fixCocosEditBoxBug(sheet.getBoundingBox().height)
+        this.fixCocosEditBoxBug(sheet.getRealHeight())
     },
 
     /**
@@ -145,12 +171,10 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
      * @param belowHeight
      */
     fixCocosEditBoxBug:function (belowHeight) {
-        console.log(belowHeight)
         if (this.captcha_edit_.getBoundingBox().y + this.captcha_edit_.getBoundingBox().height * 0.5 < belowHeight) {
             this.captcha_edit_.setVisible(false)
         }
 
-        console.log(this.school_edit_.getBoundingBox().y + this.school_edit_.getBoundingBox().height * 0.5 )
         if (this.school_edit_.getBoundingBox().y + this.school_edit_.getBoundingBox().height * 0.5 < belowHeight) {
             this.school_edit_.setVisible(false)
         }
@@ -205,6 +229,37 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
         })
     },
 
+    /**
+     * 提交用户信息
+     */
+    apiSubmitInfo: function () {
+        if (this.name_edit_.getString().length < 0){
+            console.log("name empty")
+        }
+        if (this.captcha_edit_.getString().length < 4) {
+            console.log("invalid captcha")
+        }
+        if (this.phone_edit_.getString().length < 11){
+            console.log("invalid phone")
+        }
+        if (this.lastGradeID_){
+            console.log("invalid grade")
+        }
+        if (this.lastClassID_){
+            console.log("invalid class")
+        }
+
+        var param = {
+            mobile: this.name_edit_.getString(),
+            code: this.captcha_edit_.getString(),
+            gradeName: g_game_user.channelID,
+            userName: this.name_edit_.getString(),
+        }
+        console.log(param)
+        // geek_lib.f_network_post_json(this, uri.userInfoAdd, param, function () {
+        //
+        // })
+    },
 
     /**
      * api获取验证码
@@ -275,6 +330,9 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
                     break;
                 case this.close_btn_:
                     this.removeFromParent()
+                    break;
+                case this.submit_btn_:
+                    this.apiSubmitInfo()
                     break;
             }
         }
@@ -347,10 +405,12 @@ var g_game_comp_select_item = cc.LayerColor.extend({
         this.setPosition(pos_x, pos_y)
     },
     draw: function (placeholder) {
+        this.placeholder_ = placeholder
         var size = this.getBoundingBox()
         geek_lib.f_imageview_create(this, res.s_edit_box, 0, 0, 1, 1, 2,cc.AncorPointBottomLeft)
         var label = geek_lib.f_label_create(this, placeholder, 28, 5, size.height * 0.5, 1, DisableColor, 1, 1, cc.AncorPointMidLeft)
         label.height = 57 * 2
+        this.label_ = label
         // var name_edit = geek_lib.f_edit_create(this, 0, 0, size.width, size.height, 28, 28,res.s_edit_box,placeholder,20)
         // geek_lib.f_set_anchor_point_type(name_edit, cc.AncorPointBottomLeft)
         geek_lib.f_imageview_create(this, res.s_arrow, size.width - 20, size.height * 0.5, 1, 2, 3, cc.AncorPointCenter)
@@ -375,5 +435,15 @@ var g_game_comp_select_item = cc.LayerColor.extend({
             }
         }), this);
     },
+
+    setText: function (text) {
+        if (!text) {
+            text = this.placeholder_
+            this.label_.setColor(DisableColor)
+        } else {
+            this.label_.setColor(cc.color.BLACK)
+        }
+        geek_lib.f_label_change_txt(this.label_, text)
+    }
 
 })

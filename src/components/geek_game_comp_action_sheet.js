@@ -23,19 +23,41 @@ var SheetType = {
 var g_app_game_action_sheet = cc.LayerColor.extend({
     items_: [],
     lastIndex_: -1,
+    lastID_: null,
+    total_: 0,
     /**
      * 构造函数
      */
-    ctor: function (dataArr, type) {
+    ctor: function (dataArr, type, lastID) {
+        this._super(cc.color(112,112,112,150), g_size.width, g_size.height)
         var total = SheetTailHeigth + SheetHeadHeigth + SheetScrollHeight
-        this._super(cc.color.WHITE, g_size.width, total)
+        this.total_ = total
+        var white_bg = cc.LayerColor.create(cc.color.WHITE, g_size.width, total)
+        this.addChild(white_bg)
+        white_bg.setPosition(0, 0)
+        this.white_bg_ = white_bg
         this.width_ = g_size.width
         this.dataArr_ = dataArr
         this.type_ = type
+        this.lastID_ = lastID
         this.draw()
         this.drawScrollviewItem()
-        // this.swallowEvent()
+        this.swallowEvent()
     },
+
+    /**
+     * 吞噬事件
+     */
+    swallowEvent:function () {
+        cc.eventManager.addListener({
+            event : cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches : true,
+            onTouchBegan : function (touch,event){
+                return true
+            },
+        }, this);
+    },
+
 
     /**
      * 设置回调
@@ -58,7 +80,7 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
         sure_btn.setTitleFontSize(36)
         sure_btn.setTitleText("确定");
         this.sure_ = sure_btn
-        geek_lib.f_label_create(this, text, 36, 18 * 2, SheetTailHeigth + SheetScrollHeight + 65, 1, cc.color.BLACK, 1, 3, cc.AncorPointBottomLeft)
+        geek_lib.f_label_create(this.white_bg_, text, 36, 18 * 2, SheetTailHeigth + SheetScrollHeight + 65, 1, cc.color.BLACK, 1, 3, cc.AncorPointBottomLeft)
         this.close_ = geek_lib.f_btn_create(this, res.s_login_delete, "", this.width_ - 60, SheetTailHeigth + SheetScrollHeight + 65 + 10, 1, 2, 4, cc.AncorPointBottomLeft)
     },
 
@@ -66,35 +88,71 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
      * 绘制scrollview
      */
     drawScrollviewItem:function () {
-        var InnerHeight = this.dataArr_.length * SheetItemHeight
-        var scrollView = geek_lib.f_create_scroll_view(this, 0, SheetTailHeigth, this.width_, SheetScrollHeight, this.width_, InnerHeight, 1)
-        var heightOffset = SheetScrollHeight > InnerHeight ? SheetScrollHeight - InnerHeight : 0
-        for (var i = 0; i < this.dataArr_.length; i++ ){
-            var item = new g_game_comp_scrollview_item(i, this.dataArr_[i], SheetItemHeight)
-            item.delegate_ = this
-            scrollView.addChild(item, 3, i + 1)
-            item.setPosition(0, InnerHeight - (i+1)* SheetItemHeight  + heightOffset)
-            this.items_.push(item)
-        }
-        scrollView.scrollToTop(0.1)
+        var tableView = new cc.TableView(this, cc.size(this.width_, SheetScrollHeight))
+        tableView.setBounceable(false)
+        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
+        tableView.setPosition(0, SheetTailHeigth)
+        tableView.setDelegate(this)
+        // cell 顺序从上到下排列
+        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN)
+        this.white_bg_.addChild(tableView, 2, 2)
+        tableView.reloadData()
+        this.tableView_ = tableView
+
     },
 
+    /**
+     * 设置点击cell后的回调函数
+     * @param table
+     * @param cell
+     */
+    tableCellTouched: function (table, cell) {
+        var index = cell.getIdx()
+        this.lastIndex_ = index
+        this.lastID_ = this.dataArr_[index].id
+        if (this.lastCell_) {
+            this.lastCell_.setSelect(false)
+        }
+        cell.setSelect(true)
+        this.lastCell_ = cell
+    },
 
     /**
-     * index 被选中
-     * @param index
+     * 设置cell大小
+     * @param table
+     * @param idx
+     * @returns {{width, height}}
      */
-    onSelect: function (index) {
-        for (var i = 0; i < this.items_.length; i++) {
-            var item = this.items_[i]
-            if (i == this.lastIndex_) {
-                item.setSelect(false)
-            }
-            if (i == index) {
-                item.setSelect(true)
-            }
+    tableCellSizeForIndex: function (table, idx) {
+        return cc.size(this.width_, SheetItemHeight);
+    },
+
+    /**
+     * 添加Cell
+     * @param table
+     * @param idx
+     * @returns {*}
+     */
+    tableCellAtIndex: function (table, idx) {
+        var cell = table.dequeueCell();
+        if (!cell) {
+            cell = new g_game_comp_scrollview_item(SheetItemHeight);
         }
-        this.lastIndex_ = index
+        var item = this.dataArr_[idx]
+        if (item.id == this.lastID_) {
+            this.lastCell_ = cell
+        }
+        cell.setData(item.id == this.lastID_, idx, item)
+        return cell;
+    },
+
+    /**
+     * 设置cell个数
+     * @param table
+     * @returns {*}
+     */
+    numberOfCellsInTableView: function (table) {
+        return this.dataArr_.length;
     },
 
     /**
@@ -102,7 +160,7 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
      */
     close: function () {
         if (this.callBack_) {
-            this.callBack_(false, null)
+            this.callBack_(-1)
         }
     },
 
@@ -111,7 +169,7 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
      */
     confirm: function () {
         if (this.callBack_ && this.lastIndex_ > -1) {
-            this.callBack_(true, this.dataArr_[this.lastIndex_])
+            this.callBack_(this.lastIndex_)
         }
     },
 
@@ -131,24 +189,24 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
             }
         }
     },
+
+    getRealHeight: function () {
+        return this.total_
+    }
 })
 
 
-var g_game_comp_scrollview_item = cc.LayerColor.extend({
+var g_game_comp_scrollview_item = cc.TableViewCell.extend({
     height_: 0,
     data_: null,
-    index_: 0,
-    delegate_: null,
     /**
      * 构造函数
      */
-    ctor: function (index, data, height) {
+    ctor: function (height) {
         this._super(cc.color(255,55,55,0), g_size.width, height)
-        this.data_ = data
         this.height_ = height
-        this.index_ = index
         this.draw()
-        this.event()
+        // this.event()
     },
 
     setSelect: function (selectd) {
@@ -165,43 +223,27 @@ var g_game_comp_scrollview_item = cc.LayerColor.extend({
      * 绘制item
      */
     draw:function () {
-        this.label_ = geek_lib.f_label_create(this, this.data_.name, 36, g_size.width * 0.5, this.height_ * 0.5, 1, cc.color(112,112,112), 1, 1, cc.AncorPointCenter)
-        var image_x = this.label_.getBoundingBox().x + this.label_.getBoundingBox().width + 40
-        this.icon_ = geek_lib.f_sprite_create_box(this, res.s_login_delete, image_x, this.height_ * 0.5, 30, 30, 1, 2, cc.AncorPointMidLeft)
+        this.label_ = geek_lib.f_label_create(this, "", 36, g_size.width * 0.5, this.height_ * 0.5, 1, cc.color(112,112,112), 1, 1, cc.AncorPointCenter)
+        var image_x = this.label_.getBoundingBox().x + this.label_.getBoundingBox().width + 80
+        this.icon_ = geek_lib.f_sprite_create_box(this, res.s_right, image_x, this.height_ * 0.5, 30, 30, 1, 2, cc.AncorPointMidLeft)
         this.icon_.setVisible(false)
 
         var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), g_size.width, 0.6)
         geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointBottomLeft)
         this.addChild(blackline,2)
         blackline.setPosition(0, 0)
-        if (this.index_ == 0 ){
-            var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), g_size.width, 0.6)
-            geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointBottomLeft)
-            this.addChild(blackline,3)
-            blackline.setPosition(0, this.height_ - 1)
-        }
+
+        var topline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), g_size.width, 0.6)
+        geek_lib.f_set_anchor_point_type(topline, cc.AncorPointBottomLeft)
+        this.addChild(topline,3)
+        topline.setPosition(0, this.height_ - 1)
+        this.topline = topline
     },
 
-    event: function () {
-        var that = this
-        cc.eventManager.addListener(cc.EventListener.create({
-            event : cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan : function (touch,event){
-                var target = event.getCurrentTarget();
-                // target --> item , target.parent --> activity
-                var locationInNode = target.parent.convertToNodeSpace(touch.getLocation());
-                var rect = target.getBoundingBox();
-                if (!cc.rectContainsPoint(rect, locationInNode)) {
-                    return false;
-                }
-                return true
-            },
-            onTouchEnded: function (touch,event) {
-                console.log(that.index_)
-                if (that.delegate_) {
-                    that.delegate_.onSelect(that.index_)
-                }
-            }
-        }), this);
-    }
+    setData: function (isSelected, index, data) {
+        geek_lib.f_label_change_txt(this.label_, data.name )
+        this.topline.setVisible(index == 0)
+        this.setSelect(isSelected)
+    },
+
 })

@@ -129,43 +129,6 @@ var g_question_1_layer = cc.Layer.extend({
     },
 
     /**
-     * 结束游戏
-     */
-    stopGame: function () {
-        var that = this
-        geek_lib.f_network_post_json(
-            this,
-            uri.questionFinish,
-            {
-                userId: g_game_user.userID,
-                activityId: g_game_user.activity
-            },
-            function (response) {
-                that.stopGameParser(response)
-            })
-    },
-
-    /**
-     * 结束游戏解析
-     * @param data
-     */
-    stopGameParser: function (data) {
-        var finishData = data.finishData
-        // 答题结束
-        if (g_game_info.isAnswer()) {
-            // 结束页
-            this.gotoFinishLayer(finishData)
-        } else {
-            // 是否录入信息
-            if (!g_game_info.isRecorded_) {
-                this.goRecordList()
-            } else {
-                this.gotoFinishLayer(finishData)
-            }
-        }
-    },
-
-    /**
      * 去解析页
      */
     goRecordList: function () {
@@ -190,35 +153,35 @@ var g_question_1_layer = cc.Layer.extend({
         if (next.iscorrect == 1) {
             // 回答正确
             if (this.isResolve_) {
-                this.showResolve(QustionResolveType.Success)
+                this.showResolve(QustionResolveType.Success, next)
             } else {
                 this.nextQuestion()
             }
         } else {
             if (this.isResolve_) {
-                this.showResolve(QustionResolveType.Error)
+                this.showResolve(QustionResolveType.Error, next)
             } else {
                 this.nextQuestion()
             }
         }
-
     },
 
     /**
      * 显示解析页
      */
-    showResolve: function (type) {
+    showResolve: function (type, next) {
         this.answer_node_.setVisible(false)
         var data = {
             type: type,
-            data: "你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发你好好你啊浮嚣烦啊发"
+            data: next.resolveContent,
+            background: next.resolveBack,
         }
         var that = this
         var result_node = new g_question_result_node(
             data,
             function () {
                 // stop
-                that.stopGame()
+                that.stopAnswer()
             }, function () {
                 // next
                 that.nextQuestion()
@@ -234,9 +197,26 @@ var g_question_1_layer = cc.Layer.extend({
     nextQuestion: function () {
         this.currentIndex_++
         if (this.currentIndex_ == this.questions_.length) {
-            this.stopGame()
+            this.stopAnswer()
         } else {
             this.drawQuestion(this.currentIndex_)
+        }
+    },
+
+    /**
+     * 停止答题
+     */
+    stopAnswer: function () {
+        if (g_game_info.isAnswer()) {
+            // 问答直接显示结束页
+            this.gotoFinishLayer()
+        } else {
+            // 测评判断是否录入信息
+            if (!g_game_info.isRecorded_) {
+                this.goRecordList()
+            } else {
+                this.gotoFinishLayer()
+            }
         }
     },
 
@@ -249,7 +229,7 @@ var g_question_1_layer = cc.Layer.extend({
         if (type == ccui.Widget.TOUCH_ENDED) {
             switch (sender) {
                 case this.stop_btn_:
-                    this.stopGame()
+                    this.stopAnswer()
                     break;
             }
         }
@@ -259,11 +239,16 @@ var g_question_1_layer = cc.Layer.extend({
      * 提交答案
      */
     apiSubmitAnswer: function () {
+        var answers = this.answer_node_.getAnswers()
+        var ids = []
+        answers.forEach(function (value) {
+            ids.push(value.id)
+        })
         var that = this
         var question = this.questions_[this.currentIndex_]
         var params = {
             userId: g_game_user.userID,
-            option: JSON.stringify(this.answer_node_.getAnswers()),
+            option: JSON.stringify(ids),
             questionId: question.activity_question_id,
             seconds: this.questionTime_
         }

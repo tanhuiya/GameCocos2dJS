@@ -182,14 +182,19 @@ var g_question_answer_node = cc.LayerColor.extend({
      * @returns {Array}
      */
     getAnswers: function () {
-        var selectionIDS = []
+        var selectionS = []
         for (var i = 0; i < this.answers_.length; i++) {
             if (this.selections_.indexOf(i) > -1) {
                 var option = this.answers_[i]
-                selectionIDS.push(option.questionOptionId)
+                selectionS.push({
+                    id: option.questionOptionId,
+                    correct: option.isCorrect,
+                    score: option.optionScore
+                })
+                // selectionS.push(option.questionOptionId)
             }
         }
-        return selectionIDS
+        return selectionS
     },
 
     /**
@@ -253,10 +258,12 @@ var g_question_answer_cell = cc.TableViewCell.extend({
         if (type == AnswerOptionType.Text) {
             var size = this.backLayer_.getBoundingBox()
             this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+            this.text_label_.setDimensions(this.width_ - 230,0)
         } else if (type == AnswerOptionType.TextImage) {
             var size = this.backLayer_.getBoundingBox()
             geek_lib.f_imageview_box_create(this.backLayer_, res.s_audio_bg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
             this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 80, 100, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+            this.text_label_.setDimensions(this.width_ - 230,0)
         }
 
         this.submit_btn_ = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)

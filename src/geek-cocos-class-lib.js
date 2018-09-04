@@ -368,7 +368,7 @@ var geek_class_lib = cc.Layer.extend({
         ss_edit.setFontColor(cc.color(0,0,0));
         ss_edit.setPlaceHolder(input_txt);
         ss_edit.setPlaceholderFont("Arial", holderfontsize);
-        ss_edit.setPlaceholderFontColor(cc.hexToColor("#4A4A4A"))
+        ss_edit.setPlaceholderFontColor(cc.hexToColor("#8A8A8A"))
         ss_edit.setDelegate(that);
         ss_edit.setMaxLength(max_lenght);
         that.addChild(ss_edit, level);
@@ -763,7 +763,7 @@ var geek_class_lib = cc.Layer.extend({
      * @param id
      * @returns {*}
      */
-    f_circle_sprite_create: function (that, res, px, py, radius, level, id) {
+    f_circle_sprite_create: function (that, res, px, py, radius, level, id, img) {
         var stencil = new cc.DrawNode()
         stencil.drawCircle(cc.p(0,0), radius, 360, 100, false, cc.color(0,255,255,255))
         var clippingNode = new cc.ClippingNode();
@@ -775,6 +775,9 @@ var geek_class_lib = cc.Layer.extend({
         if (res){
             geek_lib.f_imageview_box_create(clippingNode, res, 0, 0, radius * 2, radius * 2, 2, 2, cc.AncorPointCenter )
             // geek_lib.f_sprite_create_box(clippingNode, res, 0, 0, radius * 2, radius * 2, 1,2, cc.AncorPointCenter)
+        }
+        if (img){
+            geek_lib.f_imageview_box_create(clippingNode, img, 0, 0, radius * 2, radius * 2, 3, 3, cc.AncorPointCenter )
         }
         if (id){
             that.addChild(clippingNode, level, id)
