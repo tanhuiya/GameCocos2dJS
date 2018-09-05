@@ -4,7 +4,7 @@
 
 
 var DisableColor = cc.hexToColor("#8A8A8A")
-var TimeToWaite = 6
+var TimeToWaite = 60
 
 /**
  * 信息录入界面
@@ -24,6 +24,7 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
 
     init: function () {
         this._super()
+        geek_lib.f_swallow_event(this)
         this.drawRect()
     },
 
@@ -56,7 +57,6 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
             name_cancel.setSwallowTouches(true)
             this.name_cancel_ = name_cancel
             this.name_edit_ = name_edit
-
         }
 
         {// 手机号
@@ -83,8 +83,9 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
         /**
          * 学校
          */
-        var school_edit = geek_lib.f_edit_create(that, size.width * 0.5, size.height - 330 * 2, 656, 57 *2, 28, 28,res.s_edit_box,"学校",30, 2)
-        geek_lib.f_set_anchor_point_type(school_edit, cc.AncorPointBottomMid)
+        var school_edit = new g_game_comp_select_item(marign_x, size.height - 330 * 2, 656, 57 *2, "学校", null)
+        school_edit.setText(g_game_user.channelName)
+        this.addChild(school_edit, 1, 8)
         this.school_edit_ = school_edit
 
         /**
@@ -138,17 +139,17 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
 
             if (type == SheetType.SheetGrade) {
                 var data = that.gradeArr_[index]
-                if (that.lastGradeID_ == data.id) return
+                if (that.lastGradeID_ == index) return
                 that.apiGetClassData(data.id)
                 that.grade_edit_.setText(data.name)
-                that.lastGradeID_ = data.id
+                that.lastGradeID_ = index
                 // 重置classid
                 that.class_edit_.setText(null)
                 that.lastClassID_ = -1
             } else {
                 var data = that.classArr_[index]
-                if (that.lastClassID_ == data.id) return
-                that.lastClassID_ = data.id
+                if (that.lastClassID_ == index) return
+                that.lastClassID_ = index
                 that.class_edit_.setText(data.name)
             }
 
@@ -242,23 +243,30 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
         if (this.phone_edit_.getString().length < 11){
             console.log("invalid phone")
         }
-        if (this.lastGradeID_){
+        var classname = this.classArr_[this.lastClassID_].name
+        var gradename = this.gradeArr_[this.lastGradeID_].name
+        if (classname.length < 1){
             console.log("invalid grade")
         }
-        if (this.lastClassID_){
+        if (gradename.length < 1){
             console.log("invalid class")
         }
-
         var param = {
-            mobile: this.name_edit_.getString(),
+            mobile: this.phone_edit_.getString(),
             code: this.captcha_edit_.getString(),
-            gradeName: g_game_user.channelID,
+            gradeName: gradename,
+            className: classname,
             userName: this.name_edit_.getString(),
+            channelId: g_game_user.channelID,
+            userId: g_game_user.userID
         }
         console.log(param)
-        // geek_lib.f_network_post_json(this, uri.userInfoAdd, param, function () {
-        //
-        // })
+        geek_lib.f_network_post_json(this, uri.userInfoAdd, param, function (response) {
+            console.log(response)
+            g_game_info.setRecord(true)
+        }, function (msg) {
+            console.log(msg)
+        })
     },
 
     /**

@@ -37,7 +37,11 @@ var g_index_layer = cc.Layer.extend({
     init: function () {
         this._super()
         g_index = this
-        var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
+
+        var bg = geek_lib.f_imageview_box_create(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
+
+        // var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
+        this.bg_ = bg
         var bg_y = bg.getBoundingBox().height
         // 活动介绍
         var rule_btn = geek_lib.f_btn_create(this, res.s_rule, "活动介绍", 30, bg_y - 32, 1, 1, 2, cc.AncorPointTopLeft)
@@ -50,13 +54,16 @@ var g_index_layer = cc.Layer.extend({
         var music_btn = geek_lib.f_btn_create(this, res.s_music, "", rank_btn.getBoundingBox().x - 14 - 50, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
         this.music_btn_ = music_btn
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
-        var homebg = geek_lib.f_sprite_create_box(this, res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6)
-        // geek_lib.f_update_texture(homebg, res.s_head)
+
+        var homebg = geek_lib.f_imageview_box_create(this, res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6, cc.AncorPointCenter)
+        this.homebg_ = homebg
 
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
 
         this.addRichLabel(0)
+
+        this.apiIsActivityUser()
         this.apiGameState()
         this.apiHomeData()
     },
@@ -143,6 +150,8 @@ var g_index_layer = cc.Layer.extend({
         }
         g_game_info.activityType_ = data.activityType
         this.rank_btn_.setVisible(g_game_info.isAnswer())
+
+        // geek_lib.f_update_img_texture(this.homebg_, res.t_home_bg)
     },
 
     /**
@@ -174,10 +183,7 @@ var g_index_layer = cc.Layer.extend({
      * @param startData
      */
     gotoQuestion: function (startData) {
-
-
         if (startData.countState == QuestionStatePermission.StateAllow) {
-            // this.removeFromParent();
             geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
         } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")
@@ -188,6 +194,24 @@ var g_index_layer = cc.Layer.extend({
 
 
     // ---- network
+
+    /**
+     * 判断是否录入用户
+     */
+    apiIsActivityUser: function () {
+        var param = {
+            userId: g_game_user.userID
+        }
+        geek_lib.f_network_post_json(
+            this,
+            uri.isActivityUser,
+            param,
+            function (data) {
+                if (data.activityUser) {
+                    g_game_info.setRecord(true)
+                }
+            })
+    },
 
     /**
      * 判断活动开始状态
@@ -229,6 +253,8 @@ var g_index_layer = cc.Layer.extend({
      * 获取游戏信息
      */
     apiStartGame: function () {
+        // geek_lib.f_layer_create_data(g_root, g_question_1_layer, MockData.startData, 0, 0)
+        // return
         var that = this
         geek_lib.f_network_post_json(
             this,
@@ -244,7 +270,6 @@ var g_index_layer = cc.Layer.extend({
                 } else {
                     that.errorHandler("startData 数据为空")
                 }
-
             }
         )
     },

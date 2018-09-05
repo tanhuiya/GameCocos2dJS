@@ -55,6 +55,10 @@ var g_question_answer_node = cc.LayerColor.extend({
      * 提交按钮高度
      */
     left_height_: 0,
+
+    lastIndex_: -1,
+
+    lastCell_: null,
     /**
      * 提交按钮回调
      * @private
@@ -71,7 +75,7 @@ var g_question_answer_node = cc.LayerColor.extend({
     ctor: function (answers, width, height, selectType) {
         this._super(cc.color(255,255,255,0), width, height)
         this.selectType_ = selectType
-        this.answersMap_ = []
+        this.selections_ = []
         this.answers_ = answers
         this.width_ = width
         this.height_ = height
@@ -128,11 +132,10 @@ var g_question_answer_node = cc.LayerColor.extend({
                 this.lastCell_.selected(false)
             }
         }
+
         cell.selected(true)
         this.lastCell_ = cell
-        console.log("cell touched at index: " + cell.getIdx());
-        console.log("ids " + this.selections_);
-
+        this.lastIndex_ = index
     },
 
     /**
@@ -164,7 +167,8 @@ var g_question_answer_node = cc.LayerColor.extend({
         cell.setDelegate(this)
         cell.setData(idx, this.answers_[idx], idx == this.answers_.length)
         cell.selected(this.selections_.indexOf(idx) > -1)
-        return cell;
+
+        return cell
     },
 
     /**
@@ -191,7 +195,6 @@ var g_question_answer_node = cc.LayerColor.extend({
                     correct: option.isCorrect,
                     score: option.optionScore
                 })
-                // selectionS.push(option.questionOptionId)
             }
         }
         return selectionS
@@ -286,8 +289,8 @@ var g_question_answer_cell = cc.TableViewCell.extend({
      * 设置答案选中
      */
     selected: function (select) {
-        this.selected_ = select
-        this.select_img_.setVisible(this.selected_)
+
+        this.select_img_.setVisible(select)
     },
 
     /**

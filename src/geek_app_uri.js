@@ -18,6 +18,10 @@ var uri = {
      */
     userInfoAdd:    domain + "/front/user/userInfoAdd",
     /**
+     * 用户是否录入过
+     */
+    isActivityUser: domain + "/front/user/isActivityUser",
+    /**
      * 发送短信
      */
     sendSms:        domain + "/front/user/sendSms",

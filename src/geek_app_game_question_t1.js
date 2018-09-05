@@ -8,6 +8,7 @@ var QuestionTimeLimitType = {
     Single: 3 ,
 }
 
+
 /**
  * 答题页面
  * @type {any}
@@ -25,15 +26,17 @@ var g_question_1_layer = cc.Layer.extend({
     headNode_: null,
     // 是否查看解析页
     isResolve_: 0,
+    // 当前分数
+    score_: 0,
 
     init: function (startData) {
         this._super()
-        this.questions_ = startData.questions
-        // this.questionTime_ = startData.questiontime
-        // this.questionTimeType_ = startData.questionTimeType
 
-        this.questionTime_ = 112
-        this.questionTimeType_ = QuestionTimeLimitType.Single
+        if (!startData)return
+        geek_lib.f_swallow_event(this)
+        this.questions_ = startData.questions
+        this.questionTime_ = startData.questiontime
+        this.questionTimeType_ = startData.questionTimeType
 
         this.isResolve_ = startData.isResolve
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
@@ -49,7 +52,7 @@ var g_question_1_layer = cc.Layer.extend({
         var node = new g_question_header_node(this.questions_.length)
         this.addChild(node,2,2)
         node.setUp()
-        node.setPosition(cc.p(44, g_size.height - 20))
+        node.setPosition(cc.p(25, g_size.height - 20))
         this.headNode_ = node
 
         // 停止答题按钮
@@ -84,13 +87,14 @@ var g_question_1_layer = cc.Layer.extend({
         var content = new g_question_content_node()
         container.addChild(content, 2, 3)
         content.setPosition(cc.p(0, container_height))
+
+
         // content.setUp(ContentType.Text_Video,questionData)
         content.setUp(questionData.question_material_type, questionData)
         var content_height = content.getHeight()
 
         // 绘制答案
         var scroll_height = container_height - content_height - 30
-        // var data = ["adfaafad","adfaafad","adfaafad","adfaafad","adfaafad","adfaafad","adfaafad","adfaafad"]
         var answer_node = new g_question_answer_node(questionData.options,g_size.width, scroll_height, questionData.question_type)
         container.addChild(answer_node, 2, 4)
         this.answer_node_ = answer_node
@@ -124,7 +128,15 @@ var g_question_1_layer = cc.Layer.extend({
         if (this.questionTime_ >= 0){
             this.headNode_.updateTime(this.questionTime_)
         } else {
+            // timeout
             geek_lib.f_timer_stop(this, this.updateTimeBack)
+            if (this.questionTimeType_== QuestionTimeLimitType.Single) {
+                // 单题限制时间
+                this.apiSubmitAnswer(true)
+            } else {
+                // 限制总时间
+                this.gotoFinishLayer(true)
+            }
         }
     },
 
@@ -140,9 +152,9 @@ var g_question_1_layer = cc.Layer.extend({
      * 去结束页
      * @param data
      */
-    gotoFinishLayer: function (finishData) {
+    gotoFinishLayer: function () {
         this.removeFromParent()
-        geek_lib.f_layer_create_data(g_root, g_game_over_layer, finishData, 1, 3)
+        geek_lib.f_layer_create_data(g_root, g_game_over_layer, null, 1, 3)
     },
 
     /**
@@ -150,6 +162,10 @@ var g_question_1_layer = cc.Layer.extend({
      */
     submitParser: function (data) {
         var next = data.nextData
+        if (next) {
+            this.score_ = next.scoreResult
+            this.headNode_.updateScore(this.score_)
+        }
         if (next.iscorrect == 1) {
             // 回答正确
             if (this.isResolve_) {
@@ -238,17 +254,19 @@ var g_question_1_layer = cc.Layer.extend({
     /**
      * 提交答案
      */
-    apiSubmitAnswer: function () {
+    apiSubmitAnswer: function (timeout) {
         var answers = this.answer_node_.getAnswers()
         var ids = []
-        answers.forEach(function (value) {
-            ids.push(value.id)
-        })
+        if (!timeout) {
+            answers.forEach(function (value) {
+                ids.push(value.id)
+            })
+        }
         var that = this
         var question = this.questions_[this.currentIndex_]
         var params = {
             userId: g_game_user.userID,
-            option: JSON.stringify(ids),
+            options: JSON.stringify(ids),
             questionId: question.activity_question_id,
             seconds: this.questionTime_
         }

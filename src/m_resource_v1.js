@@ -1,7 +1,12 @@
 
 var path = "res/";
-
+var test_path = "res/test/";
 var res = {
+    t_question_bg: test_path + "audio_bg.png",
+    t_home_bg: test_path + "home_bg.png",
+    t_bg: test_path + "background.png",
+    t_option_img: test_path + "question_option.png",
+
     s_video: path + "longge.mp4",
     s_background : path + "background.png",
     s_rank:     path + "rank.png",
@@ -45,6 +50,11 @@ var res = {
 
 
 var m_resources = [
+    res.t_bg,
+    res.t_home_bg,
+    res.t_option_img,
+    res.t_question_bg,
+
     res.s_video,
     res.s_audio_bg,
     res.s_audio_1,

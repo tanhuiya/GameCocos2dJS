@@ -697,7 +697,7 @@ var geek_class_lib = cc.Layer.extend({
         var img = ccui.ImageView.create(res)
         if(img) {
             img.setPosition(px, py)
-
+            console.log(img.getContentSize())
             var scalex = width/img.getContentSize().width;
             var scaley = height/img.getContentSize().height;
 
@@ -799,32 +799,53 @@ var geek_class_lib = cc.Layer.extend({
     },
 
     /**
-     * 更新图片
+     * ImageView更新图片
      * @param sp
      * @param res
      */
-    f_update_texture: function (sp, res) {
+    f_update_img_texture: function (sp, res) {
         var rect = sp.getBoundingBox()
         var org_scaleX = sp.getScaleX()
         var org_scaleY = sp.getScaleY()
         console.log(org_scaleX, org_scaleY)
-        // console.log(rect)
-        var texture = cc.textureCache.addImage(res)
-
-        var scaleX = texture.width / rect.width
-        var scaleY = texture.height / rect.height
-        sp.setScale(scaleX, scaleY)
-        console.log(sp.getBoundingBox())
-        sp.setTexture(texture)
-        sp.setScale(org_scaleX, org_scaleY)
-        console.log(sp.getBoundingBox())
-        // sp.setTextureRect(cc.rect(0, 0, rect.width, rect.height))
-        // cc.spriteFrameCache.addSpriteFrame("aaaa",res)
-
-        // var spf = cc.spriteFrameCache.getSpriteFrame("aaaa")
-        // var spf = cc.SpriteFrame.create(res, cc.rect(0, 0, rect.width, rect.height))
-        // sp.setSpriteFrame(spf)
+        console.log(rect)
+        // var texture = cc.textureCache.addImage(res)
+        // var scaleX = texture.width / rect.width
+        // var scaleY = texture.height / rect.height
+        // sp.setScale(scaleX, scaleY)
         // console.log(sp.getBoundingBox())
+        sp.setTextureRect(cc.rect(0, 0, rect.width, rect.height))
+        sp.loadTexture(res)
+        // console.log(sp.getBoundingBox())
+        // console.log(sp.getContentSize())
+        sp.setScaleX(rect.width / sp.getBoundingBox().width)
+        sp.setScaleY(rect.height / sp.getBoundingBox().height)
+
+    },
+
+    /**
+     * Sprite更新图片
+     * @param sp
+     * @param res
+     */
+    f_update_sprite_texture: function (sp, res) {
+        var rect = sp.getBoundingBox()
+        var org_scaleX = sp.getScaleX()
+        var org_scaleY = sp.getScaleY()
+        console.log(org_scaleX, org_scaleY)
+        console.log(rect)
+        var texture = cc.textureCache.addImage(res)
+        // var scaleX = texture.width / rect.width
+        // var scaleY = texture.height / rect.height
+        // sp.setScale(scaleX, scaleY)
+        // console.log(sp.getBoundingBox())
+        sp.setTextureRect(cc.rect(0, 0, rect.width, rect.height))
+        sp.setTexture(texture)
+        console.log(sp.getBoundingBox())
+        console.log(sp.getContentSize())
+        sp.setScaleX(rect.width / sp.getBoundingBox().width)
+        sp.setScaleY(rect.height / sp.getBoundingBox().height)
+
     },
 
     /**
@@ -858,6 +879,9 @@ var geek_class_lib = cc.Layer.extend({
      */
     f_set_effect_path: function (path) {
         this.effect_path_ = path
+        if (path) {
+            // cc.audioEngine.
+        }
     },
 
     f_pause_effect: function () {
@@ -871,6 +895,16 @@ var geek_class_lib = cc.Layer.extend({
             cc.audioEngine.resumeEffect(this.audio_)
         }
     },
+
+    f_swallow_event: function (that) {
+        cc.eventManager.addListener({
+            event : cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches : true,
+            onTouchBegan : function (touch,event){
+                return true
+            },
+        }, that);
+    }
 
 });
 
@@ -942,6 +976,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
     };
     cc.game.run(canvas);
 }
+
 
 
 

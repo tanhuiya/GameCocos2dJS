@@ -23,12 +23,11 @@ var SheetType = {
 var g_app_game_action_sheet = cc.LayerColor.extend({
     items_: [],
     lastIndex_: -1,
-    lastID_: null,
     total_: 0,
     /**
      * 构造函数
      */
-    ctor: function (dataArr, type, lastID) {
+    ctor: function (dataArr, type, lastIndex) {
         this._super(cc.color(112,112,112,150), g_size.width, g_size.height)
         var total = SheetTailHeigth + SheetHeadHeigth + SheetScrollHeight
         this.total_ = total
@@ -39,7 +38,7 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
         this.width_ = g_size.width
         this.dataArr_ = dataArr
         this.type_ = type
-        this.lastID_ = lastID
+        this.lastIndex_ = lastIndex
         this.draw()
         this.drawScrollviewItem()
         this.swallowEvent()
@@ -109,7 +108,6 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
     tableCellTouched: function (table, cell) {
         var index = cell.getIdx()
         this.lastIndex_ = index
-        this.lastID_ = this.dataArr_[index].id
         if (this.lastCell_) {
             this.lastCell_.setSelect(false)
         }
@@ -139,10 +137,10 @@ var g_app_game_action_sheet = cc.LayerColor.extend({
             cell = new g_game_comp_scrollview_item(SheetItemHeight);
         }
         var item = this.dataArr_[idx]
-        if (item.id == this.lastID_) {
+        if (idx == this.lastIndex_) {
             this.lastCell_ = cell
         }
-        cell.setData(item.id == this.lastID_, idx, item)
+        cell.setData(idx == this.lastIndex_, idx, item)
         return cell;
     },
 

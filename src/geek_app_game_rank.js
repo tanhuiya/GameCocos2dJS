@@ -17,6 +17,7 @@ var g_app_game_rank = cc.Layer.extend({
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
         this.drawRect()
         this.apiRankList(1)
+        geek_lib.f_swallow_event(this)
     },
 
     /**

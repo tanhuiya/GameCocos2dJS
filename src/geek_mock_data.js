@@ -9,6 +9,7 @@ var MockData = {
     Activity: "d315324316d04805a649477fc44a8832",
     // Activity: "68b1443f8bf949b5af4552a024d0cb7f",
     channelID: 1111111111,
+    channelName: '小学',
     ClassData: ["一班","一班","一班","一班","一班","一班","一班","一班"],
     GradeData: ["一年级","一年级","一年级","一年级"],
     RankData:  [{
@@ -59,13 +60,16 @@ var MockData = {
         title: "猜猜下面是那个",
         school: "合肥第六中学",
         score: "390",
-    }]
+    }],
+
+    
 }
 
 var g_game_user = {
     userID: MockData.UserID,
     activity: MockData.Activity,
     channelID: MockData.channelID,
+    channelName: MockData.channelName,
 }
 
 var g_game_info = {
@@ -77,7 +81,7 @@ var g_game_info = {
     /**
      * 是否录入过信息
      */
-    isRecorded_: true,
+    isRecorded_: false,
     /**
      * 是否是问答
      * @returns {boolean}
@@ -85,5 +89,12 @@ var g_game_info = {
     isAnswer: function () {
         return this.activityType_ == ActivityType.Answer
     },
+
+    /**
+     * 设置录入
+     */
+    setRecord: function (flag) {
+        this.isRecorded_ = flag
+    }
 
 }

@@ -34,7 +34,6 @@ var g_question_result_node = cc.LayerColor.extend({
 
         var bg = geek_lib.f_imageview_box_create(node, res.s_activity_bg, 0, 0, width, 240 *2, 1, 1, cc.AncorPointBottomLeft)
         var rect = bg.getBoundingBox()
-        console.log(rect)
         if (data.type == QustionResolveType.Error) {
             geek_lib.f_sprite_create_box(node, res.s_error, 112 * 2 , 212 * 2, 40, 40, 2, 2,cc.AncorPointCenter)
             geek_lib.f_label_create(node, "回答错误", 50, rect.width * 0.5 + 20, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)

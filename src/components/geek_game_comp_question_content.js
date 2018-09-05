@@ -25,24 +25,33 @@ var g_question_content_node = cc.Node.extend({
      * 设置题目类型
      * @param type
      */
-    setUp:function (type, questionData) {
+    setUp:function (contentType, questionData) {
         var margin = 30
         this.heigth_ = 0
         var textHeight = 300
+
+        this.content_type_ = contentType
+        var question_type_ = questionData.question_type
         var text = questionData.question_title
-        this.content_type_ = type
-        if (type == ContentType.Text) {
+        if (question_type_ == AnswerSelectType.Single) {
+            text = "(单选题): " + text
+        } else if (question_type_ == AnswerSelectType.Multi){
+            text = "(多选题): " + text
+        } else if (question_type_ == AnswerSelectType.Judge){
+            text = "(判断题): " + text
+        }
+        if (contentType == ContentType.Text) {
             var text_label = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
             text_label.setDimensions(g_size.width - 100, 0)
             // 文字类型固定高度300
             this.height_ = textHeight
-        } else if (type == ContentType.Text_Picture) {
+        } else if (contentType == ContentType.Text_Picture) {
             var image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
         }
-        else if (type == ContentType.Text_Audio) {
+        else if (contentType == ContentType.Text_Audio) {
             var image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
             this.addListner(icon)
@@ -50,7 +59,7 @@ var g_question_content_node = cc.Node.extend({
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
         }
-        else if (type == ContentType.Text_Video) {
+        else if (contentType == ContentType.Text_Video) {
             var player = new ccui.VideoPlayer(res.s_video)
             this.addChild(player, 1, 1)
             player.setContentSize(395, 290)
@@ -67,7 +76,6 @@ var g_question_content_node = cc.Node.extend({
                 player.setVisible(false)
             })
         }
-        this.music_btn_ = geek_lib.f_btn_create(this, res.s_music, "", 32 * 2, 0, 1, 1, 4, cc.AncorPointTopLeft)
 
     },
 
@@ -103,6 +111,7 @@ var g_question_content_node = cc.Node.extend({
                     if (!that.animating_) {
                         that.addAnimateFrame(icon)
                         that.startMusic()
+                        geek_lib.f_timer_start(that, that.updateTimer, 0.1, true)
                     } else {
                         that.stopAnimate(icon)
                     }
@@ -116,6 +125,18 @@ var g_question_content_node = cc.Node.extend({
                 }
             }
         }, icon)
+        this.icon_play_ = icon
+    },
+
+    /**
+     * 判断是否播放结束
+     */
+    updateTimer:function () {
+        if  (!cc.audioEngine.isMusicPlaying()) {
+            console.log("stoped")
+            geek_lib.f_timer_stop(this, this.updateTimer)
+            this.stopAnimate(this.icon_play_)
+        }
     },
 
     stopAnimate: function (sp) {
@@ -141,9 +162,9 @@ var g_question_content_node = cc.Node.extend({
     ctl_button_event: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
             switch (sender) {
-                case this.music_btn_:
-                    geek_lib.f_toggle_back_music()
-                    break;
+                // case this.music_btn_:
+                //     geek_lib.f_toggle_back_music()
+                //     break;
             }
         }
     },
