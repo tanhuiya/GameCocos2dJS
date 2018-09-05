@@ -7,11 +7,12 @@
  * @type {any}
  */
 var g_game_over_layer = cc.Layer.extend({
-    init: function () {
+    init: function (data) {
         this._super()
         this.stopGame()
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
         geek_lib.f_swallow_event(this)
+        this.secondUsed_ = data.secondUsed
     },
 
 
@@ -28,7 +29,7 @@ var g_game_over_layer = cc.Layer.extend({
 
         var node = null
         if (g_game_info.isAnswer()) {
-            node = new g_game_comp_over_question(g_size.width, data.again, 100, 120)
+            node = new g_game_comp_over_question(g_size.width, data.again, 100, this.secondUsed_)
         } else {
             node = new g_game_comp_over_test(g_size.width, data.again, "测评结果标题", "测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析测评解析")
         }

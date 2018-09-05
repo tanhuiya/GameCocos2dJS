@@ -19,6 +19,8 @@ var g_game_comp_over_question = cc.Node.extend({
         var time_left_text = "您还有" + timeLeft + "次答题机会"
         geek_lib.f_label_create(this, time_left_text, 28, width * 0.5, 150 * 2, 1, cc.hexToColor("#95AAD1"), 1, 1, cc.AncorPointTopMid)
 
+        var minute = second / 60
+        var sec = second % 60
         var timeRichData = [
             {
                 color: cc.hexToColor("#1F2B75"),
@@ -26,7 +28,7 @@ var g_game_comp_over_question = cc.Node.extend({
                 size: 28,
             },{
                 color: cc.hexToColor("#E99305"),
-                text: 9 + "",
+                text: Math.floor(minute) +"",
                 size: 28,
             },{
                 color: cc.hexToColor("#1F2B75"),
@@ -34,7 +36,7 @@ var g_game_comp_over_question = cc.Node.extend({
                 size: 28,
             },{
                 color: cc.hexToColor("#E99305"),
-                text: 9 + "",
+                text: sec + "",
                 size: 28,
             },{
                 color: cc.hexToColor("#1F2B75"),

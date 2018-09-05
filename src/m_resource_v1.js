@@ -7,7 +7,7 @@ var res = {
     t_bg: test_path + "background.png",
     t_option_img: test_path + "question_option.png",
 
-    s_video: path + "longge.mp4",
+    s_video: path + "testvideo.mp4",
     s_background : path + "background.png",
     s_rank:     path + "rank.png",
     s_rule:     path + "rule.png",

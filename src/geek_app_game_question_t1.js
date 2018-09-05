@@ -28,16 +28,16 @@ var g_question_1_layer = cc.Layer.extend({
     isResolve_: 0,
     // 当前分数
     score_: 0,
+    // 总耗时
+    secondUsed_: 0,
 
     init: function (startData) {
         this._super()
-
         if (!startData)return
         geek_lib.f_swallow_event(this)
         this.questions_ = startData.questions
         this.questionTime_ = startData.questiontime
         this.questionTimeType_ = startData.questionTimeType
-
         this.isResolve_ = startData.isResolve
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.drawRect()
@@ -60,7 +60,6 @@ var g_question_1_layer = cc.Layer.extend({
         this.stop_btn_ = stop_btn
 
         // 提交答案按钮
-
         this.drawQuestion(this.currentIndex_)
     },
 
@@ -154,7 +153,10 @@ var g_question_1_layer = cc.Layer.extend({
      */
     gotoFinishLayer: function () {
         this.removeFromParent()
-        geek_lib.f_layer_create_data(g_root, g_game_over_layer, null, 1, 3)
+        var data = {
+            secondUsed: this.secondUsed_
+        }
+        geek_lib.f_layer_create_data(g_root, g_game_over_layer, data, 1, 3)
     },
 
     /**
@@ -162,10 +164,6 @@ var g_question_1_layer = cc.Layer.extend({
      */
     submitParser: function (data) {
         var next = data.nextData
-        if (next) {
-            this.score_ = next.scoreResult
-            this.headNode_.updateScore(this.score_)
-        }
         if (next.iscorrect == 1) {
             // 回答正确
             if (this.isResolve_) {
@@ -253,22 +251,38 @@ var g_question_1_layer = cc.Layer.extend({
 
     /**
      * 提交答案
+     * @param timeout 是否超时
      */
     apiSubmitAnswer: function (timeout) {
+        var used = this.headNode_.getUsedSeconds()
+        if (this.questionTimeType_ == QuestionTimeLimitType.Single) {
+            this.secondUsed_ = this.secondUsed_ + used
+        } else {
+            this.secondUsed_ = used
+        }
+
         var answers = this.answer_node_.getAnswers()
         var ids = []
+
+        var ceping_score = 0
         if (!timeout) {
             answers.forEach(function (value) {
                 ids.push(value.id)
+                if (g_game_info.activityType_ == ActivityType.Evalution) {
+                    ceping_score = value.score
+                }
             })
+            // 测评类，更新选项中的分数
+            this.headNode_.updateScore(ceping_score)
         }
+
         var that = this
         var question = this.questions_[this.currentIndex_]
         var params = {
             userId: g_game_user.userID,
             options: JSON.stringify(ids),
             questionId: question.activity_question_id,
-            seconds: this.questionTime_
+            seconds: this.headNode_.getUsedSeconds()
         }
         geek_lib.f_network_post_json(
             this,
@@ -277,7 +291,11 @@ var g_question_1_layer = cc.Layer.extend({
             function (data) {
                 if (data.nextData) {
                     that.submitParser(data)
-
+                    // 答题类根据服务端返回更新分数
+                    if (g_game_info.activityType_ == ActivityType.Answer) {
+                        that.score_ = data.nextData.scoreResult
+                        that.headNode_.updateScore(that.score_)
+                    }
                 } else {
                     that.errorHandler("缺少nextData数据")
                 }

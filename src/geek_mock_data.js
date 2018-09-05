@@ -62,7 +62,7 @@ var MockData = {
         score: "390",
     }],
 
-    
+
 }
 
 var g_game_user = {

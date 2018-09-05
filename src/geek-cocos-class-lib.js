@@ -697,7 +697,6 @@ var geek_class_lib = cc.Layer.extend({
         var img = ccui.ImageView.create(res)
         if(img) {
             img.setPosition(px, py)
-            console.log(img.getContentSize())
             var scalex = width/img.getContentSize().width;
             var scaley = height/img.getContentSize().height;
 
@@ -861,6 +860,8 @@ var geek_class_lib = cc.Layer.extend({
      * 停止播放背景
      */
     f_toggle_back_music: function () {
+        console.log(this.music_play_)
+        if (this.music_play_) return
         if (!this.audio_ && this.effect_path_) {
             this.f_play_back_music(this.effect_path_)
         } else {
@@ -872,6 +873,14 @@ var geek_class_lib = cc.Layer.extend({
                 this.effect_play_ = true
             }
         }
+    },
+
+    /**
+     * 设置音乐是否播放
+     * @param flag
+     */
+    f_play_music:function (flag) {
+        this.music_play_ = flag
     },
 
     /**
@@ -890,10 +899,8 @@ var geek_class_lib = cc.Layer.extend({
         }
     },
 
-    f_resume_effect: function () {
-        if (this.audio_) {
-            cc.audioEngine.resumeEffect(this.audio_)
-        }
+    f_isplay_effect: function () {
+        return this.effect_play_
     },
 
     f_swallow_event: function (that) {

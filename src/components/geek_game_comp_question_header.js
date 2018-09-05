@@ -6,7 +6,9 @@ var g_question_header_node = cc.Node.extend({
     progress_: null,
     white_circle_: null,
     totalSecond_: 0,
+    currentSecond_: 0,
     numberOfQuestion_: 0,
+    score_: 0,
     ctor: function (numberOfQuestion) {
         this._super()
         this.numberOfQuestion_ = numberOfQuestion
@@ -29,15 +31,12 @@ var g_question_header_node = cc.Node.extend({
         progress.setPercentage(100)
         white_circle.addChild(progress, 4, 5)
         this.progress_ = progress
-
         this.time_lable = geek_lib.f_label_create(white_circle, "",74, white_circle.getBoundingBox().width * 0.5 , white_circle.getBoundingBox().height * 0.5, 1, cc.color.WHITE, 1,1)
-
         var title_label = geek_lib.f_label_create(this, "第一题（1/" + this.numberOfQuestion_ +"）", 28, 126, -14, 1, cc.color.WHITE, 2,2 , cc.AncorPointTopLeft)
         this.title_label_ = title_label
-        var score_label = geek_lib.f_label_create(this, "0 分", 48, 126, -54, 1, cc.color.WHITE, 2,3, cc.AncorPointTopLeft)
+        var score_label = geek_lib.f_label_create(this, this.score_ + " 分", 48, 126, -54, 1, cc.color.WHITE, 2,3, cc.AncorPointTopLeft)
         this.score_label_ = score_label
         var white_bg = geek_lib.f_sprite_create_box(this, res.s_white_bg, 60, 0 - head_bg.getBoundingBox().height * 0.5, 100, 100, 2, 4, cc.AncorPointCenter)
-
         var avatar = geek_lib.f_sprite_create_box(this, res.s_default_avator, 60, 0 - head_bg.getBoundingBox().height * 0.5, 100, 100, 3, 5, cc.AncorPointCenter)
     },
 
@@ -58,11 +57,13 @@ var g_question_header_node = cc.Node.extend({
     },
 
     /**
-     * 更新分数
+     * 更新分数 添加
      * @param score
      */
     updateScore: function (score) {
+        score = this.score_ + score
         this.score_label_.setString(score + "")
+        this.score_ = score
     },
 
     /**
@@ -78,7 +79,17 @@ var g_question_header_node = cc.Node.extend({
         this.time_lable.setString(time + "")
         var rate = time * 1.0 / this.totalSecond_
         this.progress_.setPercentage(rate * 100)
+        this.currentSecond_ = time
     },
+
+    /**
+     * 花费的时间
+     * @returns {number}
+     */
+    getUsedSeconds: function () {
+        return this.totalSecond_ - this.currentSecond_
+    },
+
 
     /**
      * 设置第几题标题

@@ -21,6 +21,7 @@ var g_question_content_node = cc.Node.extend({
     heigth_: 0,
     animating_: false,
     content_type_: ContentType.Text,
+    background_playing_: false,
     /**
      * 设置题目类型
      * @param type
@@ -46,34 +47,36 @@ var g_question_content_node = cc.Node.extend({
             // 文字类型固定高度300
             this.height_ = textHeight
         } else if (contentType == ContentType.Text_Picture) {
-            var image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
-            title.setDimensions(g_size.width - 100, 0)
-            this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
-        }
-        else if (contentType == ContentType.Text_Audio) {
-            var image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
-            var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
-            this.addListner(icon)
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
-            title.setDimensions(g_size.width - 100, 0)
-            this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
-        }
-        else if (contentType == ContentType.Text_Video) {
+        //     var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+        //     var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+        //     title.setDimensions(g_size.width - 100, 0)
+        //     this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
+        // }
+        // else if (contentType == ContentType.Text_Audio) {
+        //     var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+        //     var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
+        //     this.addListener(icon)
+        //     var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+        //     title.setDimensions(g_size.width - 100, 0)
+        //     this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
+        // }
+        // else if (contentType == ContentType.Text_Video) {
             var player = new ccui.VideoPlayer(res.s_video)
             this.addChild(player, 1, 1)
             player.setContentSize(395, 290)
             player.setPosition(g_size.width * 0.5, -145)
+            var player_image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+            this.player_image_ = player_image
             var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.5, -145, 60, 50, 999, 2, cc.AncorPointCenter)
-            this.addListner(icon)
+            this.addListener(icon)
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + player.getBoundingBox().height + margin
             this.videoPlayer_ = player
             player.setVisible(false)
+            var that = this
             player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
-                console.log("play over")
-                player.setVisible(false)
+                that.videoPlayOver(player, icon)
             })
         }
 
@@ -84,14 +87,14 @@ var g_question_content_node = cc.Node.extend({
      */
     startMusic: function () {
         var url = "http://s2-cdn.oneitfarm.com/njpivllfr63mk8pikayc4uro5gqu0td2/8e009aee4ff0981231325e8fc52e7cad.mp3"
-        cc.audioEngine.playMusic(url, true)
+        cc.audioEngine.playMusic(url, false)
     },
 
     /**
      * 添加播放按钮回调
      * @param icon
      */
-    addListner: function (icon) {
+    addListener: function (icon) {
         var that = this
         cc.eventManager.addListener({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -107,25 +110,52 @@ var g_question_content_node = cc.Node.extend({
             },
             onTouchEnded: function (touch,event) {
                 // // captch clicked
-                if (that.content_type_ == ContentType.Text_Audio) {
-                    if (!that.animating_) {
-                        that.addAnimateFrame(icon)
-                        that.startMusic()
-                        geek_lib.f_timer_start(that, that.updateTimer, 0.1, true)
-                    } else {
-                        that.stopAnimate(icon)
-                    }
-                    that.animating_ = !that.animating_
-                    geek_lib.f_pause_effect()
-                } else if (that.content_type_ == ContentType.Text_Video) {
-                    that.videoPlayer_.setVisible(true)
-                    that.videoPlayer_.play()
-                    geek_lib.f_pause_effect()
-                    return
-                }
+                that.playIconCallback(icon)
             }
         }, icon)
         this.icon_play_ = icon
+    },
+
+    /**
+     * 播放按钮点击回调
+     */
+    playIconCallback: function (icon) {
+        this.background_playing_ = geek_lib.f_isplay_effect()
+        if (this.background_playing_) {
+            geek_lib.f_toggle_back_music()
+        }
+        // if (this.content_type_ == ContentType.Text_Audio) {
+        //     if (!this.animating_) {
+        //         this.addAnimateFrame(icon)
+        //         this.startMusic()
+        //         geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
+        //     } else {
+        //         this.stopAnimate(icon)
+        //     }
+        //     this.animating_ = !this.animating_
+        //     geek_lib.f_pause_effect()
+        // } else if (this.content_type_ == ContentType.Text_Video) {
+            this.player_image_.setVisible(false)
+            this.videoPlayer_.setVisible(true)
+            this.videoPlayer_.play()
+        // }
+        geek_lib.f_play_music(true)
+    },
+
+    /**
+     * 视频播放结束
+     * @param player
+     */
+    videoPlayOver: function (player,icon) {
+        geek_lib.f_play_music(false)
+        player.setVisible(false)
+        this.player_image_.setVisible(true)
+        icon.setVisible(true)
+        if (this.background_playing_) {
+            this.scheduleOnce(function () {  // 2秒后打印日志
+                geek_lib.f_toggle_back_music()
+            },2);
+        }
     },
 
     /**
@@ -133,10 +163,19 @@ var g_question_content_node = cc.Node.extend({
      */
     updateTimer:function () {
         if  (!cc.audioEngine.isMusicPlaying()) {
-            console.log("stoped")
+            geek_lib.f_play_music(false)
             geek_lib.f_timer_stop(this, this.updateTimer)
             this.stopAnimate(this.icon_play_)
+            if (this.background_playing_) {
+                this.scheduleOnce(function () {  // 2秒后打印日志
+                    console.log("play")
+                    geek_lib.f_toggle_back_music()
+                },2);
+
+            }
+            this.animating_ = false
         }
+
     },
 
     stopAnimate: function (sp) {
