@@ -234,8 +234,10 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
      * 提交用户信息
      */
     apiSubmitInfo: function () {
-        if (this.name_edit_.getString().length < 0){
+        if (this.name_edit_.getString().length < 1){
             console.log("name empty")
+            geek_lib.g_notice("name empty", 3)
+            return
         }
         if (this.captcha_edit_.getString().length < 4) {
             console.log("invalid captcha")

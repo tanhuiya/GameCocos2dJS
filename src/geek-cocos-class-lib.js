@@ -545,59 +545,35 @@ var geek_class_lib = cc.Layer.extend({
     },
 
 
-    g_notice:function (txt, time, move)
+    g_notice:function (txt, time)
     {
 
         this.time = time;
-        this.move = move;
-        this.image_bg = geek_lib.f_sprite_create(this, res.s_pub_notice_bg, g_size.width/2, g_size.height+30*g_scale, g_scale, 900);
+        var image_bg = cc.LayerColor.create(cc.color(0,0,0,150), g_size.width * 0.6 , 80)
+        this.addChild(image_bg, 900)
+        image_bg.setPosition(g_size.width * 0.2, g_size.height)
+        this.image_bg = image_bg
 
-        this.image = geek_lib.f_sprite_create(this, res.s_pub_notice, g_size.width/2-270, g_size.height+30*g_scale, g_scale, 900);
+        geek_lib.f_label_create(image_bg, txt, 32, g_size.width * 0.3, 40, g_scale, cc.color.WHITE, 902, 100, cc.AncorPointCenter);
 
-        this.txt_label = geek_lib.f_label_create(this, txt, 26, g_size.width/2-235, g_size.height+30*g_scale, g_scale, cc.color(255, 241, 0), 901);
-        this.txt_label.setAnchorPoint(0,0.5);
-        this.g_notice_show();
-    },
-
-    g_notice_show:function()
-    {
-
-        var px = g_size.width/2;
-        var py = g_size.height-30*g_scale;
-
-        if(this.move)
-            py = g_size.height-this.move;
-
+        var px = this.image_bg.getBoundingBox().x;
+        var py = g_size.height * 0.8;
 
         var move1 = cc.moveTo(0.5, cc.p(px, py));
         var move2 = cc.moveTo(this.time, cc.p(px, py));
-        var move3 = cc.moveTo(0.5, cc.p(px, g_size.height+30*g_scale));
+        var move3 = cc.moveTo(0.5, cc.p(px, g_size.height + 5));
         this.image_bg.runAction(cc.sequence(move1, move2, move3));
-
-        px = g_size.width/2-270;
-        move1 = cc.moveTo(0.5, cc.p(px, py));
-        move2 = cc.moveTo(this.time, cc.p(px, py));
-        move3 = cc.moveTo(0.5, cc.p(px, g_size.height+30*g_scale));
-        this.image.runAction(cc.sequence(move1, move2, move3));
-
-        px = g_size.width/2-235;
-        move1 = cc.moveTo(0.5, cc.p(px, py));
-        move2 = cc.moveTo(this.time, cc.p(px, py));
-        move3 = cc.moveTo(0.5, cc.p(px, g_size.height+30*g_scale));
 
         var sp_callback = new cc.CallFunc(function ()   //动作结束事件回调
         {
             this.scheduleOnce(this.g_notice_action, this.time);
         }, this);
-        this.txt_label.runAction(cc.sequence(move1, move2, move3, sp_callback));
 
     },
 
     g_notice_action:function()
     {
         this.image_bg.removeFromParent();
-        this.image.removeFromParent();
-        this.txt_label.removeFromParent();
     },
 
 

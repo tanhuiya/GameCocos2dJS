@@ -63,21 +63,55 @@ var g_question_content_node = cc.Node.extend({
         // else if (contentType == ContentType.Text_Video) {
             var player = new ccui.VideoPlayer(res.s_video)
             this.addChild(player, 1, 1)
+            this.videoPlayer_ = player
             player.setContentSize(395, 290)
+            // player.setSwallowTouches(false)
+            // player.setTouchEnabled(true)
+            player.setFullScreenEnabled(false)
             player.setPosition(g_size.width * 0.5, -145)
-            var player_image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+            player.setVisible(false)
+            var player_image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             this.player_image_ = player_image
             var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.5, -145, 60, 50, 999, 2, cc.AncorPointCenter)
             this.addListener(icon)
+            // cc.eventManager.addListener({
+            //     event : cc.EventListener.TOUCH_ONE_BY_ONE,
+            //     onTouchBegan : function (touch,event){
+            //         var target = event.getCurrentTarget()
+            //         // target --> item , target.parent --> activity
+            //         var locationInNode = target.parent.convertToNodeSpace(touch.getLocation())
+            //         var rect = target.getBoundingBox()
+            //         console.log(rect, locationInNode)
+            //         if (!cc.rectContainsPoint(rect, locationInNode)) {
+            //             return false
+            //         }
+            //         return true
+            //     },
+            //     onTouchEnded: function (touch,event) {
+            //         // // captch clicked
+            //         console.log("player clicked")
+            //     }
+            // }, player)
+
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + player.getBoundingBox().height + margin
-            this.videoPlayer_ = player
-            player.setVisible(false)
+
             var that = this
             player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
+                console.log("over")
                 that.videoPlayOver(player, icon)
             })
+            player.setEventListener(ccui.VideoPlayer.EventType.STOPPED, function () {
+                console.log("stoped")
+            })
+            player.setEventListener(ccui.VideoPlayer.EventType.PAUSED, function () {
+                console.log("PAUSED")
+            })
+            player.setEventListener(ccui.VideoPlayer.EventType.CLICKED, function () {
+                console.log("CLICKED")
+            })
+
         }
 
     },
