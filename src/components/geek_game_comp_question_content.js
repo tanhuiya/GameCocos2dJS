@@ -48,21 +48,21 @@ var g_question_content_node = cc.Node.extend({
             // 文字类型固定高度300
             this.height_ = textHeight
         } else if (contentType == ContentType.Text_Picture) {
-            geek_lib.f_remote_img_sprite_create(this, question_material_img, res.s_audio_bg,g_size.width * 0.5, 0, 395, 290, 1, cc.AncorPointTopMid)
-
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
-            title.setDimensions(g_size.width - 100, 0)
-            this.height_ = title.getContentSize().height + 290 + margin
-        }
-        else if (contentType == ContentType.Text_Audio) {
-            var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
-            var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
-            this.addListener(icon)
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
-            title.setDimensions(g_size.width - 100, 0)
-            this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
-        }
-        else if (contentType == ContentType.Text_Video) {
+        //     geek_lib.f_remote_img_sprite_create(this, question_material_img, res.s_audio_bg,g_size.width * 0.5, 0, 395, 290, 1, cc.AncorPointTopMid)
+        //
+        //     var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+        //     title.setDimensions(g_size.width - 100, 0)
+        //     this.height_ = title.getContentSize().height + 290 + margin
+        // }
+        // else if (contentType == ContentType.Text_Audio) {
+        //     var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+        //     var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
+        //     this.addListener(icon)
+        //     var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+        //     title.setDimensions(g_size.width - 100, 0)
+        //     this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
+        // }
+        // else if (contentType == ContentType.Text_Video) {
             var player = new ccui.VideoPlayer(res.s_video)
             this.addChild(player, 1, 1)
             this.videoPlayer_ = player
@@ -157,21 +157,21 @@ var g_question_content_node = cc.Node.extend({
         if (this.background_playing_) {
             geek_lib.f_toggle_back_music()
         }
-        if (this.content_type_ == ContentType.Text_Audio) {
-            if (!this.animating_) {
-                this.addAnimateFrame(icon)
-                this.startMusic()
-                geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
-            } else {
-                this.stopAnimate(icon)
-            }
-            this.animating_ = !this.animating_
-            geek_lib.f_pause_effect()
-        } else if (this.content_type_ == ContentType.Text_Video) {
+        // if (this.content_type_ == ContentType.Text_Audio) {
+        //     if (!this.animating_) {
+        //         this.addAnimateFrame(icon)
+        //         this.startMusic()
+        //         geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
+        //     } else {
+        //         this.stopAnimate(icon)
+        //     }
+        //     this.animating_ = !this.animating_
+        //     geek_lib.f_pause_effect()
+        // } else if (this.content_type_ == ContentType.Text_Video) {
             this.player_image_.setVisible(false)
             this.videoPlayer_.setVisible(true)
             this.videoPlayer_.play()
-        }
+        // }
         geek_lib.f_play_music(true)
     },
 
