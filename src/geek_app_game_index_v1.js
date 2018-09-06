@@ -156,8 +156,13 @@ var g_index_layer = cc.Layer.extend({
         var that = this
         this.home_data_ = data
 
+        var res = []
         if (data.musicUrl) {
             this.effectPath_ = data.musicUrl
+            res.push(data.musicUrl)
+            // cc.loader.load(this.effectPath_, {}, function (res) {
+            //     console.log("111111")
+            // })
             geek_lib.f_set_effect_path(this.effectPath_)
         }
         if (data.introButton) {
@@ -168,33 +173,22 @@ var g_index_layer = cc.Layer.extend({
         // 设置背景图
         if (data.homeBack) {
             this.homeBack_ = data.homeBack
-            this.requestNumber_ ++
-            cc.textureCache.addImageAsync(data.homeBack, function (texture) {
-                console.log(texture)
-                that.requestNumber_ --
-                if (that.requestNumber_ < 1){
-                    that.setLayout()
-                }
-            })
+            res.push(data.homeBack)
         } else {
             this.homeBack_ = res.s_background
         }
 
         // 设置活动图
         if (data.homeTitle) {
-            this.requestNumber_ ++
+            res.push(data.homeTitle)
             this.activity_img_ = data.homeTitle
-            cc.textureCache.addImageAsync(data.homeTitle, function (texture) {
-                that.requestNumber_ --
-                if (that.requestNumber_ < 1){
-                    that.setLayout()
-                }
-            })
         } else {
             this.activity_img_ = res.s_home_bg
-            this.setLayout()
         }
 
+        cc.textureCache.addImageAsync(res, function (texture) {
+            that.setLayout()
+        })
     },
 
     /**
