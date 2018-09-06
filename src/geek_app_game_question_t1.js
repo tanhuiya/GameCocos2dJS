@@ -31,9 +31,12 @@ var g_question_1_layer = cc.Layer.extend({
     // 总耗时
     secondUsed_: 0,
 
+    startSecond_: 0,
+
     init: function (startData) {
         this._super()
         if (!startData)return
+        this.startSecond_ = Date.parse(new Date())
         geek_lib.f_swallow_event(this)
         this.questions_ = startData.questions
         this.questionTime_ = startData.questiontime
@@ -141,10 +144,12 @@ var g_question_1_layer = cc.Layer.extend({
 
     /**
      * 去解析页
+     * @param 成功的回调
      */
-    goRecordList: function () {
+    goRecordList: function (succssback) {
         this.removeFromParent(true)
-        geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        var record = geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        record.success_call_back = succssback
     },
 
     /**
@@ -153,8 +158,10 @@ var g_question_1_layer = cc.Layer.extend({
      */
     gotoFinishLayer: function () {
         this.removeFromParent()
+        console.log(this.secondUsed_)
         var data = {
-            secondUsed: this.secondUsed_
+            secondUsed: this.secondUsed_,
+            score: this.headNode_.getScore()
         }
         geek_lib.f_layer_create_data(g_root, g_game_over_layer, data, 1, 3)
     },
@@ -227,7 +234,10 @@ var g_question_1_layer = cc.Layer.extend({
         } else {
             // 测评判断是否录入信息
             if (!g_game_info.isRecorded_) {
-                this.goRecordList()
+                var that = this
+                this.goRecordList(function () {
+                    that.gotoFinishLayer()
+                })
             } else {
                 this.gotoFinishLayer()
             }
@@ -243,10 +253,36 @@ var g_question_1_layer = cc.Layer.extend({
         if (type == ccui.Widget.TOUCH_ENDED) {
             switch (sender) {
                 case this.stop_btn_:
-                    this.stopAnswer()
+                    this.confirm()
                     break;
             }
         }
+    },
+
+    /**
+     * 退出的二次确认
+     */
+    confirm: function () {
+        var that = this
+        var leftType = g_game_info.left_type_
+        var leftTime = g_game_info.left_times_ - 1
+        var text = ""
+        if (leftType == LeftTimeType.Left_Day) {
+            text = "今日还有" + leftTime + "次机会"
+        } else if (leftType == LeftTimeType.Left_Total) {
+            text = "您还有" + leftTime + "次机会"
+        }
+        var confirm = new g_app_game_comp_confirm(text, function (index) {
+            if (index == 0) {
+                that.stopAnswer()
+            } else if (index == 1){
+                confirm.removeFromParent(true)
+            } else if (index == 2){
+                confirm.removeFromParent(true)
+                that.removeFromParent(true)
+            }
+        })
+        this.addChild(confirm, 50);
     },
 
     /**
@@ -257,8 +293,10 @@ var g_question_1_layer = cc.Layer.extend({
         var used = this.headNode_.getUsedSeconds()
         if (this.questionTimeType_ == QuestionTimeLimitType.Single) {
             this.secondUsed_ = this.secondUsed_ + used
-        } else {
+        } else if (this.questionTimeType_ == QuestionTimeLimitType.All) {
             this.secondUsed_ = used
+        } else if (this.questionTimeType_ == QuestionTimeLimitType.Unlimit) {
+            this.secondUsed_ = (Date.parse(new Date()) - this.startSecond_) / 1000
         }
 
         var answers = this.answer_node_.getAnswers()

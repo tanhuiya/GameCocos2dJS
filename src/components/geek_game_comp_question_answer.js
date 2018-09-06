@@ -79,16 +79,31 @@ var g_question_answer_node = cc.LayerColor.extend({
         this.answers_ = answers
         this.width_ = width
         this.height_ = height
-        // mock
 
         var type = AnswerOptionType.Text
+        if (this.judgeOptionImage(answers)) {
+            type = AnswerOptionType.TextImage
+        }
         this.optionType_ = type
         this.cellHeight_ = type == AnswerOptionType.Text ? TextBgHeight : TextImageBgHeight
-
         var left = height - answers.length * this.cellHeight_
         left = left < 100 ? 100 : left
         this.left_height_ = left
         this.setUp()
+    },
+
+    /**
+     * 判断选项中是否含图片
+     * @returns {boolean}
+     */
+    judgeOptionImage: function (answer) {
+        var find = false
+        answer.forEach(function (option, p2, p3) {
+            if (option.optionImg && option.optionImg.length > 0) {
+                find = true
+            }
+        })
+        return false
     },
 
     /**

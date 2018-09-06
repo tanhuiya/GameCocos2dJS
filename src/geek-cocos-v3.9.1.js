@@ -46877,7 +46877,7 @@ cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, function () {
     var list = ccui.VideoPlayer.pauseElements;
     var node = list.pop();
     while(node){
-        node.play();
+        // node.play();
         node = list.pop();
     }
 });

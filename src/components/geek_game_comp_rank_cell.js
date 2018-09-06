@@ -34,17 +34,17 @@ var g_app_game_rank_cell = cc.TableViewCell.extend({
         var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), this.width_ - 20, 0.6)
         geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointTopLeft)
         this.addChild(blackline,2)
-        blackline.setPosition(10,this.height_)
+        blackline.setPosition(10,0)
         this.backline_ = blackline
     },
 
     setData: function (index, data) {
         geek_lib.f_label_change_txt(this.index_label_, data.order + "")
-        geek_lib.f_label_change_txt(this.title_label_, data.user_id)
+        geek_lib.f_label_change_txt(this.title_label_, data.user_name)
         geek_lib.f_label_change_txt(this.school_label_, data.channel_name)
         geek_lib.f_label_change_txt(this.score_label_, data.question_sum_score)
-        geek_lib.f_label_change_txt(this.class_label_, "")
-        this.backline_.setVisible(index > 0)
+        geek_lib.f_label_change_txt(this.class_label_, data.class_name)
+        // this.backline_.setVisible(index > 0)
     }
 })
 

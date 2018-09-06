@@ -547,7 +547,7 @@ var geek_class_lib = cc.Layer.extend({
 
     g_notice:function (txt, time)
     {
-
+        if (this.image_bg) return
         this.time = time;
         var image_bg = cc.LayerColor.create(cc.color(0,0,0,150), g_size.width * 0.6 , 80)
         this.addChild(image_bg, 900)
@@ -574,6 +574,7 @@ var geek_class_lib = cc.Layer.extend({
     g_notice_action:function()
     {
         this.image_bg.removeFromParent();
+        this.image_bg = null
     },
 
 
@@ -791,11 +792,10 @@ var geek_class_lib = cc.Layer.extend({
         // console.log(sp.getBoundingBox())
         sp.setTextureRect(cc.rect(0, 0, rect.width, rect.height))
         sp.loadTexture(res)
-        // console.log(sp.getBoundingBox())
-        // console.log(sp.getContentSize())
+        console.log(sp.getBoundingBox())
+        console.log(sp.getContentSize())
         sp.setScaleX(rect.width / sp.getBoundingBox().width)
         sp.setScaleY(rect.height / sp.getBoundingBox().height)
-
     },
 
     /**
@@ -810,14 +810,8 @@ var geek_class_lib = cc.Layer.extend({
         console.log(org_scaleX, org_scaleY)
         console.log(rect)
         var texture = cc.textureCache.addImage(res)
-        // var scaleX = texture.width / rect.width
-        // var scaleY = texture.height / rect.height
-        // sp.setScale(scaleX, scaleY)
-        // console.log(sp.getBoundingBox())
         sp.setTextureRect(cc.rect(0, 0, rect.width, rect.height))
         sp.setTexture(texture)
-        console.log(sp.getBoundingBox())
-        console.log(sp.getContentSize())
         sp.setScaleX(rect.width / sp.getBoundingBox().width)
         sp.setScaleY(rect.height / sp.getBoundingBox().height)
 
@@ -875,10 +869,18 @@ var geek_class_lib = cc.Layer.extend({
         }
     },
 
+    /**
+     * 是否在播放背景
+     * @returns {boolean}
+     */
     f_isplay_effect: function () {
         return this.effect_play_
     },
 
+    /**
+     * 设置涂层吞噬事件
+     * @param that
+     */
     f_swallow_event: function (that) {
         cc.eventManager.addListener({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -887,8 +889,37 @@ var geek_class_lib = cc.Layer.extend({
                 return true
             },
         }, that);
-    }
+    },
 
+    /**
+     * 创建一条线 height 0.6
+     * @param that
+     * @param color
+     * @param posX
+     * @param posY
+     * @param width
+     */
+    f_line_create: function (that, color, posX, posY, width , level) {
+        var layer = cc.LayerColor.create(color, width, 0.5)
+        if (level) {
+            that.addChild(layer, level)
+        } else {
+            that.addChild(layer)
+        }
+        layer.setPosition(posX, posY)
+        return layer
+    },
+
+    f_remote_img_sprite_create: function (that, url, default_img, posX, posY, width, height, level, anchor) {
+        var image = geek_lib.f_sprite_create_box(that, default_img, posX, posY, width, height, level, 1, anchor)
+        cc.loader.loadImg(url, {}, function (err, img) {
+            if (err) {
+                return
+            }
+            geek_lib.f_sprite_create_box(that, img, posX, posY, width, height, level, 1, anchor)
+        })
+        return image
+    }
 });
 
 cc.AncorPointCenter = 0;

@@ -7,13 +7,17 @@
  */
 header("Content-type:text/html;charset=utf-8");
 
+$myfile = fopen("log.txt", "a");
+fwrite($myfile, $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+fwrite($myfile, json_encode($_GET, true));
+fwrite($myfile, "\n");
 
 echo "<!DOCTYPE html>";
 echo "<html>";
 echo "<head>";
 echo "<meta http-equiv='Content-Type' content='text/html'; charset='UTF-8'>";
 echo "<meta content='8dsun' name='author'>";
-echo "<title>飞花令</title>";
+echo "<title>皖新金智</title>";
 echo "</head>";
 
 

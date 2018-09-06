@@ -46,6 +46,10 @@ var res = {
     s_audio_1:      path + "audio_1.png",
     s_audio_2:      path + "audio_2.png",
     s_audio_bg:     path + "audio_bg.png",
+    s_confirm_bg:   path + "confirm_bg.png",
+    s_confirm_1:   path + "confirm_1.png",
+    s_confirm_2:   path + "confirm_2.png",
+    s_confirm_3:   path + "confirm_3.png",
 };
 
 
@@ -55,6 +59,10 @@ var m_resources = [
     res.t_option_img,
     res.t_question_bg,
 
+    res.s_confirm_1,
+    res.s_confirm_2,
+    res.s_confirm_3,
+    res.s_confirm_bg,
     res.s_video,
     res.s_audio_bg,
     res.s_audio_1,

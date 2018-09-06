@@ -66,16 +66,20 @@ var g_game_comp_over_question = cc.Node.extend({
 
         geek_lib.f_label_create(this, "恭喜完成答题", 72, width * 0.5, 282 * 2, 1, cc.hexToColor("#117AF5"), 1, 4, cc.AncorPointTopMid)
 
+        var line = geek_lib.f_line_create(this, cc.color(112, 112, 112, 150), 20, 200, width - 40, 2)
+        console.log(line.getBoundingBox())
+        var rank_btn = geek_lib.f_btn_create(this, res.s_common_btn, "", width * 0.5, 50 * 2, 1, 2, 3, cc.AncorPointCenter)
+        rank_btn.setTitleText("查看排名");
+        rank_btn.setTitleFontSize(40)
+        this.rank_btn_ = rank_btn
     },
 
     /**
      * 添加富文本，当前参加人数
      */
     addRichLabel: function (richData, px, py, width, height, anchorP) {
-
-
         var richText = new ccui.RichText()
-        richText.ignoreContentAdaptWithSize(false);
+        richText.ignoreContentAdaptWithSize(false)
         richText.setContentSize(cc.size(width, height));
 
         for (var i = 0; i < richData.length; i++) {
@@ -88,6 +92,21 @@ var g_game_comp_over_question = cc.Node.extend({
         richText.setPosition(px, py)
         geek_lib.f_set_anchor_point_type(richText, anchorP)
         this.addChild(richText,2,10)
+    },
+
+    /**
+     * 按钮被点击的回调
+     * @param sender 事件相应者
+     * @param type  事件类型
+     */
+    ctl_button_event: function (sender, type) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
+            switch (sender) {
+                case this.rank_btn_:
+                    geek_lib.f_layer_create_data(this.parent, g_app_game_rank, null, 10, 10)
+                    break;
+            }
+        }
     },
 })
 

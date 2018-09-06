@@ -72,7 +72,23 @@ var g_game_user = {
     channelName: MockData.channelName,
 }
 
+var LeftTimeType = {
+    Left_Unlimit: 1,
+    Left_Total: 2,
+    Left_Day: 3,
+}
+
 var g_game_info = {
+    /**
+     * 剩余答题次数
+     */
+    left_times_: 0,
+
+    /**
+     * 答题次数限制类型
+     */
+    left_type_: LeftTimeType.Left_Unlimit,
+
     /**
      * 活动类型
      */
@@ -95,6 +111,17 @@ var g_game_info = {
      */
     setRecord: function (flag) {
         this.isRecorded_ = flag
-    }
+    },
 
+    setLeftType: function (type) {
+        if (type) {
+            this.left_type_ = type
+        }
+    },
+
+    setLeftTime: function (time) {
+        if (time >= 0){
+            this.left_times_ = time
+        }
+    },
 }

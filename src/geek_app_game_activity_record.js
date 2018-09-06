@@ -17,6 +17,7 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
     seconds_: 0,
     lastGradeID_: -1,
     lastClassID_: -1,
+    success_call_back: function () {},
 
     ctor: function () {
         this._super(cc.color(255,255,255))
@@ -236,22 +237,27 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
     apiSubmitInfo: function () {
         if (this.name_edit_.getString().length < 1){
             console.log("name empty")
-            geek_lib.g_notice("name empty", 3)
+            geek_lib.g_notice("姓名非法", 2)
             return
         }
         if (this.captcha_edit_.getString().length < 4) {
-            console.log("invalid captcha")
+            geek_lib.g_notice("验证码非法", 2)
+            return
         }
         if (this.phone_edit_.getString().length < 11){
-            console.log("invalid phone")
+            geek_lib.g_notice("手机号非法", 2)
+            return
         }
-        var classname = this.classArr_[this.lastClassID_].name
-        var gradename = this.gradeArr_[this.lastGradeID_].name
+
+        var classname = this.lastClassID_ > -1 ? this.classArr_[this.lastClassID_].name : ""
+        var gradename = this.lastGradeID_ > -1 ? this.gradeArr_[this.lastGradeID_].name : ""
         if (classname.length < 1){
-            console.log("invalid grade")
+            geek_lib.g_notice("请选择班级", 2)
+            return
         }
         if (gradename.length < 1){
-            console.log("invalid class")
+            geek_lib.g_notice("请选择年级", 2)
+            return
         }
         var param = {
             mobile: this.phone_edit_.getString(),
@@ -262,12 +268,15 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
             channelId: g_game_user.channelID,
             userId: g_game_user.userID
         }
-        console.log(param)
+        var that = this
         geek_lib.f_network_post_json(this, uri.userInfoAdd, param, function (response) {
-            console.log(response)
             g_game_info.setRecord(true)
+            if (that.success_call_back) {
+                that.success_call_back()
+                that.removeFromParent()
+            }
         }, function (msg) {
-            console.log(msg)
+            geek_lib.g_notice(msg, 3)
         })
     },
 

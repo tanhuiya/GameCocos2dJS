@@ -67,6 +67,14 @@ var g_question_header_node = cc.Node.extend({
     },
 
     /**
+     * 获取当前分数
+     * @returns {number}
+     */
+    getScore: function () {
+        return this.score_
+    },
+
+    /**
      * 更新倒计时
      * @param time
      */

@@ -111,8 +111,11 @@ var g_index_layer = cc.Layer.extend({
      * 显示排行榜
      */
     showRankList:function () {
+        var that = this
         if (g_game_info.isAnswer() && !g_game_info.isRecorded_) {
-            this.showRecordList()
+            this.showRecordList(function () {
+                geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
+            })
             return
         }
         geek_lib.f_layer_create_data(this, g_app_game_rank, null, 10, 10)
@@ -121,8 +124,11 @@ var g_index_layer = cc.Layer.extend({
     /**
      * 信息录入
      */
-    showRecordList: function () {
-        geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+    showRecordList: function (callback) {
+        var record = geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        if (callback) {
+            record.success_call_back = callback
+        }
     },
 
     /**
@@ -143,7 +149,6 @@ var g_index_layer = cc.Layer.extend({
         if (data.musicUrl) {
             this.effectPath_ = data.musicUrl
             geek_lib.f_set_effect_path(this.effectPath_)
-            // geek_lib.f_play_back_music(data.musicUrl)
         }
         if (data.introButton) {
             this.introData_ = data.introButton
@@ -151,7 +156,7 @@ var g_index_layer = cc.Layer.extend({
         g_game_info.activityType_ = data.activityType
         this.rank_btn_.setVisible(g_game_info.isAnswer())
 
-        // geek_lib.f_update_img_texture(this.homebg_, res.t_home_bg)
+        geek_lib.f_update_img_texture(this.homebg_, "http://pab0rrvqm.bkt.clouddn.com/IMG_20170422_154922.jpg")
     },
 
     /**
@@ -183,6 +188,8 @@ var g_index_layer = cc.Layer.extend({
      * @param startData
      */
     gotoQuestion: function (startData) {
+        g_game_info.setLeftTime(startData.leftTimes)
+        g_game_info.setLeftType(startData.leftType)
         if (startData.countState == QuestionStatePermission.StateAllow) {
             geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
         } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
@@ -253,8 +260,6 @@ var g_index_layer = cc.Layer.extend({
      * 获取游戏信息
      */
     apiStartGame: function () {
-        // geek_lib.f_layer_create_data(g_root, g_question_1_layer, MockData.startData, 0, 0)
-        // return
         var that = this
         geek_lib.f_network_post_json(
             this,
@@ -278,6 +283,6 @@ var g_index_layer = cc.Layer.extend({
      * 通用错误处理
      */
     errorHandler: function (msg) {
-
+        geek_lib.g_notice(msg, 2)
     },
 })
