@@ -4,7 +4,6 @@
     "id"            : "geekCanvas",
     "renderMode"    : 1,
     "jsList"        : [
-        "src/geek_mock_data.js",
         "src/geek_app_uri.js",
         "src/m_resource_v1.js",
         "src/geek_app_game_question_t1.js",

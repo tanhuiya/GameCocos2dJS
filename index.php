@@ -9,6 +9,7 @@ header("Content-type:text/html;charset=utf-8");
 
 $myfile = fopen("log.txt", "a");
 fwrite($myfile, $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+fwrite($myfile, "\n");
 fwrite($myfile, json_encode($_GET, true));
 fwrite($myfile, "\n");
 
@@ -20,6 +21,10 @@ echo "<meta content='8dsun' name='author'>";
 echo "<title>皖新金智</title>";
 echo "</head>";
 
+//$userID = $_GET["userId"];
+//$channeID = $_GET["channelId"];
+//$channeName = $_GET["channelName"];
+//$activityID = $_GET["activityId"];
 
 ?>
 
@@ -36,12 +41,21 @@ echo "</head>";
 <script type="text/javascript" src="src/lib/XTimer.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek-cocos-v3.9.1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek-cocos-class-lib.js" charset=utf-8></script>
-
 <script type="text/javascript" src="src/geek_app_game_root_v1.js" charset=utf-8></script>
-
+<script type="text/javascript" src="src/geek_mock_data.js" charset=utf-8></script>
 
 <script type="text/javascript">
     window.onload = function(){
+//        g_game_user.userID = "<?php //echo $userID ?>//"
+//        g_game_user.channel = "<?php //echo $channeID ?>//"
+//        g_game_user.channelName = "<?php //echo $channeName ?>//"
+//        g_game_user.activity = "<?php //echo $activityID ?>//"
+
+        // testdata
+        g_game_user.userID = MockData.UserID
+        g_game_user.channel = MockData.channelID
+        g_game_user.channelName = MockData.channelName
+        g_game_user.activity = MockData.Activity
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
     };
 

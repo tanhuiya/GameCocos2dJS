@@ -26,11 +26,17 @@ var ActivityType = {
  * @type {any}
  */
 var g_index_layer = cc.Layer.extend({
+    requestNumber_: 0,
 
     effectPath_: null,
 
     introData_: null,
 
+    homeBack_: null,
+
+    activity_img_: null,
+
+    home_data_: null,
     /**
      * 页面初始化
      */
@@ -38,7 +44,14 @@ var g_index_layer = cc.Layer.extend({
         this._super()
         g_index = this
 
-        var bg = geek_lib.f_imageview_box_create(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
+        this.apiIsActivityUser()
+        this.apiGameState()
+        this.apiHomeData()
+
+    },
+
+    setLayout: function () {
+        var bg = geek_lib.f_imageview_box_create(this, this.homeBack_, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
 
         // var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.bg_ = bg
@@ -49,23 +62,20 @@ var g_index_layer = cc.Layer.extend({
         // 排名
         var rank_btn = geek_lib.f_btn_create(this, res.s_rank, "", g_size.width - 32 - 82 , g_size.height, 1, 1, 3, cc.AncorPointTopLeft)
         // rank_btn.setVisible(false)
+        rank_btn.setVisible(g_game_info.isAnswer())
         this.rank_btn_ = rank_btn
 
         var music_btn = geek_lib.f_btn_create(this, res.s_music, "", rank_btn.getBoundingBox().x - 14 - 50, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
         this.music_btn_ = music_btn
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
 
-        var homebg = geek_lib.f_imageview_box_create(this, res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6, cc.AncorPointCenter)
+        var homebg = geek_lib.f_imageview_box_create(this, this.activity_img_, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 3, 6, cc.AncorPointCenter)
         this.homebg_ = homebg
 
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
 
-        this.addRichLabel(0)
-
-        this.apiIsActivityUser()
-        this.apiGameState()
-        this.apiHomeData()
+        this.addRichLabel(this.home_data_.numOfUser)
     },
 
     /**
@@ -143,9 +153,9 @@ var g_index_layer = cc.Layer.extend({
      * 解析首页数据
      */
     parserHomeData: function (data) {
-        if (data.numOfUser) {
-            this.addRichLabel(data.numOfUser)
-        }
+        var that = this
+        this.home_data_ = data
+
         if (data.musicUrl) {
             this.effectPath_ = data.musicUrl
             geek_lib.f_set_effect_path(this.effectPath_)
@@ -154,9 +164,37 @@ var g_index_layer = cc.Layer.extend({
             this.introData_ = data.introButton
         }
         g_game_info.activityType_ = data.activityType
-        this.rank_btn_.setVisible(g_game_info.isAnswer())
 
-        geek_lib.f_update_img_texture(this.homebg_, "http://pab0rrvqm.bkt.clouddn.com/IMG_20170422_154922.jpg")
+        // 设置背景图
+        if (data.homeBack) {
+            this.homeBack_ = data.homeBack
+            this.requestNumber_ ++
+            cc.textureCache.addImageAsync(data.homeBack, function (texture) {
+                console.log(texture)
+                that.requestNumber_ --
+                if (that.requestNumber_ < 1){
+                    that.setLayout()
+                }
+            })
+        } else {
+            this.homeBack_ = res.s_background
+        }
+
+        // 设置活动图
+        if (data.homeTitle) {
+            this.requestNumber_ ++
+            this.activity_img_ = data.homeTitle
+            cc.textureCache.addImageAsync(data.homeTitle, function (texture) {
+                that.requestNumber_ --
+                if (that.requestNumber_ < 1){
+                    that.setLayout()
+                }
+            })
+        } else {
+            this.activity_img_ = res.s_home_bg
+            this.setLayout()
+        }
+
     },
 
     /**

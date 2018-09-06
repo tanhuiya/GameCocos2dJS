@@ -37,12 +37,8 @@ var g_game_over_layer = cc.Layer.extend({
         this.addChild(node, 2, 5)
         node.setPosition(0, bg.getBoundingBox().y)
 
-        this.back_btn_ = geek_lib.f_btn_create(this, res.s_common_btn, "", g_size.width * 0.25, 80 * 2, 1, 2, 5, cc.AncorPointCenter)
-        this.back_btn_.setTitleText("返回首页");
-        this.back_btn_.setTitleFontSize(40)
-        this.again_btn_ = geek_lib.f_btn_create(this, res.s_common_btn, "", g_size.width * 0.75, 80 * 2, 1, 2, 5, cc.AncorPointCenter)
-        this.again_btn_.setTitleText("再次答题");
-        this.again_btn_.setTitleFontSize(40)
+        this.back_btn_ = geek_lib.f_btn_create(this, res.s_back_index, "", g_size.width * 0.25, 80 * 2, 1, 2, 5, cc.AncorPointCenter)
+        this.again_btn_ = geek_lib.f_btn_create(this, res.s_answer_again, "", g_size.width * 0.75, 80 * 2, 1, 2, 5, cc.AncorPointCenter)
     },
 
     /**

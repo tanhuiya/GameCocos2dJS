@@ -50,6 +50,8 @@ var res = {
     s_confirm_1:   path + "confirm_1.png",
     s_confirm_2:   path + "confirm_2.png",
     s_confirm_3:   path + "confirm_3.png",
+    s_answer_again: path + "answer_again.png",
+    s_back_index: path + "back_index.png"
 };
 
 
@@ -59,6 +61,8 @@ var m_resources = [
     res.t_option_img,
     res.t_question_bg,
 
+    res.s_answer_again,
+    res.s_back_index,
     res.s_confirm_1,
     res.s_confirm_2,
     res.s_confirm_3,

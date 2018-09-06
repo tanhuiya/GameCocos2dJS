@@ -796,6 +796,8 @@ var geek_class_lib = cc.Layer.extend({
         console.log(sp.getContentSize())
         sp.setScaleX(rect.width / sp.getBoundingBox().width)
         sp.setScaleY(rect.height / sp.getBoundingBox().height)
+
+
     },
 
     /**

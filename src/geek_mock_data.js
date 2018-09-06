@@ -66,10 +66,10 @@ var MockData = {
 }
 
 var g_game_user = {
-    userID: MockData.UserID,
-    activity: MockData.Activity,
-    channelID: MockData.channelID,
-    channelName: MockData.channelName,
+    userID: "",
+    activity: "",
+    channelID: "",
+    channelName: "",
 }
 
 var LeftTimeType = {
