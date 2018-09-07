@@ -825,6 +825,7 @@ var geek_class_lib = cc.Layer.extend({
      */
     f_play_back_music: function (path) {
         this.audio_ = cc.audioEngine.playEffect(path, true)
+        // cc.audioEngine.setEffectsVolume(1.0)
         this.effect_play_ = true
     },
 
@@ -865,11 +866,11 @@ var geek_class_lib = cc.Layer.extend({
         }
     },
 
-    f_pause_effect: function () {
-        if (this.audio_) {
-            cc.audioEngine.pauseEffect(this.audio_)
-        }
-    },
+    // f_pause_effect: function () {
+    //     if (this.audio_) {
+    //         cc.audioEngine.pauseEffect(this.audio_)
+    //     }
+    // },
 
     /**
      * 是否在播放背景

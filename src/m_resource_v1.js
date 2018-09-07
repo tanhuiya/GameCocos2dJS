@@ -51,7 +51,7 @@ var res = {
     s_confirm_2:   path + "confirm_2.png",
     s_confirm_3:   path + "confirm_3.png",
     s_answer_again: path + "answer_again.png",
-    s_back_index: path + "back_index.png"
+    s_back_index: path + "back_index.png",
 };
 
 

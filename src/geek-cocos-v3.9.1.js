@@ -3611,8 +3611,9 @@ cc.ContainerStrategy = cc.Class.extend({
         var locCanvasElement = cc._canvas, locContainer = cc.container;
         locContainer.style.width = locCanvasElement.style.width = w + "px";
         locContainer.style.height = locCanvasElement.style.height = h + "px";
-        var devicePixelRatio = view._devicePixelRatio = 1;
-        if (view.isRetinaEnabled())
+        // geek fix android
+        // var devicePixelRatio = view._devicePixelRatio = 1;
+        // if (view.isRetinaEnabled())
             devicePixelRatio = view._devicePixelRatio = window.devicePixelRatio || 1;
         locCanvasElement.width = w * devicePixelRatio;
         locCanvasElement.height = h * devicePixelRatio;
@@ -46988,7 +46989,6 @@ ccui.VideoPlayer.EventType = {
             ty = t.ty*scaleY - ch/2 + ch*node._scaleY/2*scaleY;
         var matrix = "matrix(" + a + "," + b + "," + c + "," + d + "," + tx + "," + -ty + ")";
         this._video.style["transform"] = matrix;
-        this._video.style["-webkit-transform"] = matrix;
     };
     proto.updateURL = function(path){
         var source, video, hasChild, container, extname;
