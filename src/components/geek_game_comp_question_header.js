@@ -79,7 +79,9 @@ var g_question_header_node = cc.Node.extend({
      * @param time
      */
     updateTime: function (time) {
-        if (time > 99) {
+        if (time > 999) {
+            this.time_lable.setFontSize(44)
+        } else if (time > 99) {
             this.time_lable.setFontSize(60)
         } else {
             this.time_lable.setFontSize(74)
