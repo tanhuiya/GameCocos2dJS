@@ -89,6 +89,7 @@ var g_question_content_node = cc.Node.extend({
      * 播放音乐
      */
     startMusic: function (videopath) {
+        console.log(videopath)
         // var url = "http://s2-cdn.oneitfarm.com/njpivllfr63mk8pikayc4uro5gqu0td2/8e009aee4ff0981231325e8fc52e7cad.mp3"
         cc.audioEngine.playMusic(videopath, false)
     },
@@ -97,7 +98,7 @@ var g_question_content_node = cc.Node.extend({
      * 添加播放按钮回调
      * @param icon
      */
-    addListener: function (icon) {
+    addListener: function (icon, question_material_img) {
         var that = this
         cc.eventManager.addListener({
             event : cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -113,7 +114,7 @@ var g_question_content_node = cc.Node.extend({
             },
             onTouchEnded: function (touch,event) {
                 // // captch clicked
-                that.playIconCallback(icon)
+                that.playIconCallback(icon, question_material_img)
             }
         }, icon)
         this.icon_play_ = icon
@@ -128,6 +129,10 @@ var g_question_content_node = cc.Node.extend({
             geek_lib.f_toggle_back_music()
         }
         if (this.content_type_ == ContentType.Text_Audio) {
+            if (!videopath || videopath.length < 1) {
+                geek_lib.g_notice("音频文件为空", 2)
+                return
+            }
             if (!this.animating_) {
                 this.addAnimateFrame(icon)
                 this.startMusic(videopath)
@@ -136,7 +141,6 @@ var g_question_content_node = cc.Node.extend({
                 this.stopAnimate(icon)
             }
             this.animating_ = !this.animating_
-            geek_lib.f_pause_effect()
         }
         geek_lib.f_play_music(true)
     },
