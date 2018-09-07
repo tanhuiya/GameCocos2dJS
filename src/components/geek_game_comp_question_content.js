@@ -31,7 +31,7 @@ var g_question_content_node = cc.Node.extend({
         this.heigth_ = 0
         var textHeight = 300
 
-        this.content_type_ = contentType
+        this.content_type_ = ContentType.Text_Video
         var question_type_ = questionData.question_type
         var question_material_img = questionData.question_material_img
         var text = questionData.question_title
@@ -42,27 +42,27 @@ var g_question_content_node = cc.Node.extend({
         } else if (question_type_ == AnswerSelectType.Judge){
             text = "(判断题): " + text
         }
-        if (contentType == ContentType.Text) {
+        if (this.content_type_ == ContentType.Text) {
             var text_label = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
             text_label.setDimensions(g_size.width - 100, 0)
             // 文字类型固定高度300
             this.height_ = textHeight
-        } else if (contentType == ContentType.Text_Picture) {
-        //     geek_lib.f_remote_img_sprite_create(this, question_material_img, res.s_audio_bg,g_size.width * 0.5, 0, 395, 290, 1, cc.AncorPointTopMid)
-        //
-        //     var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
-        //     title.setDimensions(g_size.width - 100, 0)
-        //     this.height_ = title.getContentSize().height + 290 + margin
-        // }
-        // else if (contentType == ContentType.Text_Audio) {
-        //     var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
-        //     var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
-        //     this.addListener(icon)
-        //     var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
-        //     title.setDimensions(g_size.width - 100, 0)
-        //     this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
-        // }
-        // else if (contentType == ContentType.Text_Video) {
+        } else if (this.content_type_ == ContentType.Text_Picture) {
+            geek_lib.f_remote_img_sprite_create(this, question_material_img, res.s_audio_bg,g_size.width * 0.5, 0, 395, 290, 1, cc.AncorPointTopMid)
+
+            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+            title.setDimensions(g_size.width - 100, 0)
+            this.height_ = title.getContentSize().height + 290 + margin
+        }
+        else if (this.content_type_ == ContentType.Text_Audio) {
+            var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+            var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
+            this.addListener(icon)
+            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+            title.setDimensions(g_size.width - 100, 0)
+            this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
+        }
+        else if (this.content_type_ == ContentType.Text_Video) {
 
             var player = new ccui.VideoPlayer(res.s_video)
             this.addChild(player, 1, 1)
@@ -70,29 +70,12 @@ var g_question_content_node = cc.Node.extend({
             player.setContentSize(395, 290)
             player.setFullScreenEnabled(false)
             player.setPosition(g_size.width * 0.5, -145)
-            player.setVisible(false)
-            var player_image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
-            this.player_image_ = player_image
-            var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.5, -145, 60, 50, 999, 2, cc.AncorPointCenter)
-            this.addListener(icon)
-            cc.eventManager.addListener({
-                event : cc.EventListener.TOUCH_ONE_BY_ONE,
-                onTouchBegan : function (touch,event){
-                    var target = event.getCurrentTarget()
-                    // target --> item , target.parent --> activity
-                    var locationInNode = target.parent.convertToNodeSpace(touch.getLocation())
-                    var rect = target.getBoundingBox()
-                    console.log(rect, locationInNode)
-                    if (!cc.rectContainsPoint(rect, locationInNode)) {
-                        return false
-                    }
-                    return true
-                },
-                onTouchEnded: function (touch,event) {
-                    // // captch clicked
-                    console.log("player clicked")
-                }
-            }, player)
+
+            // player.setVisible(false)
+            // var player_image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
+            // this.player_image_ = player_image
+            // var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.5, -145, 60, 50, 999, 2, cc.AncorPointCenter)
+            // this.addListener(icon)
 
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
@@ -101,19 +84,11 @@ var g_question_content_node = cc.Node.extend({
             var that = this
             player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
                 console.log("over")
-                that.videoPlayOver(player, icon)
+                that.videoPlayOver(player, null)
             })
-            player.setEventListener(ccui.VideoPlayer.EventType.STOPPED, function () {
-                console.log("stoped")
-            })
-            player.setEventListener(ccui.VideoPlayer.EventType.PAUSED, function () {
-                console.log("PAUSED")
-            })
-            player.setEventListener(ccui.VideoPlayer.EventType.CLICKED, function () {
-                console.log("CLICKED")
-            })
-        }
 
+            geek_game_setup_video()
+        }
     },
 
     /**
@@ -158,21 +133,21 @@ var g_question_content_node = cc.Node.extend({
         if (this.background_playing_) {
             geek_lib.f_toggle_back_music()
         }
-        // if (this.content_type_ == ContentType.Text_Audio) {
-        //     if (!this.animating_) {
-        //         this.addAnimateFrame(icon)
-        //         this.startMusic()
-        //         geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
-        //     } else {
-        //         this.stopAnimate(icon)
-        //     }
-        //     this.animating_ = !this.animating_
-        //     geek_lib.f_pause_effect()
-        // } else if (this.content_type_ == ContentType.Text_Video) {
-            this.player_image_.setVisible(false)
-            this.videoPlayer_.setVisible(true)
-            this.videoPlayer_.play()
-        // }
+        if (this.content_type_ == ContentType.Text_Audio) {
+            if (!this.animating_) {
+                this.addAnimateFrame(icon)
+                this.startMusic()
+                geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
+            } else {
+                this.stopAnimate(icon)
+            }
+            this.animating_ = !this.animating_
+            geek_lib.f_pause_effect()
+        } else if (this.content_type_ == ContentType.Text_Video) {
+            // this.player_image_.setVisible(false)
+            // this.videoPlayer_.setVisible(true)
+            // this.videoPlayer_.play()
+        }
         geek_lib.f_play_music(true)
     },
 
@@ -182,9 +157,9 @@ var g_question_content_node = cc.Node.extend({
      */
     videoPlayOver: function (player,icon) {
         geek_lib.f_play_music(false)
-        player.setVisible(false)
-        this.player_image_.setVisible(true)
-        icon.setVisible(true)
+        // player.setVisible(false)
+        // this.player_image_.setVisible(true)
+        // icon.setVisible(true)
         if (this.background_playing_) {
             this.scheduleOnce(function () {  // 2秒后打印日志
                 geek_lib.f_toggle_back_music()

@@ -3612,8 +3612,8 @@ cc.ContainerStrategy = cc.Class.extend({
         locContainer.style.width = locCanvasElement.style.width = w + "px";
         locContainer.style.height = locCanvasElement.style.height = h + "px";
         // geek fix android
-        // var devicePixelRatio = view._devicePixelRatio = 1;
-        // if (view.isRetinaEnabled())
+        var devicePixelRatio = view._devicePixelRatio = 1;
+        if (view.isRetinaEnabled())
             devicePixelRatio = view._devicePixelRatio = window.devicePixelRatio || 1;
         locCanvasElement.width = w * devicePixelRatio;
         locCanvasElement.height = h * devicePixelRatio;
@@ -46878,7 +46878,7 @@ cc.eventManager.addCustomListener(cc.game.EVENT_SHOW, function () {
     var list = ccui.VideoPlayer.pauseElements;
     var node = list.pop();
     while(node){
-        // node.play();
+        node.play();
         node = list.pop();
     }
 });
@@ -46989,6 +46989,7 @@ ccui.VideoPlayer.EventType = {
             ty = t.ty*scaleY - ch/2 + ch*node._scaleY/2*scaleY;
         var matrix = "matrix(" + a + "," + b + "," + c + "," + d + "," + tx + "," + -ty + ")";
         this._video.style["transform"] = matrix;
+        this._video.style["-webkit-transform"] = matrix;
     };
     proto.updateURL = function(path){
         var source, video, hasChild, container, extname;

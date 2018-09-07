@@ -44,6 +44,16 @@ echo "</head>";
 <script type="text/javascript" src="src/geek_app_game_root_v1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek_mock_data.js" charset=utf-8></script>
 
+<style type="text/css">
+    .IIV::-webkit-media-controls-fullscreen-button {
+        overflow:hidden;
+    }
+    video::-webkit-media-controls-fullscreen-button {
+        display: none;
+    }
+
+</style>
+
 <script type="text/javascript">
     window.onload = function(){
 //        g_game_user.userID = "<?php //echo $userID ?>//"
@@ -59,6 +69,18 @@ echo "</head>";
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
     };
 
+    function geek_game_setup_video() {
+        var video = document.getElementsByClassName("cocosVideo")[0]
+        if (video) {
+            video.setAttribute("x5-playsinline", "true")
+            video.setAttribute("webkit-playsinline", "true")
+            video.setAttribute("x5-video-player-type", "h5")
+//            video.setAttribute("x5-video-orientation", "portraint")
+//            video.setAttribute("x5-video-player-fullscreen", "true")
+            video.setAttribute("playsinline", "true")
+            video.setAttribute("controls", "true")
+        }
+    }
 </script>
 
 
