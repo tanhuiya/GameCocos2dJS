@@ -37,7 +37,7 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
         var size = g_size
 
         {
-            var bg = ccui.ImageView.create(res.s_activity_bg)
+            var bg = ccui.ImageView.create(res.s_white)
             bg.setScale9Enabled(true)
             bg.setCapInsets(cc.rect(60, 60 ,1, 1))
             bg.setContentSize(g_size)

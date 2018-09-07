@@ -44,6 +44,8 @@ var g_index_layer = cc.Layer.extend({
         this._super()
         g_index = this
 
+        this.loading_layer = geek_lib.f_layer_create(this, g_app_game_comp_loading, 1, 1)
+
         this.apiIsActivityUser()
         this.apiGameState()
         this.apiHomeData()
@@ -51,6 +53,8 @@ var g_index_layer = cc.Layer.extend({
     },
 
     setLayout: function () {
+        this.loading_layer.removeFromParent(true)
+
         var bg = geek_lib.f_imageview_box_create(this, this.homeBack_, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
 
         // var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)

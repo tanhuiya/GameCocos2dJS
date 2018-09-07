@@ -12,6 +12,7 @@
         "src/geek_app_game_rank.js",
         "src/geek_app_game_over.js",
         "src/geek_app_game_activity_record.js",
+        "src/components/geek_game_comp_loading.js",
         "src/components/core/geek_game_comp_core_tableview.js",
         "src/components/core/geek_game_comp_tip.js",
         "src/components/geek_game_comp_confirm.js",

@@ -56,7 +56,7 @@ echo "</head>";
 
 <script type="text/javascript">
     window.onload = function(){
-        var vConsole = new VConsole();
+//        var vConsole = new VConsole();
 //        g_game_user.userID = "<?php //echo $userID ?>//"
 //        g_game_user.channel = "<?php //echo $channeID ?>//"
 //        g_game_user.channelName = "<?php //echo $channeName ?>//"

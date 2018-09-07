@@ -31,7 +31,7 @@ var g_question_content_node = cc.Node.extend({
         this.heigth_ = 0
         var textHeight = 300
 
-        this.content_type_ = ContentType.Text_Video
+        this.content_type_ = contentType
         var question_type_ = questionData.question_type
         var question_material_img = questionData.question_material_img
         var text = questionData.question_title
@@ -57,7 +57,7 @@ var g_question_content_node = cc.Node.extend({
         else if (this.content_type_ == ContentType.Text_Audio) {
             var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
-            this.addListener(icon)
+            this.addListener(icon, question_material_img)
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
@@ -70,12 +70,6 @@ var g_question_content_node = cc.Node.extend({
             player.setContentSize(395, 290)
             player.setFullScreenEnabled(false)
             player.setPosition(g_size.width * 0.5, -145)
-
-            // player.setVisible(false)
-            // var player_image = geek_lib.f_sprite_create_box(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
-            // this.player_image_ = player_image
-            // var icon = geek_lib.f_sprite_create_box(this, res.s_audio_1, g_size.width * 0.5, -145, 60, 50, 999, 2, cc.AncorPointCenter)
-            // this.addListener(icon)
 
             var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
@@ -94,9 +88,9 @@ var g_question_content_node = cc.Node.extend({
     /**
      * 播放音乐
      */
-    startMusic: function () {
-        var url = "http://s2-cdn.oneitfarm.com/njpivllfr63mk8pikayc4uro5gqu0td2/8e009aee4ff0981231325e8fc52e7cad.mp3"
-        cc.audioEngine.playMusic(url, false)
+    startMusic: function (videopath) {
+        // var url = "http://s2-cdn.oneitfarm.com/njpivllfr63mk8pikayc4uro5gqu0td2/8e009aee4ff0981231325e8fc52e7cad.mp3"
+        cc.audioEngine.playMusic(videopath, false)
     },
 
     /**
@@ -128,7 +122,7 @@ var g_question_content_node = cc.Node.extend({
     /**
      * 播放按钮点击回调
      */
-    playIconCallback: function (icon) {
+    playIconCallback: function (icon, videopath) {
         this.background_playing_ = geek_lib.f_isplay_effect()
         if (this.background_playing_) {
             geek_lib.f_toggle_back_music()
@@ -136,17 +130,13 @@ var g_question_content_node = cc.Node.extend({
         if (this.content_type_ == ContentType.Text_Audio) {
             if (!this.animating_) {
                 this.addAnimateFrame(icon)
-                this.startMusic()
+                this.startMusic(videopath)
                 geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
             } else {
                 this.stopAnimate(icon)
             }
             this.animating_ = !this.animating_
             geek_lib.f_pause_effect()
-        } else if (this.content_type_ == ContentType.Text_Video) {
-            // this.player_image_.setVisible(false)
-            // this.videoPlayer_.setVisible(true)
-            // this.videoPlayer_.play()
         }
         geek_lib.f_play_music(true)
     },

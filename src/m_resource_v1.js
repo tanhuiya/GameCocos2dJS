@@ -7,6 +7,8 @@ var res = {
     t_bg: test_path + "background.png",
     t_option_img: test_path + "question_option.png",
 
+    s_loading: path + "loading.png",
+    s_white: path + "white.png",
     s_video: path + "testvideo.mp4",
     s_background : path + "background.png",
     s_rank:     path + "rank.png",
@@ -61,6 +63,8 @@ var m_resources = [
     res.t_option_img,
     res.t_question_bg,
 
+    res.s_loading,
+    res.s_white,
     res.s_answer_again,
     res.s_back_index,
     res.s_confirm_1,
