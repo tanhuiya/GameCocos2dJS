@@ -16,7 +16,7 @@ fwrite($myfile, "\n");
 echo "<!DOCTYPE html>";
 echo "<html>";
 echo "<head>";
-echo "<meta http-equiv='Content-Type' content='text/html'; charset='UTF-8'>";
+echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi\" />";
 echo "<meta content='8dsun' name='author'>";
 echo "<title>皖新金智</title>";
 echo "</head>";
@@ -36,7 +36,7 @@ echo "</head>";
 
 <!--<script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>-->
 
-
+<script type="text/javascript" src="src/lib/vconsole.min.js" charset=utf-8></script>
 <script type="text/javascript" src="src/lib/XHttp.js" charset=utf-8></script>
 <script type="text/javascript" src="src/lib/XTimer.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek-cocos-v3.9.1.js" charset=utf-8></script>
@@ -56,6 +56,7 @@ echo "</head>";
 
 <script type="text/javascript">
     window.onload = function(){
+        var vConsole = new VConsole();
 //        g_game_user.userID = "<?php //echo $userID ?>//"
 //        g_game_user.channel = "<?php //echo $channeID ?>//"
 //        g_game_user.channelName = "<?php //echo $channeName ?>//"
@@ -67,6 +68,7 @@ echo "</head>";
         g_game_user.channelName = MockData.channelName
         g_game_user.activity = MockData.Activity
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
+        cc.view.enableRetina(true);
     };
 
     function geek_game_setup_video() {
