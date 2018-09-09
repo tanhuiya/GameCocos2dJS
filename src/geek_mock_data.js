@@ -5,9 +5,9 @@
 
 
 var MockData = {
-    UserID: "123456",
-    Activity: "d315324316d04805a649477fc44a8832",
-    // Activity: "68b1443f8bf949b5af4552a024d0cb7f",
+    UserID: "123457",
+    // Activity: "d315324316d04805a649477fc44a8832",
+    Activity: "68b1443f8bf949b5af4552a024d0cb7f",
     channelID: 1111111111,
     channelName: '小学',
     ClassData: ["一班","一班","一班","一班","一班","一班","一班","一班"],

@@ -30,7 +30,7 @@ var g_question_result_node = cc.LayerColor.extend({
         var node = cc.LayerColor.create(cc.color(255,255,11,0), 336 * 2, 240 *2)
         this.addChild(node)
         var width = 336 * 2
-        node.setPosition( (g_size.width - width) * 0.5 , 67 * 2)
+        node.setPosition( (g_size.width - width) * 0.5 , - 240*2)
 
         var bg = geek_lib.f_imageview_box_create(node, res.s_activity_bg, 0, 0, width, 240 *2, 1, 1, cc.AncorPointBottomLeft)
         var rect = bg.getBoundingBox()
@@ -41,6 +41,10 @@ var g_question_result_node = cc.LayerColor.extend({
             geek_lib.f_sprite_create_box(node, res.s_right, 112 * 2 , 212 * 2, 40, 40, 2, 2,cc.AncorPointCenter)
             geek_lib.f_label_create(node, "回答正确", 50, rect.width * 0.5 + 20, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)
         }
+
+        var move = cc.moveTo(0.2, cc.p(node.getPositionX(), node.getPositionY() + 67 * 2 + node.getBoundingBox().height));
+        node.runAction(cc.sequence(move, cc.callFunc(function () {
+        })));
 
         var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), width - 40, 0.6)
         geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointTopLeft)

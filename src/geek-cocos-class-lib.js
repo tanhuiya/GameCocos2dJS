@@ -549,7 +549,7 @@ var geek_class_lib = cc.Layer.extend({
     {
         if (this.image_bg) return
         this.time = time;
-        var image_bg = cc.LayerColor.create(cc.color(0,0,0,150), g_size.width * 0.6 , 80)
+        var image_bg = cc.LayerColor.create(cc.color(45,45,45,150), g_size.width * 0.6 , 80)
         this.addChild(image_bg, 900)
         image_bg.setPosition(g_size.width * 0.2, g_size.height)
         this.image_bg = image_bg
@@ -559,16 +559,13 @@ var geek_class_lib = cc.Layer.extend({
         var px = this.image_bg.getBoundingBox().x;
         var py = g_size.height * 0.8;
 
-        var move1 = cc.moveTo(0.5, cc.p(px, py));
+        var move1 = cc.moveTo(0.4, cc.p(px, py));
         var move2 = cc.moveTo(this.time, cc.p(px, py));
-        var move3 = cc.moveTo(0.5, cc.p(px, g_size.height + 5));
-        this.image_bg.runAction(cc.sequence(move1, move2, move3));
-
-        var sp_callback = new cc.CallFunc(function ()   //动作结束事件回调
-        {
-            this.scheduleOnce(this.g_notice_action, this.time);
-        }, this);
-
+        var move3 = cc.moveTo(0.4, cc.p(px, g_size.height + 5));
+        var that = this
+        this.image_bg.runAction(cc.sequence(move1, move2, move3, cc.callFunc(function () {
+            that.g_notice_action()
+        })));
     },
 
     g_notice_action:function()
@@ -576,8 +573,6 @@ var geek_class_lib = cc.Layer.extend({
         this.image_bg.removeFromParent();
         this.image_bg = null
     },
-
-
 
     /*************************** UI  END ***************************************************/
 

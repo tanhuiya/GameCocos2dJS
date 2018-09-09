@@ -131,7 +131,7 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
         }
         sheet.setPosition(0, 0)
         geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)
-        this.addChild(sheet, 9999, 10)
+        this.addChild(sheet, 9, 10)
         var that = this
         sheet.setCallback(function (index) {
             sheet.removeFromParent(true)
@@ -275,8 +275,6 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
                 that.success_call_back()
                 that.removeFromParent()
             }
-        }, function (msg) {
-            geek_lib.g_notice(msg, 3)
         })
     },
 
@@ -298,8 +296,6 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
                     console.log("000")
                     geek_lib.g_notice(response.msg, 15)
                 }
-            }, function () {
-                console.log("error")
             }
         );
     },
@@ -409,7 +405,14 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
      */
     resetTimer: function () {
         this.seconds_ = TimeToWaite
-    }
+    },
+
+    /**
+     * 通用错误处理
+     */
+    errorHandler: function (msg) {
+        geek_lib.g_notice(msg, 2)
+    },
 })
 
 /**

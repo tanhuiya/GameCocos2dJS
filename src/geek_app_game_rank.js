@@ -52,11 +52,12 @@ var g_app_game_rank = cc.Layer.extend({
      * 解析网络请求返回的数据
      */
     parseResponse: function (data) {
-        var score = data.myscore.score
-        var order = data.myscore.order
-        this.score_label_.setString(score + "")
-        this.rank_label_.setString(order + "")
-
+        if (data.myscore) {
+            var score = data.myscore.score
+            var order = data.myscore.order
+            this.score_label_.setString(score + "")
+            this.rank_label_.setString(order + "")
+        }
         this.list_node_.setData(data.page.data)
     },
 

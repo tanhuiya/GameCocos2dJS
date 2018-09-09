@@ -17,13 +17,34 @@ var g_game_introduce_layer = cc.Layer.extend({
      * 绘制界面
      */
     drawRect: function (data) {
-        var text = data.content
+        var text = data.introContent
+
+        text = this.processContent(text)
+        // var text = "<h1>这是个游戏游戏戏游戏戏游戏的说法DSF</h1>"
         geek_lib.f_label_create(this, "游戏介绍", 40, g_size.width * 0.5, g_size.height - 33 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
         this.close_btn_ = geek_lib.f_btn_create(this, res.s_close, "",g_size.width - 34, g_size.height - 32 * 2, 1, 1, 2, cc.AncorPointCenter)
-        geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - 55 * 2, 357 * 2, 473 * 2, 1, 3,cc.AncorPointTopMid)
+        geek_lib.f_sprite_create_box(this, data.introPage, g_size.width * 0.5, g_size.height - 55 * 2, 357 * 2, 473 * 2, 1, 3,cc.AncorPointTopMid)
+
+        // var richText = new g_app_super_rich_text(357 * 2,0,text,cc.p(-295, 950),undefined,28)
+        // geek_lib.f_set_anchor_point_type(richText, cc.AncorPointTopLeft)
+        // this.addChild(richText, 2)
 
         var des_label = geek_lib.f_label_create(this, text, 34, 25 * 2, g_size.height - 87 * 2, 1, cc.hexToColor("#1F2B75"), 1, 4, cc.AncorPointTopLeft)
         des_label.setDimensions(g_size.width - 25 * 2 * 2, 0)
+    },
+
+    /**
+     * 去除h5标签
+     * @param text
+     * @returns {string|void|XML}
+     */
+    processContent: function (text) {
+        var reg=new RegExp("<[^>]+>","g") //创建正则RegExp对象
+        var newstr = text.replace(reg,"")
+        if (newstr[0] == '\"' && newstr[newstr.length - 1] == '\"') {
+            newstr = newstr.substr(1, newstr.length - 2)
+        }
+        return newstr
     },
 
     /**

@@ -30,7 +30,9 @@ var g_question_content_node = cc.Node.extend({
         var margin = 30
         this.heigth_ = 0
         var textHeight = 300
-
+        if (!contentType){
+            contentType = ContentType.Text
+        }
         this.content_type_ = contentType
         var question_type_ = questionData.question_type
         var question_material_img = questionData.question_material_img
@@ -81,6 +83,10 @@ var g_question_content_node = cc.Node.extend({
                 that.videoPlayOver(player, null)
             })
 
+            player.setEventListener(ccui.VideoPlayer.EventType.PLAYING, function () {
+                that.videpPlayBegin()
+            })
+
             geek_game_setup_video()
         }
     },
@@ -121,9 +127,21 @@ var g_question_content_node = cc.Node.extend({
     },
 
     /**
+     * 视频开始播放
+     */
+    videpPlayBegin: function () {
+        this.background_playing_ = geek_lib.f_isplay_effect()
+        if (this.background_playing_) {
+            geek_lib.f_toggle_back_music()
+        }
+    },
+
+    /**
      * 播放按钮点击回调
      */
     playIconCallback: function (icon, videopath) {
+        if (this.animating_) return
+
         this.background_playing_ = geek_lib.f_isplay_effect()
         if (this.background_playing_) {
             geek_lib.f_toggle_back_music()
@@ -137,9 +155,10 @@ var g_question_content_node = cc.Node.extend({
                 this.addAnimateFrame(icon)
                 this.startMusic(videopath)
                 geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
-            } else {
-                this.stopAnimate(icon)
             }
+            // else {
+            //     this.stopAnimate(icon)
+            // }
             this.animating_ = !this.animating_
         }
         geek_lib.f_play_music(true)
@@ -155,9 +174,20 @@ var g_question_content_node = cc.Node.extend({
         // this.player_image_.setVisible(true)
         // icon.setVisible(true)
         if (this.background_playing_) {
-            this.scheduleOnce(function () {  // 2秒后打印日志
+            this.scheduleOnce(function () {  // 2秒后恢复背景音
                 geek_lib.f_toggle_back_music()
             },2);
+        }
+    },
+
+    /**
+     * 停止视频或音频播放
+     */
+    stopPlayAll: function () {
+        if (this.videoPlayer_) {
+            this.videoPlayer_.stop()
+        } else {
+            cc.audioEngine.stopMusic(false)
         }
     },
 

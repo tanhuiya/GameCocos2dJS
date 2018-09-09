@@ -72,7 +72,11 @@ var g_question_1_layer = cc.Layer.extend({
      */
     drawQuestion: function (idx) {
         if (this.container_) {
-            this.container_.removeFromParent(true)
+            var local = this.container_
+            var move = cc.moveTo(0.2, cc.p(local.getPositionX() - g_size.width, local.getPositionY()));
+            local.runAction(cc.sequence(move, cc.callFunc(function () {
+                local.removeFromParent(true)
+            })));
             this.container_ = null
         }
         this.headNode_.setQuestionIndex(this.currentIndex_ + 1)
@@ -82,18 +86,25 @@ var g_question_1_layer = cc.Layer.extend({
         var container_height = g_size.height - container_top - container_bottom
         var container = cc.LayerColor.create(cc.color(255,255,255, 0), g_size.width , container_height )
         this.addChild(container, 2)
-        container.setPosition(0, container_bottom)
+
+        if (this.currentIndex_ == 0){
+            container.setPosition(0, container_bottom)
+        } else {
+            container.setPosition(g_size.width, container_bottom)
+            var move = cc.moveTo(0.2, cc.p(0, container.getPositionY()));
+            container.runAction(move);
+        }
+
         this.container_ = container
 
         // 设置问题内容
         var content = new g_question_content_node()
         container.addChild(content, 2, 3)
         content.setPosition(cc.p(0, container_height))
-
-
         // content.setUp(ContentType.Text_Video,questionData)
         content.setUp(questionData.question_material_type, questionData)
         var content_height = content.getHeight()
+        this.answer_content_ = content
 
         // 绘制答案
         var scroll_height = container_height - content_height - 30
@@ -202,7 +213,8 @@ var g_question_1_layer = cc.Layer.extend({
             data,
             function () {
                 // stop
-                that.stopAnswer()
+                that.nextQuestion()
+                that.confirm()
             }, function () {
                 // next
                 that.nextQuestion()
@@ -273,6 +285,9 @@ var g_question_1_layer = cc.Layer.extend({
             text = "您还有" + leftTime + "次机会"
         }
         var confirm = new g_app_game_comp_confirm(text, function (index) {
+            if (that.answer_content_) {
+                that.answer_content_.stopPlayAll()
+            }
             if (index == 0) {
                 that.stopAnswer()
             } else if (index == 1){
@@ -290,6 +305,8 @@ var g_question_1_layer = cc.Layer.extend({
      * @param timeout 是否超时
      */
     apiSubmitAnswer: function (timeout) {
+        this.answer_content_.stopPlayAll()
+
         var used = this.headNode_.getUsedSeconds()
         if (this.questionTimeType_ == QuestionTimeLimitType.Single) {
             this.secondUsed_ = this.secondUsed_ + used
