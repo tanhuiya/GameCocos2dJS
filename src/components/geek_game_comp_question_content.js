@@ -66,7 +66,7 @@ var g_question_content_node = cc.Node.extend({
         }
         else if (this.content_type_ == ContentType.Text_Video) {
 
-            var player = new ccui.VideoPlayer(res.s_video)
+            var player = new ccui.VideoPlayer(question_material_img)
             this.addChild(player, 1, 1)
             this.videoPlayer_ = player
             player.setContentSize(395, 290)
@@ -238,6 +238,16 @@ var g_question_content_node = cc.Node.extend({
                 //     geek_lib.f_toggle_back_music()
                 //     break;
             }
+        }
+    },
+
+    /**
+     * 设置视频隐藏或显示, 视频在最上层，无法遮盖，只能隐藏
+     * @param visible
+     */
+    setVideo:function (visible) {
+        if (this.videoPlayer_) {
+            this.videoPlayer_.setVisible(visible)
         }
     },
 

@@ -110,6 +110,8 @@ var g_question_header_node = cc.Node.extend({
         this.title_label_.setString(title)
     },
 
+
+
     /**
      * 按钮被点击的回调
      * @param sender 事件相应者

@@ -8408,7 +8408,6 @@ cc.game.addEventListener(cc.game.EVENT_RENDERER_INITED, function () {
             var locTexs = this._textures;
             var tex = locTexs[url] || locTexs[cc.loader._getAliase(url)];
             if (tex) {
-                console.log(tex)
                 if(tex.isLoaded()) {
                     console.log("load already");
                     cb && cb.call(target, tex);

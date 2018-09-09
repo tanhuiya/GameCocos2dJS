@@ -84,6 +84,7 @@ var g_question_answer_node = cc.LayerColor.extend({
         if (this.judgeOptionImage(answers)) {
             type = AnswerOptionType.TextImage
         }
+
         this.optionType_ = type
         this.cellHeight_ = type == AnswerOptionType.Text ? TextBgHeight : TextImageBgHeight
         var left = height - answers.length * this.cellHeight_
@@ -97,12 +98,12 @@ var g_question_answer_node = cc.LayerColor.extend({
      * @returns {boolean}
      */
     judgeOptionImage: function (answer) {
-        var find = false
-        answer.forEach(function (option, p2, p3) {
+        for (var i = 0; i < answer.length; i++) {
+            var option = answer[i]
             if (option.optionImg && option.optionImg.length > 0) {
-                find = true
+                return  true
             }
-        })
+        }
         return false
     },
 
@@ -177,7 +178,7 @@ var g_question_answer_node = cc.LayerColor.extend({
     tableCellAtIndex: function (table, idx) {
         var cell = table.dequeueCell();
         if (!cell) {
-            cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_);
+            var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_);
         }
         cell.setDelegate(this)
         cell.setData(idx, this.answers_[idx], idx == this.answers_.length)
@@ -279,7 +280,7 @@ var g_question_answer_cell = cc.TableViewCell.extend({
             this.text_label_.setDimensions(this.width_ - 230,0)
         } else if (type == AnswerOptionType.TextImage) {
             var size = this.backLayer_.getBoundingBox()
-            geek_lib.f_imageview_box_create(this.backLayer_, res.s_audio_bg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
+            this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, res.s_audio_bg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
             this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 80, 100, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
             this.text_label_.setDimensions(this.width_ - 230,0)
         }
@@ -297,6 +298,11 @@ var g_question_answer_cell = cc.TableViewCell.extend({
             this.backLayer_.setVisible(true)
             this.option_ = data
             geek_lib.f_label_change_txt(this.text_label_, data.optionContent)
+
+            if (data.optionImg && this.image_) {
+                this.image_.removeFromParent()
+                this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, data.optionImg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
+            }
         }
     },
 

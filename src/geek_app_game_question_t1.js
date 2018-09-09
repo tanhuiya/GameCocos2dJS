@@ -18,6 +18,8 @@ var g_question_1_layer = cc.Layer.extend({
     questions_: [],
     // 限时时间
     questionTime_ : 0,
+    // 限制时长（不变）
+    resetTime_: 0,
     // 限时类型
     questionTimeType_: QuestionTimeLimitType.Unlimit,
     // 当前问题索引
@@ -40,11 +42,11 @@ var g_question_1_layer = cc.Layer.extend({
         geek_lib.f_swallow_event(this)
         this.questions_ = startData.questions
         this.questionTime_ = startData.questiontime
+        this.resetTime_ = startData.questiontime
         this.questionTimeType_ = startData.questionTimeType
         this.isResolve_ = startData.isResolve
         geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.drawRect()
-        this.scheduleBegin()
     },
 
     /**
@@ -56,11 +58,14 @@ var g_question_1_layer = cc.Layer.extend({
         this.addChild(node,2,2)
         node.setUp()
         node.setPosition(cc.p(25, g_size.height - 20))
+        node.setTotal(this.resetTime_)
         this.headNode_ = node
 
         // 停止答题按钮
         var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 18,1, 3, 3, cc.AncorPointTopMid)
         this.stop_btn_ = stop_btn
+
+
 
         // 提交答案按钮
         this.drawQuestion(this.currentIndex_)
@@ -79,6 +84,13 @@ var g_question_1_layer = cc.Layer.extend({
             })));
             this.container_ = null
         }
+
+        if (this.questionTimeType_== QuestionTimeLimitType.Single) {
+            this.questionTime_ = this.resetTime_
+            this.headNode_.setTotal(this.resetTime_)
+        }
+        this.scheduleBegin()
+
         this.headNode_.setQuestionIndex(this.currentIndex_ + 1)
         var questionData = this.questions_[idx]
         var container_top = 170
@@ -87,13 +99,13 @@ var g_question_1_layer = cc.Layer.extend({
         var container = cc.LayerColor.create(cc.color(255,255,255, 0), g_size.width , container_height )
         this.addChild(container, 2)
 
-        if (this.currentIndex_ == 0){
+        // if (this.currentIndex_ == 0){
             container.setPosition(0, container_bottom)
-        } else {
-            container.setPosition(g_size.width, container_bottom)
-            var move = cc.moveTo(0.2, cc.p(0, container.getPositionY()));
-            container.runAction(move);
-        }
+        // } else {
+        //     container.setPosition(g_size.width, container_bottom)
+        //     var move = cc.moveTo(0.2, cc.p(0, container.getPositionY()));
+        //     container.runAction(move);
+        // }
 
         this.container_ = container
 
@@ -128,9 +140,12 @@ var g_question_1_layer = cc.Layer.extend({
             this.headNode_.setTimeVisible(false)
         } else {
             this.headNode_.setTimeVisible(true)
-            this.headNode_.setTotal(this.questionTime_)
             geek_lib.f_timer_start(this, this.updateTimeBack, 1, true)
         }
+    },
+
+    scheduleStop: function () {
+        geek_lib.f_timer_stop(this, this.updateTimeBack)
     },
 
     /**
@@ -142,7 +157,7 @@ var g_question_1_layer = cc.Layer.extend({
             this.headNode_.updateTime(this.questionTime_)
         } else {
             // timeout
-            geek_lib.f_timer_stop(this, this.updateTimeBack)
+            this.scheduleStop()
             if (this.questionTimeType_== QuestionTimeLimitType.Single) {
                 // 单题限制时间
                 this.apiSubmitAnswer(true)
@@ -275,16 +290,19 @@ var g_question_1_layer = cc.Layer.extend({
      * 退出的二次确认
      */
     confirm: function () {
+        this.answer_content_.setVideo(false)
         var that = this
         var leftType = g_game_info.left_type_
-        var leftTime = g_game_info.left_times_ - 1
+        var leftTime = g_game_info.left_times_
         var text = ""
         if (leftType == LeftTimeType.Left_Day) {
             text = "今日还有" + leftTime + "次机会"
         } else if (leftType == LeftTimeType.Left_Total) {
             text = "您还有" + leftTime + "次机会"
         }
+
         var confirm = new g_app_game_comp_confirm(text, function (index) {
+            that.answer_content_.setVideo(true)
             if (that.answer_content_) {
                 that.answer_content_.stopPlayAll()
             }
@@ -297,6 +315,7 @@ var g_question_1_layer = cc.Layer.extend({
                 that.removeFromParent(true)
             }
         })
+
         this.addChild(confirm, 50);
     },
 
@@ -305,9 +324,12 @@ var g_question_1_layer = cc.Layer.extend({
      * @param timeout 是否超时
      */
     apiSubmitAnswer: function (timeout) {
+
+        this.scheduleStop()
         this.answer_content_.stopPlayAll()
 
         var used = this.headNode_.getUsedSeconds()
+        console.log("used: ", used)
         if (this.questionTimeType_ == QuestionTimeLimitType.Single) {
             this.secondUsed_ = this.secondUsed_ + used
         } else if (this.questionTimeType_ == QuestionTimeLimitType.All) {
@@ -315,7 +337,7 @@ var g_question_1_layer = cc.Layer.extend({
         } else if (this.questionTimeType_ == QuestionTimeLimitType.Unlimit) {
             this.secondUsed_ = (Date.parse(new Date()) - this.startSecond_) / 1000
         }
-
+        console.log("used: ", used)
         var answers = this.answer_node_.getAnswers()
         var ids = []
 

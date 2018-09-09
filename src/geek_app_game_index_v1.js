@@ -26,6 +26,7 @@ var ActivityType = {
  * @type {any}
  */
 var g_index_layer = cc.Layer.extend({
+
     requestNumber_: 0,
 
     effectPath_: null,
@@ -189,7 +190,7 @@ var g_index_layer = cc.Layer.extend({
             this.activity_img_ = res.s_home_bg
         }
 
-        cc.textureCache.addImageAsync(res, function (texture) {
+        geek_lib.f_load_resource(res, function (error) {
             that.setLayout()
         })
     },
@@ -230,23 +231,12 @@ var g_index_layer = cc.Layer.extend({
                 this.pushUrl(resources, option.optionImg)
             }
         }
-        // cc.loader.load(resources, {}, function (error) {
-        //     console.log("load resource over")
-        //     loading_layer.removeFromParent(true)
-        //     geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
-        // }, this)
-        console.log(resources)
-        if (resources.length){
-            cc.textureCache.addImageAsync(resources, function (err) {
-                console.log("load resource over", err)
-                loading_layer.removeFromParent(true)
-                geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
-            })
-        } else {
+
+        geek_lib.f_load_resource(resources, function (err) {
+            console.log("load resource over", err)
             loading_layer.removeFromParent(true)
             geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
-        }
-
+        })
     },
 
     pushUrl: function (arr, path) {

@@ -917,6 +917,30 @@ var geek_class_lib = cc.Layer.extend({
             geek_lib.f_sprite_create_box(that, img, posX, posY, width, height, level, 1, anchor)
         })
         return image
+    },
+
+    f_load_resource: function (resources, callback) {
+        if (!this.caches_){
+            this.caches_ = []
+        }
+        var temp = []
+        for (var i = 0; i < resources.length; i++) {
+            if (this.caches_.indexOf(resources[i]) < 0) {
+                this.caches_.push(resources[i])
+                temp.push(resources[i])
+            }
+        }
+        if (temp.length){
+            console.log(temp)
+            cc.textureCache.addImageAsync(temp, function (texture) {
+                if (callback) {
+                    callback(texture)
+                }
+            })
+        } else {
+            callback("empty")
+        }
+
     }
 });
 
