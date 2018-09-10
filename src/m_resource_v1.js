@@ -7,6 +7,7 @@ var res = {
     t_bg: test_path + "background.png",
     t_option_img: test_path + "question_option.png",
 
+    s_music_off: path + "music_off.png",
     s_loading: path + "loading.png",
     s_white: path + "white.png",
     s_video: path + "testvideo.mp4",
@@ -63,6 +64,7 @@ var m_resources = [
     res.t_option_img,
     res.t_question_bg,
 
+    res.s_music_off,
     res.s_loading,
     res.s_white,
     res.s_answer_again,

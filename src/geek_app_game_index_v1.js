@@ -147,7 +147,14 @@ var g_index_layer = cc.Layer.extend({
      * 背景音乐设置
      */
     toggleEffects: function () {
-        geek_lib.f_toggle_back_music()
+        if (geek_lib.f_toggle_back_music()) {
+            // 停止或继续成功
+            if (geek_lib.f_isplay_effect()) {
+                this.music_btn_.loadTextures(res.s_music_off)
+            } else {
+                this.music_btn_.loadTextures(res.s_music)
+            }
+        }
     },
 
 

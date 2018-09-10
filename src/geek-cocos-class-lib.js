@@ -825,11 +825,12 @@ var geek_class_lib = cc.Layer.extend({
     },
 
     /**
-     * 停止播放背景
+     * 切换播放背景
+     * @return 切换成功
      */
     f_toggle_back_music: function () {
         console.log(this.music_play_)
-        if (this.music_play_) return
+        if (this.music_play_) return false
         if (!this.audio_ && this.effect_path_) {
             this.f_play_back_music(this.effect_path_)
         } else {
@@ -841,6 +842,7 @@ var geek_class_lib = cc.Layer.extend({
                 this.effect_play_ = true
             }
         }
+        return true
     },
 
     /**
