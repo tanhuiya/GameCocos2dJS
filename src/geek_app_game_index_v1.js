@@ -273,8 +273,11 @@ var g_index_layer = cc.Layer.extend({
             uri.isActivityUser,
             param,
             function (data) {
-                if (data.activityUser) {
+                if (data.userFlag == 1) {
                     g_game_info.setRecord(true)
+                }
+                if (data.activityUser){
+                    g_game_info.setUser(data.activityUser)
                 }
             })
     },

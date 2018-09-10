@@ -82,6 +82,10 @@ var LeftTimeType = {
 
 var g_game_info = {
     /**
+     * 用户信息
+     */
+    user_: null,
+    /**
      * 剩余答题次数
      */
     left_times_: 0,
@@ -126,4 +130,8 @@ var g_game_info = {
             this.left_times_ = time
         }
     },
+
+    setUser: function (user) {
+        this.user_ = user
+    }
 }
