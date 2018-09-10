@@ -54,7 +54,7 @@ var g_index_layer = cc.Layer.extend({
     setLayout: function () {
         this.loading_layer.removeFromParent(true)
 
-        var bg = geek_lib.f_imageview_box_create(this, this.homeBack_, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
+        var bg = geek_lib.f_imageview_box_create(this, this.homeBack_ ? this.homeBack_ : res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
 
         // var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.bg_ = bg
@@ -73,7 +73,7 @@ var g_index_layer = cc.Layer.extend({
         this.music_btn_ = music_btn
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
 
-        var homebg = geek_lib.f_imageview_box_create(this, this.activity_img_, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 2, 6, cc.AncorPointCenter)
+        var homebg = geek_lib.f_imageview_box_create(this, this.activity_img_ ? this.activity_img_ : res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 2, 6, cc.AncorPointCenter)
         this.homebg_ = homebg
 
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
@@ -159,7 +159,7 @@ var g_index_layer = cc.Layer.extend({
         this.home_data_ = data
 
         var res = []
-        if (data.musicUrl) {
+        if (data.musicUrl.length) {
             this.effectPath_ = data.musicUrl
             res.push(data.musicUrl)
             // cc.loader.load(this.effectPath_, {}, function (res) {
@@ -174,20 +174,13 @@ var g_index_layer = cc.Layer.extend({
         if (data.homeBack) {
             this.homeBack_ = data.homeBack
             res.push(data.homeBack)
-        } else {
-            this.homeBack_ = res.s_background
         }
-
-        if (data.introPage) {
+        if (data.introPage.length) {
             res.push(data.introPage)
         }
-
         // 设置活动图
-        if (data.homeTitle) {
-            res.push(data.homeTitle)
+        if (data.homeTitle.length > 0) {
             this.activity_img_ = data.homeTitle
-        } else {
-            this.activity_img_ = res.s_home_bg
         }
 
         geek_lib.f_load_resource(res, function (error) {
