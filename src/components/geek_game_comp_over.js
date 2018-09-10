@@ -16,8 +16,11 @@ var g_game_comp_over_question = cc.Node.extend({
      */
     ctor: function (width, timeLeft, score, second) {
         this._super()
-        var time_left_text = "您还有" + timeLeft + "次答题机会"
-        geek_lib.f_label_create(this, time_left_text, 28, width * 0.5, 150 * 2, 1, cc.hexToColor("#95AAD1"), 1, 1, cc.AncorPointTopMid)
+
+        if (timeLeft > 0 && g_game_info.left_type_ != LeftTimeType.Left_Unlimit) {
+            var time_left_text = "您还有" + timeLeft + "次答题机会"
+            geek_lib.f_label_create(this, time_left_text, 28, width * 0.5, 150 * 2, 1, cc.hexToColor("#95AAD1"), 1, 1, cc.AncorPointTopMid)
+        }
 
         var minute = second / 60
         var sec = second % 60
@@ -124,8 +127,10 @@ var g_game_comp_over_test = cc.Node.extend({
      */
     ctor: function (width, timeLeft, title, desc) {
         this._super()
-        var time_left_text = "您还有" + timeLeft + "次重新测评机会"
-        geek_lib.f_label_create(this, time_left_text, 28, width * 0.5, 34, 1, cc.hexToColor("#95AAD1"), 1, 1, cc.AncorPointBottomMid)
+        if (timeLeft > 0 && g_game_info.left_type_ != LeftTimeType.Left_Unlimit) {
+            var time_left_text = "您还有" + timeLeft + "次重新测评机会"
+            geek_lib.f_label_create(this, time_left_text, 28, width * 0.5, 34, 1, cc.hexToColor("#95AAD1"), 1, 1, cc.AncorPointBottomMid)
+        }
 
         var des_label = geek_lib.f_label_create(this, desc, 34, width * 0.5, 222 * 2, 1, cc.hexToColor("#1F2B75"), 1, 4, cc.AncorPointTopMid)
         des_label.setDimensions(g_size.width - 25 * 2 * 2, 0)
