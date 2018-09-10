@@ -168,6 +168,7 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
         this.school_edit_.setVisible(true)
         this.captcha_edit_.setVisible(true)
         this.phone_edit_.setVisible(true)
+        this.name_edit_.setVisible(true)
     },
     /**
      * EditBox 层级过高， 临时解决方案， 隐藏sheet 下部的editbox
@@ -184,6 +185,10 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
 
         if (this.phone_edit_.getBoundingBox().y + this.phone_edit_.getBoundingBox().height * 0.5 < belowHeight) {
             this.phone_edit_.setVisible(false)
+        }
+
+        if (this.name_edit_.getBoundingBox().y + this.name_edit_.getBoundingBox().height * 0.5 < belowHeight) {
+            this.name_edit_.setVisible(false)
         }
     },
 

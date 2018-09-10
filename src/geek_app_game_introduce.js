@@ -19,7 +19,7 @@ var g_game_introduce_layer = cc.Layer.extend({
     drawRect: function (data) {
         var text = data.introContent
 
-        geek_lib.f_sprite_create_box(this,data.introPage, g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
+        geek_lib.f_sprite_create_box(this,data.introPage ? data.introPage : res.s_background , g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
 
         text = this.processContent(text)
         // var text = "<h1>这是个游戏游戏戏游戏戏游戏的说法DSF</h1>"
