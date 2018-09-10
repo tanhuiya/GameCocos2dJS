@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  lnmp:
+    image: registry.cn-shanghai.aliyuncs.com/idg/lnmp:develop
+    ports:
+      - "8057:80" # wx 项目
+
+    restart: always
+#    links:
+#      - mysql
+    volumes:
+      - ./nginx/logs:/opt/ci123/www/html/logs
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ../../WXGame:/opt/ci123/www/html/wx_game
+
+#   mysql:
+#     build: ./mysql-docker
+#     ports:
+#       - "3307:3306"
+#     restart: always
+#     volumes:
+#       - ./mysql:/var/lib/mysql
+#     environment:
+#       MYSQL_ROOT_PASSWORD: 123456
