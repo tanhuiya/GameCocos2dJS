@@ -21,11 +21,24 @@ echo "<meta content='8dsun' name='author'>";
 echo "<title>皖新金智</title>";
 echo "</head>";
 
-//$userID = $_GET["userId"];
-//$channeID = $_GET["channelId"];
-//$channeName = $_GET["channelName"];
-//$activityID = $_GET["activityId"];
+$userID = $_GET["userId"];
+$channeID = $_GET["channelId"];
+$channeName = $_GET["channelName"];
+$activityID = $_GET["activityId"];
 
+if (!$userID) {
+    die("userId 非法");
+}
+
+if (!$channeID) {
+	die("channelId 非法");
+}
+if (!$channeName) {
+	die("channelName 非法");
+}
+if (!$activityID) {
+	die("activityId 非法");
+}
 ?>
 
 
@@ -33,9 +46,7 @@ echo "</head>";
 
 <canvas id="geekCanvas" width="675" height="1206"></canvas>
 
-
 <!--<script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>-->
-
 <script type="text/javascript" src="src/lib/vconsole.min.js" charset=utf-8></script>
 <script type="text/javascript" src="src/lib/XHttp.js" charset=utf-8></script>
 <script type="text/javascript" src="src/lib/XTimer.js" charset=utf-8></script>
@@ -57,16 +68,18 @@ echo "</head>";
 <script type="text/javascript">
     window.onload = function(){
 //        var vConsole = new VConsole();
-//        g_game_user.userID = "<?php //echo $userID ?>//"
-//        g_game_user.channel = "<?php //echo $channeID ?>//"
-//        g_game_user.channelName = "<?php //echo $channeName ?>//"
-//        g_game_user.activity = "<?php //echo $activityID ?>//"
+
+        g_game_user.userID = "<?php echo $userID ?>"
+        g_game_user.channel = "<?php echo $channeID ?>"
+        g_game_user.channelName = "<?php echo $channeName ?>"
+        g_game_user.activity = "<?php echo $activityID ?>"
 
         // testdata
-        g_game_user.userID = MockData.UserID
-        g_game_user.channel = MockData.channelID
-        g_game_user.channelName = MockData.channelName
-        g_game_user.activity = MockData.Activity
+//        g_game_user.userID = MockData.UserID
+//        g_game_user.channel = MockData.channelID
+//        g_game_user.channelName = MockData.channelName
+//        g_game_user.activity = MockData.Activity
+
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
         cc.view.enableRetina(true);
     };
