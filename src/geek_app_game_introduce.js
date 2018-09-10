@@ -8,7 +8,7 @@ var g_game_introduce_layer = cc.Layer.extend({
      */
     init: function (data) {
         this._super()
-        geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
+
         this.drawRect(data)
         geek_lib.f_swallow_event(this)
     },
@@ -19,11 +19,22 @@ var g_game_introduce_layer = cc.Layer.extend({
     drawRect: function (data) {
         var text = data.introContent
 
+        geek_lib.f_sprite_create_box(this,data.introPage, g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
+
         text = this.processContent(text)
         // var text = "<h1>这是个游戏游戏戏游戏戏游戏的说法DSF</h1>"
         geek_lib.f_label_create(this, "游戏介绍", 40, g_size.width * 0.5, g_size.height - 33 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
         this.close_btn_ = geek_lib.f_btn_create(this, res.s_close, "",g_size.width - 34, g_size.height - 32 * 2, 1, 1, 2, cc.AncorPointCenter)
-        geek_lib.f_sprite_create_box(this, data.introPage, g_size.width * 0.5, g_size.height - 55 * 2, 357 * 2, 473 * 2, 1, 3,cc.AncorPointTopMid)
+
+        {
+            var bg = ccui.ImageView.create(res.s_activity_bg)
+            bg.setScale9Enabled(true)
+            bg.setCapInsets(cc.rect(200, 200 ,1, 1))
+            bg.setContentSize(357 * 2, 473 * 2)
+            bg.setPosition(g_size.width * 0.5, g_size.height - 55 * 2)
+            geek_lib.f_set_anchor_point_type(bg, cc.AncorPointTopMid)
+            this.addChild(bg, 1, 3)
+        }
 
         // var richText = new g_app_super_rich_text(357 * 2,0,text,cc.p(-295, 950),undefined,28)
         // geek_lib.f_set_anchor_point_type(richText, cc.AncorPointTopLeft)
