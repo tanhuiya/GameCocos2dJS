@@ -180,6 +180,7 @@ var g_index_layer = cc.Layer.extend({
         }
         // 设置活动图
         if (data.homeTitle.length > 0) {
+            res.push(data.homeBack)
             this.activity_img_ = data.homeTitle
         }
 
