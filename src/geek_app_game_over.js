@@ -40,8 +40,12 @@ var g_game_over_layer = cc.Layer.extend({
         this.addChild(node, 2, 5)
         node.setPosition(0, bg.getBoundingBox().y)
 
-        this.back_btn_ = geek_lib.f_btn_create(this, res.s_back_index, "", g_size.width * 0.25, bg.getBoundingBox().y - 20, 1, 2, 5, cc.AncorPointTopMid)
-        this.again_btn_ = geek_lib.f_btn_create(this, res.s_answer_again, "", g_size.width * 0.75, bg.getBoundingBox().y - 20, 1, 2, 5, cc.AncorPointTopMid)
+        if (data.again < 1){
+            this.back_btn_ = geek_lib.f_btn_create(this, res.s_back_index, "", g_size.width * 0.5, bg.getBoundingBox().y - 20, 1, 2, 5, cc.AncorPointTopMid)
+        } else {
+            this.back_btn_ = geek_lib.f_btn_create(this, res.s_back_index, "", g_size.width * 0.25, bg.getBoundingBox().y - 20, 1, 2, 5, cc.AncorPointTopMid)
+            this.again_btn_ = geek_lib.f_btn_create(this, res.s_answer_again, "", g_size.width * 0.75, bg.getBoundingBox().y - 20, 1, 2, 5, cc.AncorPointTopMid)
+        }
     },
 
     /**
