@@ -219,7 +219,10 @@ var g_index_layer = cc.Layer.extend({
         this.pushUrl(resources, startData.questionBack)
         for (var i = 0; i < startData.questions.length; i++) {
             var que = startData.questions[i]
-            this.pushUrl(resources, que.question_material_img)
+            var question_material_img = que.question_material_img
+            if (question_material_img && question_material_img.substring(question_material_img.lastIndexOf('.') + 1) != "mp4") {
+                this.pushUrl(resources, question_material_img)
+            }
             for (var index_option = 0; index_option < que.options.length; index_option++) {
                 var option = que.options[index_option]
                 this.pushUrl(resources, option.optionImg)
