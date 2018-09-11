@@ -734,7 +734,7 @@ var geek_class_lib = cc.Layer.extend({
      * @param id
      * @returns {*}
      */
-    f_circle_sprite_create: function (that, res, px, py, radius, level, id, img) {
+    f_circle_sprite_create: function (that, res, px, py, radius, level, id, img_res) {
         var stencil = new cc.DrawNode()
         stencil.drawCircle(cc.p(0,0), radius, 360, 100, false, cc.color(0,255,255,255))
         var clippingNode = new cc.ClippingNode();
@@ -745,10 +745,11 @@ var geek_class_lib = cc.Layer.extend({
 
         if (res){
             geek_lib.f_imageview_box_create(clippingNode, res, 0, 0, radius * 2, radius * 2, 2, 2, cc.AncorPointCenter )
-            // geek_lib.f_sprite_create_box(clippingNode, res, 0, 0, radius * 2, radius * 2, 1,2, cc.AncorPointCenter)
         }
-        if (img){
-            geek_lib.f_imageview_box_create(clippingNode, img, 0, 0, radius * 2, radius * 2, 3, 3, cc.AncorPointCenter )
+        if (img_res){
+            cc.loader.loadImg(img_res, {}, function (err, img) {
+                geek_lib.f_sprite_create_box(clippingNode,  img, 0, 0, radius * 2, radius * 2, 3, 2, cc.AncorPointCenter )
+            })
         }
         if (id){
             that.addChild(clippingNode, level, id)

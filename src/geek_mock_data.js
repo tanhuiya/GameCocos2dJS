@@ -134,5 +134,10 @@ var g_game_info = {
 
     setUser: function (user) {
         this.user_ = user
+        if (user && user.avatar) {
+            geek_lib.f_load_resource([user.avatar], function () {
+                console.log("load avatar success")
+            })
+        }
     }
 }

@@ -37,7 +37,12 @@ var g_question_header_node = cc.Node.extend({
         var score_label = geek_lib.f_label_create(this, this.score_ + " 分", 48, 126, -54, 1, cc.color.WHITE, 2,3, cc.AncorPointTopLeft)
         this.score_label_ = score_label
         var white_bg = geek_lib.f_sprite_create_box(this, res.s_white_bg, 60, 0 - head_bg.getBoundingBox().height * 0.5, 100, 100, 2, 4, cc.AncorPointCenter)
-        var avatar = geek_lib.f_sprite_create_box(this, res.s_default_avator, 60, 0 - head_bg.getBoundingBox().height * 0.5, 100, 100, 3, 5, cc.AncorPointCenter)
+
+        var head = null
+        if (g_game_info.user_ && g_game_info.user_.avatar) {
+            head = g_game_info.user_.avatar
+        }
+        var avatar = geek_lib.f_circle_sprite_create(this, res.s_default_avator, 60, 0 - head_bg.getBoundingBox().height * 0.5, 51, 3, 5, head)
     },
 
     /**
