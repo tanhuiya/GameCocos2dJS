@@ -11,6 +11,7 @@ var g_app_game_comp_confirm = cc.LayerColor.extend({
         this._super(cc.color(112, 112, 112, 150), g_size.width, g_size.height)
         this.call_back_ = callback
         this.setUpLayout(text)
+        geek_lib.f_swallow_event(this)
     },
 
     /**
