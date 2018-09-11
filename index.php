@@ -21,24 +21,34 @@ echo "<meta content='8dsun' name='author'>";
 echo "<title>皖新金智</title>";
 echo "</head>";
 
-//$userID = $_GET["userId"];
-//$channeID = $_GET["channelId"];
-//$channeName = $_GET["channelName"];
-//$activityID = $_GET["activityId"];
-//
-//if (!$userID) {
-//    die("userId 非法");
-//}
-//
-//if (!$channeID) {
-//	die("channelId 非法");
-//}
-//if (!$channeName) {
-//	die("channelName 非法");
-//}
-//if (!$activityID) {
-//	die("activityId 非法");
-//}
+$test = 1;
+if (!$test) {
+	$userID = $_GET["userId"];
+	$channeID = $_GET["channelId"];
+	$channeName = $_GET["channelName"];
+	$activityID = $_GET["activityId"];
+	$activityName = $_GET["activityName"];
+
+	if (!$userID) {
+		die("userId 非法");
+	}
+	if (!$channeID) {
+		die("channelId 非法");
+	}
+	if (!$channeName) {
+		die("channelName 非法");
+	}
+	if (!$activityID) {
+		die("activityId 非法");
+	}
+} else {
+	$userID = "";
+	$channeID = "";
+	$channeName = "";
+	$activityID = "";
+	$activityName = "测试环境";
+}
+
 ?>
 
 
@@ -67,18 +77,20 @@ echo "</head>";
 
 <script type="text/javascript">
     window.onload = function(){
-//        var vConsole = new VConsole();
-
-//        g_game_user.userID = "<?php //echo $userID ?>//"
-//        g_game_user.channel = "<?php //echo $channeID ?>//"
-//        g_game_user.channelName = "<?php //echo $channeName ?>//"
-//        g_game_user.activity = "<?php //echo $activityID ?>//"
-
-        // testdata
-        g_game_user.userID = MockData.UserID
-        g_game_user.channel = MockData.channelID
-        g_game_user.channelName = MockData.channelName
-        g_game_user.activity = MockData.Activity
+        document.title = "<?php echo $activityName ?>"
+        var test = "<?php echo $test ?>"
+        if (1) {
+            //        var vConsole = new VConsole();
+            g_game_user.userID = MockData.UserID
+            g_game_user.channel = MockData.channelID
+            g_game_user.channelName = MockData.channelName
+            g_game_user.activity = MockData.Activity
+        } else {
+            g_game_user.userID = "<?php echo $userID ?>"
+            g_game_user.channel = "<?php echo $channeID ?>"
+            g_game_user.channelName = "<?php echo $channeName ?>"
+            g_game_user.activity = "<?php echo $activityID ?>"
+        }
 
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
         cc.view.enableRetina(true);
@@ -90,8 +102,6 @@ echo "</head>";
             video.setAttribute("x5-playsinline", "true")
             video.setAttribute("webkit-playsinline", "true")
             video.setAttribute("x5-video-player-type", "h5")
-//            video.setAttribute("x5-video-orientation", "portraint")
-//            video.setAttribute("x5-video-player-fullscreen", "true")
             video.setAttribute("playsinline", "true")
             video.setAttribute("controls", "true")
         }

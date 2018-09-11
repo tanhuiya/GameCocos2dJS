@@ -56,7 +56,6 @@ var g_question_answer_node = cc.LayerColor.extend({
      */
     left_height_: 0,
 
-    lastIndex_: -1,
 
     lastCell_: null,
     /**
@@ -134,9 +133,15 @@ var g_question_answer_node = cc.LayerColor.extend({
         var index = cell.getIdx()
 
         if (this.selectType_ == AnswerSelectType.Multi){
-            if (this.selections_.indexOf(index) < 0) {
+            var find = this.selections_.indexOf(index)
+            if (find < 0) {
                 this.selections_.push(index)
+                cell.selected(true)
+            } else {
+                this.selections_.splice(find, 1)
+                cell.selected(false)
             }
+            return
         } else if (this.selectType_ == AnswerSelectType.Single) {
             this.selections_ = [index]
             if (this.lastCell_){
@@ -151,7 +156,6 @@ var g_question_answer_node = cc.LayerColor.extend({
 
         cell.selected(true)
         this.lastCell_ = cell
-        this.lastIndex_ = index
     },
 
     /**
