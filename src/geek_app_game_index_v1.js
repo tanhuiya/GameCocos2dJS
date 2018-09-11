@@ -69,7 +69,7 @@ var g_index_layer = cc.Layer.extend({
         this.rank_btn_ = rank_btn
 
         var music_x = g_game_info.isAnswer() ? rank_btn.getBoundingBox().x - 14 - 50 : rank_btn.getBoundingBox().x
-        var music_btn = geek_lib.f_btn_create(this, res.s_music, "", music_x, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
+        var music_btn = geek_lib.f_btn_create(this, res.s_music_off, "", music_x, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
         this.music_btn_ = music_btn
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
 
@@ -150,9 +150,9 @@ var g_index_layer = cc.Layer.extend({
         if (geek_lib.f_toggle_back_music()) {
             // 停止或继续成功
             if (geek_lib.f_isplay_effect()) {
-                this.music_btn_.loadTextures(res.s_music_off)
-            } else {
                 this.music_btn_.loadTextures(res.s_music)
+            } else {
+                this.music_btn_.loadTextures(res.s_music_off)
             }
         }
     },

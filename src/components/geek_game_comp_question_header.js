@@ -19,8 +19,8 @@ var g_question_header_node = cc.Node.extend({
      */
     setUp:function () {
         var head_bg = geek_lib.f_sprite_create_box(this, res.s_purpose, 0, 0, 420, 124, 1, 1, cc.AncorPointTopLeft)
-
-        this.music_btn_ = geek_lib.f_btn_create(this, res.s_music, "", 180 * 2, - head_bg.getBoundingBox().height * 0.5, 1, 2, 4, cc.AncorPointCenter)
+        var music_icon = geek_lib.f_isplay_effect() ? res.s_music : res.s_music_off
+        this.music_btn_ = geek_lib.f_btn_create(this, music_icon, "", 180 * 2, - head_bg.getBoundingBox().height * 0.5, 1, 2, 4, cc.AncorPointCenter)
         var white_circle = geek_lib.f_sprite_create_box(this, res.s_white_circle_big, head_bg.getBoundingBox().width + 14, -1, 126,126,2,4, cc.AncorPointTopLeft)
         this.white_circle_ = white_circle
         var progress = cc.ProgressTimer.create(cc.Sprite.create(res.s_progress))
@@ -110,7 +110,12 @@ var g_question_header_node = cc.Node.extend({
         this.title_label_.setString(title)
     },
 
-
+    /**
+     * 切换背景音
+     */
+    toggleEffect:function () {
+        g_root.indexLayer_.toggleEffects()
+    },
 
     /**
      * 按钮被点击的回调
@@ -121,7 +126,7 @@ var g_question_header_node = cc.Node.extend({
         if (type == ccui.Widget.TOUCH_ENDED) {
             switch (sender) {
                 case this.music_btn_:
-                    geek_lib.f_toggle_back_music()
+                    this.toggleEffect()
                     break;
             }
         }
