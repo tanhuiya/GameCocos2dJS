@@ -86,6 +86,7 @@ var g_index_layer = cc.Layer.extend({
      * 添加富文本，当前参加人数
      */
     addRichLabel: function (num) {
+        if (num < 1) return
         if (this.richLabel_ ){
             this.richLabel_.removeFromParent(true)
         }
