@@ -52,7 +52,7 @@ var g_app_game_rank_cell = cc.TableViewCell.extend({
         geek_lib.f_label_change_txt(this.title_label_, data.user_name)
         geek_lib.f_label_change_txt(this.school_label_, data.channel_name)
         geek_lib.f_label_change_txt(this.score_label_, data.question_sum_score)
-        var classname = data.grade_name ? data.grade_name : "" + " " + data.class_name ? data.class_name : ""
+        var classname = (data.grade_name ? data.grade_name : "") + " " + (data.class_name ? data.class_name : "")
         geek_lib.f_label_change_txt(this.class_label_, classname)
     }
 })
