@@ -168,13 +168,10 @@ var g_index_layer = cc.Layer.extend({
         var res = []
         if (data.musicUrl.length) {
             this.effectPath_ = data.musicUrl
-            res.push(data.musicUrl)
-            // cc.loader.load(this.effectPath_, {}, function (res) {
-            //     console.log("111111")
-            // })
+            // "http://pab0rrvqm.bkt.clouddn.com/II-07.mp3"
+            res.push(this.effectPath_)
             geek_lib.f_set_effect_path(this.effectPath_)
         }
-
         g_game_info.activityType_ = data.activityType
 
         // 设置背景图

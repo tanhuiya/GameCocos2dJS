@@ -120,6 +120,11 @@ var g_question_header_node = cc.Node.extend({
      */
     toggleEffect:function () {
         g_root.indexLayer_.toggleEffects()
+        if (geek_lib.f_isplay_effect()) {
+            this.music_btn_.loadTextures(res.s_music)
+        } else {
+            this.music_btn_.loadTextures(res.s_music_off)
+        }
     },
 
     /**

@@ -101,7 +101,7 @@ var g_game_comp_over_question = cc.Node.extend({
      * 去排行榜
      */
     gotoRank: function () {
-        var that = this
+        var that = this.parent
         if (g_game_info.isAnswer() && !g_game_info.isRecorded_) {
             this.showRecordList(function () {
                 geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
