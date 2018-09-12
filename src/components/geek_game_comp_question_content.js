@@ -30,12 +30,12 @@ var g_question_content_node = cc.Node.extend({
         var margin = 30
         this.heigth_ = 0
         var textHeight = 300
-        if (!contentType){
+        var question_material_img = questionData.question_material_img
+        if (!contentType || !question_material_img){
             contentType = ContentType.Text
         }
         this.content_type_ = contentType
         var question_type_ = questionData.question_type
-        var question_material_img = questionData.question_material_img
         var text = questionData.question_title
         if (question_type_ == AnswerSelectType.Single) {
             text = "(单选题): " + text
