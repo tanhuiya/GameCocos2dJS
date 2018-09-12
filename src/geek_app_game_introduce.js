@@ -2,7 +2,7 @@
  * Created by tanhui on 2018/8/25.
  */
 
-var g_game_introduce_layer = cc.Layer.extend({
+var g_introduce_layer = cc.Layer.extend({
     /**
      * 初始化函数
      */

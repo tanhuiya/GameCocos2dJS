@@ -12,7 +12,7 @@ var ListItemHeight = 60 * 2
  * 排行榜单个 item
  * @type {any}
  */
-var g_app_game_rank_cell = cc.TableViewCell.extend({
+var g_rank_layer_cell = cc.TableViewCell.extend({
     ctor: function (width, height) {
         this._super()
         this.width_ = width
@@ -61,6 +61,6 @@ var g_app_game_rank_cell = cc.TableViewCell.extend({
  * 获取高度
  * @returns {number}
  */
-g_app_game_rank_cell.getHeight = function () {
+g_rank_layer_cell.getHeight = function () {
     return ListItemHeight
 }

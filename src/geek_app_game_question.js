@@ -13,7 +13,7 @@ var QuestionTimeLimitType = {
  * 答题页面
  * @type {any}
  */
-var g_question_1_layer = cc.Layer.extend({
+var g_question_layer = cc.Layer.extend({
     // 问题
     questions_: [],
     // 限时时间
@@ -177,7 +177,7 @@ var g_question_1_layer = cc.Layer.extend({
      */
     goRecordList: function (succssback) {
         this.removeFromParent(true)
-        var record = geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        var record = geek_lib.f_layer_create_data(g_root, g_activity_record_layer, null, 1, 3)
         record.success_call_back = succssback
     },
 
@@ -192,7 +192,7 @@ var g_question_1_layer = cc.Layer.extend({
             secondUsed: this.secondUsed_,
             score: this.headNode_.getScore()
         }
-        geek_lib.f_layer_create_data(g_root, g_game_over_layer, data, 1, 3)
+        geek_lib.f_layer_create_data(g_root, g_finish_layer, data, 1, 3)
     },
 
     /**

@@ -69,7 +69,7 @@ if (!$test_env) {
 <script type="text/javascript" src="src/core/vconsole.min.js" charset=utf-8></script>
 <script type="text/javascript" src="src/core/geek-cocos-v3.9.1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/core/geek-cocos-class-lib.js" charset=utf-8></script>
-<script type="text/javascript" src="src/geek_app_game_root_v1.js" charset=utf-8></script>
+<script type="text/javascript" src="src/geek_app_game_root.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek_mock_data.js" charset=utf-8></script>
 
 <script type="text/javascript">
@@ -93,6 +93,9 @@ if (!$test_env) {
         cc.view.enableRetina(true);
     };
 
+    /**
+     * 设置video标签样式，小屏播放
+     */
     function geek_game_setup_video() {
         var video = document.getElementsByClassName("cocosVideo")[0]
         if (video) {

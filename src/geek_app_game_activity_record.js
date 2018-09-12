@@ -10,7 +10,7 @@ var TimeToWaite = 60
  * 信息录入界面
  * @type {any}
  */
-var g_game_activity_record_layer = cc.LayerColor.extend({
+var g_activity_record_layer = cc.LayerColor.extend({
     classArr_: [],
     gradeArr_: [],
     fetchCode_: false,

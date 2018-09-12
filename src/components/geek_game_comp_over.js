@@ -104,10 +104,10 @@ var g_game_comp_over_question = cc.Node.extend({
         var that = this.parent
         if (g_game_info.isAnswer() && !g_game_info.isRecorded_) {
             this.showRecordList(function () {
-                geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
+                geek_lib.f_layer_create_data(that, g_rank_layer, null, 10, 10)
             })
         } else {
-            geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
+            geek_lib.f_layer_create_data(that, g_rank_layer, null, 10, 10)
         }
     },
 
@@ -115,7 +115,7 @@ var g_game_comp_over_question = cc.Node.extend({
      * 信息录入
      */
     showRecordList: function (callback) {
-        var record = geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        var record = geek_lib.f_layer_create_data(g_root, g_activity_record_layer, null, 1, 3)
         if (callback) {
             record.success_call_back = callback
         }

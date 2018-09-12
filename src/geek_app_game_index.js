@@ -116,7 +116,7 @@ var g_index_layer = cc.Layer.extend({
      * 显示游戏简介
      */
     showIntroduce: function () {
-        geek_lib.f_layer_create_data(this, g_game_introduce_layer, this.home_data_, 10, 10)
+        geek_lib.f_layer_create_data(this, g_introduce_layer, this.home_data_, 10, 10)
     },
 
     /**
@@ -126,18 +126,18 @@ var g_index_layer = cc.Layer.extend({
         var that = this
         if (g_game_info.isAnswer() && !g_game_info.isRecorded_) {
             this.showRecordList(function () {
-                geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
+                geek_lib.f_layer_create_data(that, g_rank_layer, null, 10, 10)
             })
             return
         }
-        geek_lib.f_layer_create_data(this, g_app_game_rank, null, 10, 10)
+        geek_lib.f_layer_create_data(this, g_rank_layer, null, 10, 10)
     },
 
     /**
      * 信息录入
      */
     showRecordList: function (callback) {
-        var record = geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        var record = geek_lib.f_layer_create_data(g_root, g_activity_record_layer, null, 1, 3)
         if (callback) {
             record.success_call_back = callback
         }
@@ -219,7 +219,7 @@ var g_index_layer = cc.Layer.extend({
 
     // preloadQuestionResource: function (startData) {
     //
-    //     geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+    //     geek_lib.f_layer_create_data(g_root, g_question_layer, startData, 0, 0)
     //
     //
     //     var loading_layer = geek_lib.f_layer_create(this, g_app_game_comp_loading, 3, 1)
@@ -240,7 +240,7 @@ var g_index_layer = cc.Layer.extend({
     //     geek_lib.f_load_resource(resources, function (err) {
     //         console.log("load resource over", err)
     //         loading_layer.removeFromParent(true)
-    //         geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+    //         geek_lib.f_layer_create_data(g_root, g_question_layer, startData, 0, 0)
     //     })
     // },
 
@@ -258,7 +258,7 @@ var g_index_layer = cc.Layer.extend({
         g_game_info.setLeftTime(startData.leftTimes)
         g_game_info.setLeftType(startData.leftType)
         if (startData.countState == QuestionStatePermission.StateAllow) {
-            geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+            geek_lib.f_layer_create_data(g_root, g_question_layer, startData, 0, 0)
             // this.preloadQuestionResource(startData)
         } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")

@@ -6,7 +6,7 @@
  * 游戏结束页面
  * @type {any}
  */
-var g_game_over_layer = cc.Layer.extend({
+var g_finish_layer = cc.Layer.extend({
     init: function (data) {
         this._super()
         this.loading_ = geek_lib.f_layer_create(this, g_app_game_comp_loading, 1, 1)
