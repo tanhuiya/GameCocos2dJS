@@ -264,6 +264,8 @@ var g_index_layer = cc.Layer.extend({
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")
         } else if (startData.countState == QuestionStatePermission.StateOverToday) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏今日次数限制")
+        } else {
+            geek_lib.g_notice("startData.countState 字段缺失", 2)
         }
     },
 
