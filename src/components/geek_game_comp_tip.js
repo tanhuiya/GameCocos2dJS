@@ -6,7 +6,7 @@
  * 弹出提示框
  * @type {any}
  */
-var g_game_comp_tip_layer = cc.LayerColor.extend({
+var g_comp_tip = cc.LayerColor.extend({
 
     ctor: function (icon, text) {
         this._super(cc.color(0, 0, 0, 150))

@@ -17,7 +17,7 @@ var ContentType = {
  * 题目内容组件
  * @type {any}
  */
-var g_question_content_node = cc.Node.extend({
+var g_comp_question_content = cc.Node.extend({
     heigth_: 0,
     animating_: false,
     content_type_: ContentType.Text,

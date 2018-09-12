@@ -6,7 +6,7 @@
  * Tableview列表组件
  * @type {any}
  */
-var g_app_game_list_view = cc.LayerColor.extend({
+var g_comp_rank_list = cc.LayerColor.extend({
     tableView_: null,
     /**
      * 构造函数
@@ -114,7 +114,7 @@ var g_app_game_list_view = cc.LayerColor.extend({
  * @param cellHeight 高度
  * @returns {*}
  */
-g_app_game_list_view.create = function (size, dataArr, cell_func, bg, cellHeight) {
-    return new g_app_game_list_view(size, dataArr, cell_func, bg, cellHeight)
+g_comp_rank_list.create = function (size, dataArr, cell_func, bg, cellHeight) {
+    return new g_comp_rank_list(size, dataArr, cell_func, bg, cellHeight)
 }
 

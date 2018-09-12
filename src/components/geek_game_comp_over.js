@@ -6,7 +6,7 @@
  * 答题类型
  * @type {any}
  */
-var g_game_comp_over_question = cc.Node.extend({
+var g_comp_over_question = cc.Node.extend({
     /**
      * 构造函数
      * @param width node 可见宽度
@@ -141,7 +141,7 @@ var g_game_comp_over_question = cc.Node.extend({
  * 测评类型
  * @type {any}
  */
-var g_game_comp_over_test = cc.Node.extend({
+var g_comp_over_test = cc.Node.extend({
     /**
      * 构造函数
      * @param width node 可见宽度

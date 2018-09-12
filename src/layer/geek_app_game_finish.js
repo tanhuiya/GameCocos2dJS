@@ -9,7 +9,7 @@
 var g_finish_layer = cc.Layer.extend({
     init: function (data) {
         this._super()
-        this.loading_ = geek_lib.f_layer_create(this, g_app_game_comp_loading, 1, 1)
+        this.loading_ = geek_lib.f_layer_create(this, g_comp_loading, 1, 1)
         this.stopGame()
         geek_lib.f_swallow_event(this)
         this.secondUsed_ = data.secondUsed
@@ -37,9 +37,9 @@ var g_finish_layer = cc.Layer.extend({
 
         var node = null
         if (g_game_info.isAnswer()) {
-            node = new g_game_comp_over_question(g_size.width, data.again, this.score_, this.secondUsed_)
+            node = new g_comp_over_question(g_size.width, data.again, this.score_, this.secondUsed_)
         } else {
-            node = new g_game_comp_over_test(g_size.width, data.again, data.imgTitle, data.result)
+            node = new g_comp_over_test(g_size.width, data.again, data.imgTitle, data.result)
         }
         this.addChild(node, 2, 5)
         node.setPosition(0, bg.getBoundingBox().y)

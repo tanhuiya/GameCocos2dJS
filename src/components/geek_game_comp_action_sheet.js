@@ -20,7 +20,7 @@ var SheetType = {
  * 弹出选择框
  * @type {any}
  */
-var g_app_game_action_sheet = cc.LayerColor.extend({
+var g_comp_action_sheet = cc.LayerColor.extend({
     items_: [],
     lastIndex_: -1,
     total_: 0,

@@ -125,9 +125,9 @@ var g_activity_record_layer = cc.LayerColor.extend({
 
         var sheet = null
         if (type == SheetType.SheetClass) {
-            sheet = new g_app_game_action_sheet(this.classArr_, type, this.lastClassID_)
+            sheet = new g_comp_action_sheet(this.classArr_, type, this.lastClassID_)
         } else {
-            sheet = new g_app_game_action_sheet(this.gradeArr_, type, this.lastGradeID_)
+            sheet = new g_comp_action_sheet(this.gradeArr_, type, this.lastGradeID_)
         }
         sheet.setPosition(0, 0)
         geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)

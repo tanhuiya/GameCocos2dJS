@@ -6,7 +6,7 @@
  * 弹出选择框
  * @type {any}
  */
-var g_app_game_comp_loading = cc.LayerColor.extend({
+var g_comp_loading = cc.LayerColor.extend({
     /**
      * 构造函数
      */

@@ -9,7 +9,7 @@ var QustionResolveType = {
     Error : 2,
 }
 
-var g_question_result_node = cc.LayerColor.extend({
+var g_comp_question_result = cc.LayerColor.extend({
 
     stop_callback_: function () {},
     next_callback_: function () {},

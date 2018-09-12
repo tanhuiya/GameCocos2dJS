@@ -34,7 +34,7 @@ var AnswerSelectType = {
  * 答题框组件
  * @type {*}
  */
-var g_question_answer_node = cc.LayerColor.extend({
+var g_comp_question_answer = cc.LayerColor.extend({
     /**
      * 单选 双选
      */

@@ -2,7 +2,7 @@
  * Created by tanhui on 2018/8/22.
  */
 
-var g_question_header_node = cc.Node.extend({
+var g_comp_question_header = cc.Node.extend({
     progress_: null,
     white_circle_: null,
     totalSecond_: 0,

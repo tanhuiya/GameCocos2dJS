@@ -4,7 +4,7 @@
 
 var g_root_layer = cc.Layer.extend({
     indexLayer_: null,
-    
+
     init:function () {
         this._super();
 

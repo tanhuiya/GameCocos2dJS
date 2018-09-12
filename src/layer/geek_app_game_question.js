@@ -57,7 +57,7 @@ var g_question_layer = cc.Layer.extend({
      */
     drawRect: function () {
         // 设置头
-        var node = new g_question_header_node(this.questions_.length, this.isShowNum_)
+        var node = new g_comp_question_header(this.questions_.length, this.isShowNum_)
         this.addChild(node,2,2)
         node.setUp()
         node.setPosition(cc.p(25, g_size.height - 20))
@@ -113,7 +113,7 @@ var g_question_layer = cc.Layer.extend({
         this.container_ = container
 
         // 设置问题内容
-        var content = new g_question_content_node()
+        var content = new g_comp_question_content()
         container.addChild(content, 2, 3)
         content.setPosition(cc.p(0, container_height))
         // content.setUp(ContentType.Text_Video,questionData)
@@ -123,7 +123,7 @@ var g_question_layer = cc.Layer.extend({
 
         // 绘制答案
         var scroll_height = container_height - content_height - 30
-        var answer_node = new g_question_answer_node(questionData.options,g_size.width, scroll_height, questionData.question_type)
+        var answer_node = new g_comp_question_answer(questionData.options,g_size.width, scroll_height, questionData.question_type)
         container.addChild(answer_node, 2, 4)
         this.answer_node_ = answer_node
         answer_node.setPosition(0, 0)
@@ -227,7 +227,7 @@ var g_question_layer = cc.Layer.extend({
             background: next.resolveBack,
         }
         var that = this
-        var result_node = new g_question_result_node(
+        var result_node = new g_comp_question_result(
             data,
             function () {
                 // stop
@@ -304,7 +304,7 @@ var g_question_layer = cc.Layer.extend({
             text = "您还有" + leftTime + "次机会"
         }
 
-        var confirm = new g_app_game_comp_confirm(text, function (index) {
+        var confirm = new g_comp_confirm(text, function (index) {
             that.answer_content_.setVideo(true)
             if (that.answer_content_) {
                 that.answer_content_.stopPlayAll()

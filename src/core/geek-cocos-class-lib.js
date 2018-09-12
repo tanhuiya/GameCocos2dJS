@@ -770,7 +770,7 @@ var geek_class_lib = cc.Layer.extend({
      * @param text
      */
     f_show_custom_tip: function (that, res, text) {
-        var tip = new g_game_comp_tip_layer(res, text)
+        var tip = new g_comp_tip(res, text)
         that.addChild(tip, 999)
     },
 

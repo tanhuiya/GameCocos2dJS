@@ -2,7 +2,7 @@
  * Created by tanhui on 2018/9/6.
  */
 
-var g_app_game_comp_confirm = cc.LayerColor.extend({
+var g_comp_confirm = cc.LayerColor.extend({
     call_back_: function (index) {},
     /**
      * 构造函数

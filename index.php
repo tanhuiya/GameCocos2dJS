@@ -69,7 +69,7 @@ if (!$test_env) {
 <script type="text/javascript" src="src/core/vconsole.min.js" charset=utf-8></script>
 <script type="text/javascript" src="src/core/geek-cocos-v3.9.1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/core/geek-cocos-class-lib.js" charset=utf-8></script>
-<script type="text/javascript" src="src/geek_app_game_root.js" charset=utf-8></script>
+<script type="text/javascript" src="src/layer/geek_app_game_root.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek_mock_data.js" charset=utf-8></script>
 
 <script type="text/javascript">

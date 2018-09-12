@@ -35,7 +35,7 @@ var g_rank_layer = cc.Layer.extend({
 
         var list_bottom_y = 75 * 2
         var list_top_y = g_size.height - 55 * 2
-        var list_node = g_app_game_list_view.create(cc.size(g_size.width - 40, list_top_y - list_bottom_y), [], g_rank_layer_cell,res.s_activity_bg, ListItemHeight)
+        var list_node = g_comp_rank_list.create(cc.size(g_size.width - 40, list_top_y - list_bottom_y), [], g_comp_rank_cell,res.s_activity_bg, ListItemHeight)
         this.addChild(list_node, 1)
         list_node.setPosition(20, list_bottom_y)
         this.list_node_ = list_node

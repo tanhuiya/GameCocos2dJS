@@ -43,7 +43,7 @@ var g_index_layer = cc.Layer.extend({
         this._super()
         g_index = this
 
-        this.loading_layer = geek_lib.f_layer_create(this, g_app_game_comp_loading, 1, 1)
+        this.loading_layer = geek_lib.f_layer_create(this, g_comp_loading, 1, 1)
 
         this.apiIsActivityUser()
         this.apiGameState()
@@ -222,7 +222,7 @@ var g_index_layer = cc.Layer.extend({
     //     geek_lib.f_layer_create_data(g_root, g_question_layer, startData, 0, 0)
     //
     //
-    //     var loading_layer = geek_lib.f_layer_create(this, g_app_game_comp_loading, 3, 1)
+    //     var loading_layer = geek_lib.f_layer_create(this, g_comp_loading, 3, 1)
     //     var resources = []
     //     this.pushUrl(resources, startData.questionBack)
     //     for (var i = 0; i < startData.questions.length; i++) {
