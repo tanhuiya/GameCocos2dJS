@@ -57,9 +57,7 @@ var g_question_answer_node = cc.LayerColor.extend({
     left_height_: 0,
 
 
-    lastCell_: null,
-
-    submitCell_: null,
+    cells_: [],
     /**
      * 提交按钮回调
      * @private
@@ -89,7 +87,7 @@ var g_question_answer_node = cc.LayerColor.extend({
         this.optionType_ = type
         this.cellHeight_ = type == AnswerOptionType.Text ? TextBgHeight : TextImageBgHeight
         var left = height - answers.length * this.cellHeight_
-        left = left < 100 ? 100 : left
+        left = left < 100 ? 120 : left
         this.left_height_ = left
         this.setUp()
     },
@@ -112,97 +110,73 @@ var g_question_answer_node = cc.LayerColor.extend({
      * 设置布局UI
      */
     setUp: function () {
-        var tableView = new cc.TableView(this, cc.size(this.width_, this.height_))
-        tableView.setBounceable(false)
-        tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
-        tableView.setPosition(0, 0)
-        tableView.setDelegate(this)
-        // cell 顺序从上到下排列
-        tableView.setVerticalFillOrder(cc.TABLEVIEW_FILL_TOPDOWN)
-        this.addChild(tableView, 2, 2)
-        tableView.reloadData()
+        var listView = new ccui.ListView();
+        // set list view ex direction
+        listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
+        listView.setTouchEnabled(true);
+        listView.setBounceEnabled(true);
+        listView.setContentSize(cc.size(this.width_, this.height_));
+        listView.x = 0;
+        listView.y = 0;
+        listView.addEventListener(this.selectedItemEvent, this);
+        this.addChild(listView, 2, 2);
+        listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
+        this.cells_ = [];
+        for(var i = 0; i < this.answers_.length; i++){
+            var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_, i, this.answers_[i]);
+            // var layer = new cc.LayerColor.create(cc.color(123,12,32), 400, 50)
+            var layout=new ccui.Layout();
+            layout.setTouchEnabled(true)
+            layout.setSize(cell.getContentSize())
+            layout.addChild(cell)
+            listView.pushBackCustomItem(layout)
+            this.cells_.push(cell)
+        }
+        {
+            // 添加提交按钮
+            var sub_layout = new ccui.Layout()
+            console.log(this.cellHeight_)
+            sub_layout.setSize(cc.size(this.width_, this.left_height_))
+            this.submit_btn_ = geek_lib.f_btn_create(sub_layout, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)
+            this.submit_btn_.addTouchEventListener(this.ctl_button_event, this);
+            this.submit_btn_.enabled = false
+            listView.pushBackCustomItem(sub_layout)
+        }
     },
 
-
     /**
-     * 设置点击cell后的回调函数
-     * @param table
-     * @param cell
+     * item 被选择
+     * @param sender
+     * @param type
      */
-    tableCellTouched: function (table, cell) {
-        if (cell.getIdx() == this.answers_.length) return
+    selectedItemEvent: function (sender, type) {
+        if (type == ccui.ListView.ON_SELECTED_ITEM_END) {
+            var cell = sender;
+            var index = cell.getCurSelectedIndex()
+            // console.log(index)
+            if (index == this.answers_.length) return
 
-        var index = cell.getIdx()
-
-        if (this.selectType_ == AnswerSelectType.Multi){
-            var find = this.selections_.indexOf(index)
-            if (find < 0) {
-                this.selections_.push(index)
-                cell.selected(true)
-            } else {
-                this.selections_.splice(find, 1)
-                cell.selected(false)
+            if (this.selectType_ == AnswerSelectType.Multi){
+                var find = this.selections_.indexOf(index)
+                if (find < 0) {
+                    this.selections_.push(index)
+                } else {
+                    this.selections_.splice(find, 1)
+                }
+            } else if (this.selectType_ == AnswerSelectType.Single) {
+                this.selections_ = [index]
+            } else if (this.selectType_ == AnswerSelectType.Judge){
+                this.selections_ = [index]
             }
-            return
-        } else if (this.selectType_ == AnswerSelectType.Single) {
-            this.selections_ = [index]
-            if (this.lastCell_){
-                this.lastCell_.selected(false)
+            for (var i = 0; i < this.cells_.length; i++){
+                if (this.selections_.indexOf(i) > -1) {
+                    this.cells_[i].selected(true)
+                }else {
+                    this.cells_[i].selected(false)
+                }
             }
-        } else if (this.selectType_ == AnswerSelectType.Judge){
-            this.selections_ = [index]
-            if (this.lastCell_){
-                this.lastCell_.selected(false)
-            }
+            this.submit_btn_.enabled = this.selections_.length > 0
         }
-
-        cell.selected(true)
-        this.lastCell_ = cell
-    },
-
-    /**
-     * 设置cell大小
-     * @param table
-     * @param idx
-     * @returns {{width, height}}
-     */
-    tableCellSizeForIndex: function (table, idx) {
-        if (idx == this.answers_.length){
-            // 提交按钮
-            return cc.size(this.width_, this.left_height_)
-        } else {
-            return cc.size(this.width_, this.cellHeight_)
-        }
-    },
-
-    /**
-     * 添加Cell
-     * @param table
-     * @param idx
-     * @returns {*}
-     */
-    tableCellAtIndex: function (table, idx) {
-        var cell = table.dequeueCell();
-        if (!cell) {
-            var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_);
-        }
-        if (idx == this.answers_.length) {
-            this.submitCell_ = cell
-        }
-        cell.setDelegate(this)
-        cell.setData(idx, this.answers_[idx], idx == this.answers_.length)
-        cell.selected(this.selections_.indexOf(idx) > -1)
-        return cell
-    },
-
-    /**
-     * 设置cell个数
-     * @param table
-     * @returns {*}
-     */
-    numberOfCellsInTableView: function (table) {
-        // 添加提交按钮
-        return this.answers_.length + 1
     },
 
     /**
@@ -232,6 +206,17 @@ var g_question_answer_node = cc.LayerColor.extend({
             this.submitCallback_()
         }
     },
+
+    /**
+     * 按钮被点击的回调
+     * @param sender 事件相应者
+     * @param type  事件类型
+     */
+    ctl_button_event: function (sender, type) {
+        if (type == ccui.Widget.TOUCH_ENDED) {
+            this.submit()
+        }
+    },
 })
 
 
@@ -239,31 +224,22 @@ var g_question_answer_node = cc.LayerColor.extend({
  * option cell
  * @type {any}
  */
-var g_question_answer_cell = cc.TableViewCell.extend({
+var g_question_answer_cell = cc.LayerColor.extend({
 
     optionType_: AnswerOptionType.Text,
-    option_ : null,
-    delegate_: null,
 
-    ctor: function (width, height, type) {
-        this._super()
+    ctor: function (width, height, type, index, data) {
+        this._super(cc.color(0,0,0,0), width, height)
         this.width_ = width
         this.height_ = height
         this.optionType_ = type
-        this.setLayout(type)
-    },
-
-    /**
-     * 设置代理
-     */
-    setDelegate: function (del) {
-        this.delegate_ = del
+        this.setLayout(type, data)
     },
 
     /**
      * 设置item 布局
      */
-    setLayout:function (type) {
+    setLayout:function (type, data) {
         var back = cc.LayerColor.create(cc.color(0,0,0,0), this.width_, this.height_)
         this.addChild(back, 1)
         this.backLayer_ = back
@@ -284,34 +260,13 @@ var g_question_answer_cell = cc.TableViewCell.extend({
         this.selected(false)
         if (type == AnswerOptionType.Text) {
             var size = this.backLayer_.getBoundingBox()
-            this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+            this.text_label_ = geek_lib.f_label_create(this.backLayer_, data.optionContent, 36, 130, size.height * 0.5, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
             this.text_label_.setDimensions(this.width_ - 230,0)
         } else if (type == AnswerOptionType.TextImage) {
             var size = this.backLayer_.getBoundingBox()
-            this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, res.s_audio_bg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
-            this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 80, 76, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+            this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, data.optionImg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
+            this.text_label_ = geek_lib.f_label_create(this.backLayer_, data.optionContent, 36, 80, 76, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
             this.text_label_.setDimensions(this.width_ - 230,0)
-        }
-
-        this.submit_btn_ = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)
-        // this.submit_btn_.enabled = false
-        this.submit_btn_.setVisible(false)
-    },
-
-    setData: function (index, data, isFooter) {
-        if (isFooter) {
-            this.submit_btn_.setVisible(true)
-            this.backLayer_.setVisible(false)
-        } else {
-            this.submit_btn_.setVisible(false)
-            this.backLayer_.setVisible(true)
-            this.option_ = data
-            geek_lib.f_label_change_txt(this.text_label_, data.optionContent)
-
-            if (data.optionImg && this.image_) {
-                this.image_.removeFromParent()
-                this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, data.optionImg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
-            }
         }
     },
 
@@ -319,21 +274,8 @@ var g_question_answer_cell = cc.TableViewCell.extend({
      * 设置答案选中
      */
     selected: function (select) {
-
         this.select_img_.setVisible(select)
     },
 
-    /**
-     * 按钮被点击的回调
-     * @param sender 事件相应者
-     * @param type  事件类型
-     */
-    ctl_button_event: function (sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            if (this.delegate_){
-                this.delegate_.submit()
-            }
-        }
-    },
 })
 
