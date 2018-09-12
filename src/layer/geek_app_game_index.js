@@ -72,8 +72,7 @@ var g_index_layer = cc.Layer.extend({
         this.music_btn_ = music_btn
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
 
-        var homebg = geek_lib.f_imageview_box_create(this, this.activity_img_ ? this.activity_img_ : res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 2, 6, cc.AncorPointCenter)
-        this.homebg_ = homebg
+        geek_lib.f_imageview_box_create(this, this.activity_img_ ? this.activity_img_ : res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 2, 6, cc.AncorPointCenter)
 
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
@@ -243,12 +242,12 @@ var g_index_layer = cc.Layer.extend({
     //         geek_lib.f_layer_create_data(g_root, g_question_layer, startData, 0, 0)
     //     })
     // },
-
-    pushUrl: function (arr, path) {
-        if (path) {
-            arr.push(path)
-        }
-    },
+    //
+    // pushUrl: function (arr, path) {
+    //     if (path) {
+    //         arr.push(path)
+    //     }
+    // },
 
     /**
      * 判断开始游戏的信息

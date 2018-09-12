@@ -79,14 +79,12 @@ var g_comp_question_content = cc.Node.extend({
 
             var that = this
             player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
-                console.log("over")
                 that.videoPlayOver(player, null)
             })
-
             player.setEventListener(ccui.VideoPlayer.EventType.PLAYING, function () {
                 that.videpPlayBegin()
             })
-
+            // 设置video 标签样式
             geek_game_setup_video()
         }
     },
@@ -211,10 +209,18 @@ var g_comp_question_content = cc.Node.extend({
 
     },
 
+    /**
+     * 停止动画帧
+     * @param sp
+     */
     stopAnimate: function (sp) {
         sp.stopAllActions()
     },
 
+    /**
+     * 添加动画帧
+     * @param sp
+     */
     addAnimateFrame: function (sp) {
         var animation = new cc.Animation()
         animation.addSpriteFrameWithFile(res.s_audio_1)
