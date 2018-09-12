@@ -186,7 +186,7 @@ var geek_class_lib = cc.Layer.extend({
     },
 
 
-    f_img_create_box:function(that, url, px, py, width, height, level, id)
+    f_img_create_box:function(that, url, px, py, width, height, level, id, anchor)
     {
         cc.loader.loadImg(url, function (err, img) {
             var image = new cc.Sprite(img);
@@ -200,6 +200,10 @@ var geek_class_lib = cc.Layer.extend({
 
                 image.setScaleX(scalex);
                 image.setScaleY(scaley);
+
+                if (anchor) {
+                    this.f_set_anchor_point_type(image, anchor)
+                }
 
                 if(id)
                 {
@@ -653,7 +657,7 @@ var geek_class_lib = cc.Layer.extend({
     },
 
     /**
-     * 创建 Imageview
+     * 创建 Imageview (本地图片，或者已加载过的)
      * @param that
      * @param res
      * @param px
@@ -820,9 +824,7 @@ var geek_class_lib = cc.Layer.extend({
      * @param path
      */
     f_play_back_music: function (path) {
-        console.log(path)
         this.audio_ = cc.audioEngine.playEffect(path, true)
-        // cc.audioEngine.setEffectsVolume(1.0)
         this.effect_play_ = true
     },
 
@@ -863,12 +865,6 @@ var geek_class_lib = cc.Layer.extend({
             // cc.audioEngine.
         }
     },
-
-    // f_pause_effect: function () {
-    //     if (this.audio_) {
-    //         cc.audioEngine.pauseEffect(this.audio_)
-    //     }
-    // },
 
     /**
      * 是否在播放背景

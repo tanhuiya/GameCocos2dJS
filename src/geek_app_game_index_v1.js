@@ -56,7 +56,6 @@ var g_index_layer = cc.Layer.extend({
 
         var bg = geek_lib.f_imageview_box_create(this, this.homeBack_ ? this.homeBack_ : res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
 
-        // var bg = geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
         this.bg_ = bg
         var bg_y = bg.getBoundingBox().height
         // 活动介绍

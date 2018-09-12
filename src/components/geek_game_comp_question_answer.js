@@ -135,7 +135,6 @@ var g_question_answer_node = cc.LayerColor.extend({
         {
             // 添加提交按钮
             var sub_layout = new ccui.Layout()
-            console.log(this.cellHeight_)
             sub_layout.setSize(cc.size(this.width_, this.left_height_))
             this.submit_btn_ = geek_lib.f_btn_create(sub_layout, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)
             this.submit_btn_.addTouchEventListener(this.ctl_button_event, this);
@@ -264,7 +263,7 @@ var g_question_answer_cell = cc.LayerColor.extend({
             this.text_label_.setDimensions(this.width_ - 230,0)
         } else if (type == AnswerOptionType.TextImage) {
             var size = this.backLayer_.getBoundingBox()
-            this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, data.optionImg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
+            geek_lib.f_img_create_box(this.backLayer_, data.optionImg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter)
             this.text_label_ = geek_lib.f_label_create(this.backLayer_, data.optionContent, 36, 80, 76, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
             this.text_label_.setDimensions(this.width_ - 230,0)
         }
