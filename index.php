@@ -79,7 +79,7 @@ if (!$test) {
     window.onload = function(){
         document.title = "<?php echo $activityName ?>"
         var test = "<?php echo $test ?>"
-        if (1) {
+        if (test) {
             //        var vConsole = new VConsole();
             g_game_user.userID = MockData.UserID
             g_game_user.channel = MockData.channelID
