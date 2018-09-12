@@ -98,6 +98,30 @@ var g_game_comp_over_question = cc.Node.extend({
     },
 
     /**
+     * 去排行榜
+     */
+    gotoRank: function () {
+        var that = this
+        if (g_game_info.isAnswer() && !g_game_info.isRecorded_) {
+            this.showRecordList(function () {
+                geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
+            })
+        } else {
+            geek_lib.f_layer_create_data(that, g_app_game_rank, null, 10, 10)
+        }
+    },
+
+    /**
+     * 信息录入
+     */
+    showRecordList: function (callback) {
+        var record = geek_lib.f_layer_create_data(g_root, g_game_activity_record_layer, null, 1, 3)
+        if (callback) {
+            record.success_call_back = callback
+        }
+    },
+
+    /**
      * 按钮被点击的回调
      * @param sender 事件相应者
      * @param type  事件类型
@@ -106,7 +130,7 @@ var g_game_comp_over_question = cc.Node.extend({
         if (type == ccui.Widget.TOUCH_ENDED) {
             switch (sender) {
                 case this.rank_btn_:
-                    geek_lib.f_layer_create_data(this.parent, g_app_game_rank, null, 10, 10)
+                    this.gotoRank()
                     break;
             }
         }

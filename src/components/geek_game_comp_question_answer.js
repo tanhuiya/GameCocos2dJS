@@ -285,7 +285,7 @@ var g_question_answer_cell = cc.TableViewCell.extend({
         } else if (type == AnswerOptionType.TextImage) {
             var size = this.backLayer_.getBoundingBox()
             this.image_ = geek_lib.f_imageview_box_create(this.backLayer_, res.s_audio_bg, this.width_ * 0.5, 120 * 2, 230, 230, 2, 2, cc.AncorPointCenter )
-            this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 80, 100, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
+            this.text_label_ = geek_lib.f_label_create(this.backLayer_, "", 36, 80, 76, 1, cc.color.BLACK, 3, 3, cc.AncorPointMidLeft)
             this.text_label_.setDimensions(this.width_ - 230,0)
         }
 

@@ -299,13 +299,8 @@ var g_game_activity_record_layer = cc.LayerColor.extend({
                 phone: this.phone_edit_.getText()
             },
             function (response) {
-                if (response.returnCode == 1) {
-                    console.log("111")
-                    geek_lib.g_notice("发送成功", 5)
-                } else {
-                    console.log("000")
-                    geek_lib.g_notice(response.msg, 15)
-                }
+                console.log("发送成功")
+                // geek_lib.g_notice("发送成功", 2)
             }
         );
     },
