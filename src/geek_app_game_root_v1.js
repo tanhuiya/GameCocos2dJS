@@ -13,8 +13,6 @@ var g_root_layer = cc.Layer.extend({
 
         var layer = geek_lib.f_layer_create(this,g_index_layer,0,0)
         this.indexLayer_ = layer
-        // geek_lib.f_layer_create(this,g_question_1_layer,0,0)
-        // geek_lib.f_layer_create(this,g_game_activity_record_layer,0,0)
         return true;
     },
 

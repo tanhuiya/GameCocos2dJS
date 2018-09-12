@@ -22,7 +22,7 @@ var g_question_result_node = cc.LayerColor.extend({
     },
 
     /**
-     * 是否答对标志
+     * 设置解析数据
      * @param data
      */
     setData: function (data) {
@@ -34,12 +34,17 @@ var g_question_result_node = cc.LayerColor.extend({
 
         var bg = geek_lib.f_imageview_box_create(node, res.s_activity_bg, 0, 0, width, 240 *2, 1, 1, cc.AncorPointBottomLeft)
         var rect = bg.getBoundingBox()
-        if (data.type == QustionResolveType.Error) {
-            geek_lib.f_sprite_create_box(node, res.s_error, 112 * 2 , 212 * 2, 40, 40, 2, 2,cc.AncorPointCenter)
-            geek_lib.f_label_create(node, "回答错误", 50, rect.width * 0.5 + 20, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)
-        } else if (data.type == QustionResolveType.Success) {
-            geek_lib.f_sprite_create_box(node, res.s_right, 112 * 2 , 212 * 2, 40, 40, 2, 2,cc.AncorPointCenter)
-            geek_lib.f_label_create(node, "回答正确", 50, rect.width * 0.5 + 20, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)
+
+        if (g_game_info.isAnswer()){
+            if (data.type == QustionResolveType.Error) {
+                geek_lib.f_sprite_create_box(node, res.s_error, 112 * 2 , 212 * 2, 40, 40, 2, 2,cc.AncorPointCenter)
+                geek_lib.f_label_create(node, "回答错误", 50, rect.width * 0.5 + 20, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)
+            } else if (data.type == QustionResolveType.Success) {
+                geek_lib.f_sprite_create_box(node, res.s_right, 112 * 2 , 212 * 2, 40, 40, 2, 2,cc.AncorPointCenter)
+                geek_lib.f_label_create(node, "回答正确", 50, rect.width * 0.5 + 20, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)
+            }
+        } else {
+            geek_lib.f_label_create(node, "本题解析", 50, rect.width * 0.5, 212 * 2, 1, cc.hexToColor("#1F2B75"), 3, 3, cc.AncorPointCenter)
         }
 
         var move = cc.moveTo(0.2, cc.p(node.getPositionX(), node.getPositionY() + 67 * 2 + node.getBoundingBox().height));

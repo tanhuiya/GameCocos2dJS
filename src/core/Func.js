@@ -2,6 +2,12 @@
  * Created by tanhui on 2018/9/2.
  */
 
+/**
+ * 阿拉伯数字转中文
+ * @param Num
+ * @returns {string}
+ * @constructor
+ */
 function ArabiSimplified(Num) {
     for (var i = Num.length - 1; i >= 0; i--) {
         Num = Num.replace(",", "")//替换Num中的“,”

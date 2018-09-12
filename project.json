@@ -14,8 +14,8 @@
         "src/geek_app_game_activity_record.js",
         "src/components/geek_game_com_richtext_html.js",
         "src/components/geek_game_comp_loading.js",
-        "src/components/core/geek_game_comp_core_tableview.js",
-        "src/components/core/geek_game_comp_tip.js",
+        "src/components/geek_game_comp_core_tableview.js",
+        "src/components/geek_game_comp_tip.js",
         "src/components/geek_game_comp_confirm.js",
         "src/components/geek_game_comp_question_header.js",
         "src/components/geek_game_comp_question_answer.js",
@@ -24,6 +24,8 @@
         "src/components/geek_game_comp_over.js",
         "src/components/geek_game_comp_action_sheet.js",
         "src/components/geek_game_comp_rank_cell.js",
-        "src/lib/Func.js"
+        "src/core/Func.js",
+        "src/core/XHttp.js",
+        "src/core/XTimer.js"
     ]
 }
