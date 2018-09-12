@@ -67,20 +67,10 @@ if (!$test_env) {
 
 <!--<script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>-->
 <script type="text/javascript" src="src/core/vconsole.min.js" charset=utf-8></script>
-<script type="text/javascript" src="src/geek-cocos-v3.9.1.js" charset=utf-8></script>
-<script type="text/javascript" src="src/geek-cocos-class-lib.js" charset=utf-8></script>
+<script type="text/javascript" src="src/core/geek-cocos-v3.9.1.js" charset=utf-8></script>
+<script type="text/javascript" src="src/core/geek-cocos-class-lib.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek_app_game_root_v1.js" charset=utf-8></script>
 <script type="text/javascript" src="src/geek_mock_data.js" charset=utf-8></script>
-
-<style type="text/css">
-    .IIV::-webkit-media-controls-fullscreen-button {
-        overflow:hidden;
-    }
-    video::-webkit-media-controls-fullscreen-button {
-        display: none;
-    }
-
-</style>
 
 <script type="text/javascript">
     window.onload = function(){
@@ -116,7 +106,15 @@ if (!$test_env) {
 </script>
 
 
+<style type="text/css">
+    .IIV::-webkit-media-controls-fullscreen-button {
+        overflow:hidden;
+    }
+    video::-webkit-media-controls-fullscreen-button {
+        display: none;
+    }
 
+</style>
 
 </body>
 </html>

@@ -24,8 +24,7 @@
         "src/components/geek_game_comp_over.js",
         "src/components/geek_game_comp_action_sheet.js",
         "src/components/geek_game_comp_rank_cell.js",
-        "src/core/Func.js",
-        "src/core/XHttp.js",
-        "src/core/XTimer.js"
+        "src/core/geek_app_game_func.js",
+        "src/core/geek_app_game_xhttp.js"
     ]
 }

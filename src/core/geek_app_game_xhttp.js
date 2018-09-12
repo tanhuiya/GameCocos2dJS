@@ -9,15 +9,6 @@ var XHttp = {
             }
         }
         xhr.open("GET" , url , true);
-        XTimer.add(timeout , 1 , function(){
-            if(xhr.readyState == 4 && xhr.status == 200){
-                return;
-            }else{
-                xhr.abort();
-                xhr = null;
-                fail_func();
-            }
-        })
         xhr.send();
     },
 
