@@ -34,10 +34,13 @@ var g_question_1_layer = cc.Layer.extend({
     secondUsed_: 0,
 
     startSecond_: 0,
+    // 是否显示积分
+    isShowNum_: 0,
 
     init: function (startData) {
         this._super()
         if (!startData)return
+        this.isShowNum_ = startData.isShowNum
         this.startSecond_ = Date.parse(new Date())
         geek_lib.f_swallow_event(this)
         this.questions_ = startData.questions
@@ -54,7 +57,7 @@ var g_question_1_layer = cc.Layer.extend({
      */
     drawRect: function () {
         // 设置头
-        var node = new g_question_header_node(this.questions_.length)
+        var node = new g_question_header_node(this.questions_.length, this.isShowNum_)
         this.addChild(node,2,2)
         node.setUp()
         node.setPosition(cc.p(25, g_size.height - 20))

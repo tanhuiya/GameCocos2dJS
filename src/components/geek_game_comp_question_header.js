@@ -9,9 +9,12 @@ var g_question_header_node = cc.Node.extend({
     currentSecond_: 0,
     numberOfQuestion_: 0,
     score_: 0,
-    ctor: function (numberOfQuestion) {
+    isShowNum_: 0,
+
+    ctor: function (numberOfQuestion, isShowNum) {
         this._super()
         this.numberOfQuestion_ = numberOfQuestion
+        this.isShowNum_ = isShowNum
     },
 
     /**
@@ -35,6 +38,7 @@ var g_question_header_node = cc.Node.extend({
         var title_label = geek_lib.f_label_create(this, "第一题（1/" + this.numberOfQuestion_ +"）", 28, 126, -14, 1, cc.color.WHITE, 2,2 , cc.AncorPointTopLeft)
         this.title_label_ = title_label
         var score_label = geek_lib.f_label_create(this, this.score_ + " 分", 48, 126, -54, 1, cc.color.WHITE, 2,3, cc.AncorPointTopLeft)
+        score_label.setVisible(this.isShowNum_ > 0)
         this.score_label_ = score_label
         var white_bg = geek_lib.f_sprite_create_box(this, res.s_white_bg, 60, 0 - head_bg.getBoundingBox().height * 0.5, 100, 100, 2, 4, cc.AncorPointCenter)
 
