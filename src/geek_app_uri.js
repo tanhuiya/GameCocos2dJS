@@ -14,6 +14,11 @@ var domain = "http://game.k12c.com"
  */
 var uri = {
     /**
+     * 预加载资源
+     */
+    preload:        domain + "/front/activity/getActivityResource",
+
+    /**
      * 添加用户信息
      */
     userInfoAdd:    domain + "/front/user/userInfoAdd",

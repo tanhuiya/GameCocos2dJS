@@ -943,7 +943,6 @@ var geek_class_lib = cc.Layer.extend({
         } else {
             callback("empty")
         }
-
     }
 });
 
@@ -986,19 +985,25 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
         g_scale = g_size.height/height;
 
         if(state)
-        {
-            cc.LoaderScene.preload(m_resources, function () {
+        {   var that = this
+            g_preloadRes(function (remote_res) {
+                if (remote_res && remote_res.length) {
+                    m_resources = m_resources.concat(remote_res)
+                }
+                console.log(m_resources)
+                cc.LoaderScene.preload(m_resources, function () {
 
-                var MyScene = cc.Scene.extend({
-                    onEnter:function () {
-                        this._super();
-                        var layer = new fun();
-                        layer.init();
-                        this.addChild(layer);
-                    }
-                });
-                cc.director.runScene(new MyScene());
-            }, this);
+                    var MyScene = cc.Scene.extend({
+                        onEnter:function () {
+                            this._super();
+                            var layer = new fun();
+                            layer.init();
+                            this.addChild(layer);
+                        }
+                    });
+                    cc.director.runScene(new MyScene());
+                }, that);
+            })
         }
         else
         {
@@ -1016,7 +1021,17 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
     cc.game.run(canvas);
 }
 
-
+function  g_preloadRes(callback) {
+    var layer = new geek_class_lib();
+    layer.f_network_post_json(this, uri.preload,
+        {
+            activityId: g_game_user.activity
+        }, function (response) {
+        if (callback && response) {
+            callback(response.activityResource)
+        }
+    })
+}
 
 
 

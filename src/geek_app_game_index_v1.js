@@ -217,28 +217,32 @@ var g_index_layer = cc.Layer.extend({
         }
     },
 
-    preloadQuestionResource: function (startData) {
-        var loading_layer = geek_lib.f_layer_create(this, g_app_game_comp_loading, 3, 1)
-        var resources = []
-        this.pushUrl(resources, startData.questionBack)
-        for (var i = 0; i < startData.questions.length; i++) {
-            var que = startData.questions[i]
-            var question_material_img = que.question_material_img
-            // if (question_material_img && question_material_img.substring(question_material_img.lastIndexOf('.') + 1) != "mp4") {
-                this.pushUrl(resources, question_material_img)
-            // }
-            for (var index_option = 0; index_option < que.options.length; index_option++) {
-                var option = que.options[index_option]
-                this.pushUrl(resources, option.optionImg)
-            }
-        }
-
-        geek_lib.f_load_resource(resources, function (err) {
-            console.log("load resource over", err)
-            loading_layer.removeFromParent(true)
-            geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
-        })
-    },
+    // preloadQuestionResource: function (startData) {
+    //
+    //     geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+    //
+    //
+    //     var loading_layer = geek_lib.f_layer_create(this, g_app_game_comp_loading, 3, 1)
+    //     var resources = []
+    //     this.pushUrl(resources, startData.questionBack)
+    //     for (var i = 0; i < startData.questions.length; i++) {
+    //         var que = startData.questions[i]
+    //         var question_material_img = que.question_material_img
+    //         // if (question_material_img && question_material_img.substring(question_material_img.lastIndexOf('.') + 1) != "mp4") {
+    //             this.pushUrl(resources, question_material_img)
+    //         // }
+    //         for (var index_option = 0; index_option < que.options.length; index_option++) {
+    //             var option = que.options[index_option]
+    //             this.pushUrl(resources, option.optionImg)
+    //         }
+    //     }
+    //
+    //     geek_lib.f_load_resource(resources, function (err) {
+    //         console.log("load resource over", err)
+    //         loading_layer.removeFromParent(true)
+    //         geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+    //     })
+    // },
 
     pushUrl: function (arr, path) {
         if (path) {
@@ -254,7 +258,8 @@ var g_index_layer = cc.Layer.extend({
         g_game_info.setLeftTime(startData.leftTimes)
         g_game_info.setLeftType(startData.leftType)
         if (startData.countState == QuestionStatePermission.StateAllow) {
-            this.preloadQuestionResource(startData)
+            geek_lib.f_layer_create_data(g_root, g_question_1_layer, startData, 0, 0)
+            // this.preloadQuestionResource(startData)
         } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")
         } else if (startData.countState == QuestionStatePermission.StateOverToday) {
