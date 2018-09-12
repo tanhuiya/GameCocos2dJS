@@ -7,10 +7,10 @@ var res = {
     t_bg: test_path + "background.png",
     t_option_img: test_path + "question_option.png",
 
+
     s_music_off: path + "music_off.png",
     s_loading: path + "loading.png",
     s_white: path + "white.png",
-    s_video: path + "testvideo.mp4",
     s_background : path + "background.png",
     s_rank:     path + "rank.png",
     s_rule:     path + "rule.png",
@@ -73,7 +73,6 @@ var m_resources = [
     res.s_confirm_2,
     res.s_confirm_3,
     res.s_confirm_bg,
-    res.s_video,
     res.s_audio_bg,
     res.s_audio_1,
     res.s_audio_2,

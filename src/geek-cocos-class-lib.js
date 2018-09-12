@@ -820,6 +820,7 @@ var geek_class_lib = cc.Layer.extend({
      * @param path
      */
     f_play_back_music: function (path) {
+        console.log(path)
         this.audio_ = cc.audioEngine.playEffect(path, true)
         // cc.audioEngine.setEffectsVolume(1.0)
         this.effect_play_ = true
@@ -830,7 +831,6 @@ var geek_class_lib = cc.Layer.extend({
      * @return 切换成功
      */
     f_toggle_back_music: function () {
-        console.log(this.music_play_)
         if (this.music_play_) return false
         if (!this.audio_ && this.effect_path_) {
             this.f_play_back_music(this.effect_path_)

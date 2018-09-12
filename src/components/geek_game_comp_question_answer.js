@@ -58,6 +58,8 @@ var g_question_answer_node = cc.LayerColor.extend({
 
 
     lastCell_: null,
+
+    submitCell_: null,
     /**
      * 提交按钮回调
      * @private
@@ -184,10 +186,12 @@ var g_question_answer_node = cc.LayerColor.extend({
         if (!cell) {
             var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_);
         }
+        if (idx == this.answers_.length) {
+            this.submitCell_ = cell
+        }
         cell.setDelegate(this)
         cell.setData(idx, this.answers_[idx], idx == this.answers_.length)
         cell.selected(this.selections_.indexOf(idx) > -1)
-
         return cell
     },
 
@@ -290,6 +294,7 @@ var g_question_answer_cell = cc.TableViewCell.extend({
         }
 
         this.submit_btn_ = geek_lib.f_btn_create(this, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)
+        // this.submit_btn_.enabled = false
         this.submit_btn_.setVisible(false)
     },
 

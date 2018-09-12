@@ -68,6 +68,7 @@ var g_app_game_rank = cc.Layer.extend({
      */
     ctl_button_event: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
+            console.log(this.close_btn_)
             switch (sender) {
                 case this.close_btn_:
                     this.close()

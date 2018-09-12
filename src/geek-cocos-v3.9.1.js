@@ -3611,7 +3611,6 @@ cc.ContainerStrategy = cc.Class.extend({
         var locCanvasElement = cc._canvas, locContainer = cc.container;
         locContainer.style.width = locCanvasElement.style.width = w + "px";
         locContainer.style.height = locCanvasElement.style.height = h + "px";
-        // geek fix android
         var devicePixelRatio = view._devicePixelRatio = 1;
         if (view.isRetinaEnabled())
             devicePixelRatio = view._devicePixelRatio = window.devicePixelRatio || 1;
