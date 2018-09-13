@@ -230,7 +230,7 @@ var g_index_layer = cc.Layer.extend({
      */
     canPlayActivity: function () {
         if (this.activity_state_ == -1) {
-            geek_lib.f_show_custom_tip(this, res.s_tip_content_1, "活动已结束")
+            geek_lib.f_show_custom_tip(this, res.s_tip_content_1, "活动未开始")
         } else if (this.activity_state_ == 0) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_1, "活动已结束")
         } else {
