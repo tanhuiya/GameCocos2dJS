@@ -138,7 +138,7 @@ var g_comp_question_answer = cc.LayerColor.extend({
             sub_layout.setSize(cc.size(this.width_, this.left_height_))
             this.submit_btn_ = geek_lib.f_btn_create(sub_layout, res.s_submit, "", g_size.width * 0.5, 60,1,4,4,cc.AncorPointCenter)
             this.submit_btn_.addTouchEventListener(this.ctl_button_event, this);
-            this.submit_btn_.enabled = false
+            this.submit_btn_.setVisible(false)
             listView.pushBackCustomItem(sub_layout)
         }
     },
@@ -174,7 +174,7 @@ var g_comp_question_answer = cc.LayerColor.extend({
                     this.cells_[i].selected(false)
                 }
             }
-            this.submit_btn_.enabled = this.selections_.length > 0
+            this.submit_btn_.setVisible(this.selections_.length > 0)
         }
     },
 
