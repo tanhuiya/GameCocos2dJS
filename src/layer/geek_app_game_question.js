@@ -113,11 +113,9 @@ var g_question_layer = cc.Layer.extend({
         this.container_ = container
 
         // 设置问题内容
-        var content = new g_comp_question_content()
+        var content = new g_comp_question_content(questionData.question_material_type, questionData)
         container.addChild(content, 2, 3)
         content.setPosition(cc.p(0, container_height))
-        // content.setUp(ContentType.Text_Video,questionData)
-        content.setUp(questionData.question_material_type, questionData)
         var content_height = content.getHeight()
         this.answer_content_ = content
 

@@ -124,7 +124,6 @@ var g_comp_question_answer = cc.LayerColor.extend({
         this.cells_ = [];
         for(var i = 0; i < this.answers_.length; i++){
             var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_, i, this.answers_[i]);
-            // var layer = new cc.LayerColor.create(cc.color(123,12,32), 400, 50)
             var layout=new ccui.Layout();
             layout.setTouchEnabled(true)
             layout.setSize(cell.getContentSize())

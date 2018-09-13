@@ -22,16 +22,19 @@ var g_comp_question_content = cc.Node.extend({
     animating_: false,
     content_type_: ContentType.Text,
     background_playing_: false,
+
     /**
-     * 设置题目类型
-     * @param type
+     * 初始化
+     * @param contentType
+     * @param questionData
      */
-    setUp:function (contentType, questionData) {
+    ctor: function (contentType, questionData) {
+        this._super()
         var margin = 30
         this.heigth_ = 0
         var textHeight = 300
         var question_material_img = questionData.question_material_img
-        if (!contentType || !question_material_img){
+        if (!contentType || !question_material_img) {
             contentType = ContentType.Text
         }
         this.content_type_ = contentType
@@ -39,44 +42,34 @@ var g_comp_question_content = cc.Node.extend({
         var text = questionData.question_title
         if (question_type_ == AnswerSelectType.Single) {
             text = "(单选题): " + text
-        } else if (question_type_ == AnswerSelectType.Multi){
+        } else if (question_type_ == AnswerSelectType.Multi) {
             text = "(多选题): " + text
-        } else if (question_type_ == AnswerSelectType.Judge){
+        } else if (question_type_ == AnswerSelectType.Judge) {
             text = "(判断题): " + text
         }
-        if (this.content_type_ == ContentType.Text) {
-            var text_label = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
-            text_label.setDimensions(g_size.width - 100, 0)
-            // 文字类型固定高度300
-            this.height_ = textHeight
-        } else if (this.content_type_ == ContentType.Text_Picture) {
-            geek_lib.f_remote_img_sprite_create(this, question_material_img, res.s_audio_bg,g_size.width * 0.5, 0, 395, 290, 1, cc.AncorPointTopMid)
+        if (this.content_type_ == ContentType.Text_Picture) {
+            geek_lib.f_remote_img_sprite_create(this, question_material_img, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, cc.AncorPointTopMid)
 
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+            var title = geek_lib.f_label_create(this, text, 36, g_size.width * 0.5, -163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + 290 + margin
-        }
-        else if (this.content_type_ == ContentType.Text_Audio) {
+        } else if (this.content_type_ == ContentType.Text_Audio) {
             var image = geek_lib.f_imageview_box_create(this, res.s_audio_bg, g_size.width * 0.5, 0, 395, 290, 1, 1, cc.AncorPointTopMid)
             var icon = geek_lib.f_sprite_create_box(this, res.s_audio_2, g_size.width * 0.5, -145, 60, 50, 2, 2, cc.AncorPointCenter)
             this.addListener(icon, question_material_img)
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+            var title = geek_lib.f_label_create(this, text, 36, g_size.width * 0.5, -163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
-        }
-        else if (this.content_type_ == ContentType.Text_Video) {
-
+        } else if (this.content_type_ == ContentType.Text_Video) {
             var player = new ccui.VideoPlayer(question_material_img)
             this.addChild(player, 1, 1)
             this.videoPlayer_ = player
             player.setContentSize(395, 290)
             player.setFullScreenEnabled(false)
             player.setPosition(g_size.width * 0.5, -145)
-
-            var title = geek_lib.f_label_create(this, text, 36 , g_size.width * 0.5, - 163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
+            var title = geek_lib.f_label_create(this, text, 36, g_size.width * 0.5, -163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + player.getBoundingBox().height + margin
-
             var that = this
             player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
                 that.videoPlayOver(player, null)
@@ -86,6 +79,11 @@ var g_comp_question_content = cc.Node.extend({
             })
             // 设置video 标签样式
             geek_game_setup_video()
+        } else {
+            var text_label = geek_lib.f_label_create(this, text, 36, g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
+            text_label.setDimensions(g_size.width - 100, 0)
+            // 文字类型固定高度300
+            this.height_ = textHeight
         }
     },
 
