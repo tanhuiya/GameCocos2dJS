@@ -10,10 +10,10 @@ var g_finish_layer = cc.Layer.extend({
     init: function (data) {
         this._super()
         this.loading_ = geek_lib.f_layer_create(this, g_comp_loading, 1, 1)
-        this.stopGame()
         geek_lib.f_swallow_event(this)
         this.secondUsed_ = data.secondUsed
         this.score_ = data.score
+        this.stopGame()
     },
 
 
@@ -106,7 +106,8 @@ var g_finish_layer = cc.Layer.extend({
             uri.questionFinish,
             {
                 userId: g_game_user.userID,
-                activityId: g_game_user.activity
+                activityId: g_game_user.activity,
+                scoreSum: this.score_
             },
             function (response) {
                 that.stopGameParser(response)
