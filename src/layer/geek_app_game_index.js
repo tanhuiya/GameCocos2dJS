@@ -74,17 +74,15 @@ var g_index_layer = cc.Layer.extend({
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
 
-        this.addRichLabel(this.home_data_.numOfUser)
+        if (!this.home_data_.hideFlag || this.home_data_.hideFlag == 0){
+            this.addRichLabel(this.home_data_.numOfUser)
+        }
     },
 
     /**
      * 添加富文本，当前参加人数
      */
     addRichLabel: function (num) {
-        if (num < 1) return
-        if (this.richLabel_ ){
-            this.richLabel_.removeFromParent(true)
-        }
         var richText = new ccui.RichText()
         richText.ignoreContentAdaptWithSize(false);
         richText.setContentSize(cc.size(g_size.width, 100));
