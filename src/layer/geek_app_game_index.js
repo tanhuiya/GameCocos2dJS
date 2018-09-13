@@ -42,9 +42,7 @@ var g_index_layer = cc.Layer.extend({
     init: function () {
         this._super()
         g_index = this
-
-        this.loading_layer = geek_lib.f_layer_create(this, g_comp_loading, 1, 1)
-
+        // this.loading_layer = geek_lib.f_layer_create(this, g_comp_loading, 1, 1)
         this.apiIsActivityUser()
         this.apiGameState()
         this.apiHomeData()
@@ -52,12 +50,9 @@ var g_index_layer = cc.Layer.extend({
     },
 
     setLayout: function () {
-        this.loading_layer.removeFromParent(true)
-
-        var bg = geek_lib.f_imageview_box_create(this, this.homeBack_ ? this.homeBack_ : res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
-
-        this.bg_ = bg
-        var bg_y = bg.getBoundingBox().height
+        // this.loading_layer.removeFromParent(true)
+        geek_lib.f_img_create_box(this, this.homeBack_ ? this.homeBack_ : res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
+        var bg_y = g_size.height
         // 活动介绍
         var rule_btn = geek_lib.f_btn_create(this, res.s_rule, "活动介绍", 30, bg_y - 32, 1, 1, 2, cc.AncorPointTopLeft)
         this.rule_btn_ = rule_btn
@@ -69,10 +64,12 @@ var g_index_layer = cc.Layer.extend({
 
         var music_x = g_game_info.isAnswer() ? rank_btn.getBoundingBox().x - 14 - 50 : rank_btn.getBoundingBox().x
         var music_btn = geek_lib.f_btn_create(this, res.s_music_off, "", music_x, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
+        music_btn.setVisible(this.effectPath_ && this.effectPath_.length > 0)
         this.music_btn_ = music_btn
+
         geek_lib.f_sprite_create_box(this, res.s_activity_bg, g_size.width * 0.5, g_size.height - (128 + 281), 692, 562, 2, 5)
 
-        geek_lib.f_imageview_box_create(this, this.activity_img_ ? this.activity_img_ : res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 2, 6, cc.AncorPointCenter)
+        geek_lib.f_img_create_box(this, this.activity_img_ ? this.activity_img_ : res.s_home_bg, g_size.width * 0.5, g_size.height - (128 + 281), 644, 510, 2, 6, cc.AncorPointCenter)
 
         start_btn = geek_lib.f_btn_create(this, res.s_game_start, "", g_size.width * 0.5, 170, 1, 1, 7)
         this.start_btn_ = start_btn
@@ -167,7 +164,6 @@ var g_index_layer = cc.Layer.extend({
         var res = []
         if (data.musicUrl.length) {
             this.effectPath_ = data.musicUrl
-            // "http://pab0rrvqm.bkt.clouddn.com/II-07.mp3"
             res.push(this.effectPath_)
             geek_lib.f_set_effect_path(this.effectPath_)
         }
@@ -187,9 +183,9 @@ var g_index_layer = cc.Layer.extend({
             this.activity_img_ = data.homeTitle
         }
 
-        geek_lib.f_load_resource(res, function (error) {
-            that.setLayout()
-        })
+        // geek_lib.f_load_resource(res, function (error) {
+        that.setLayout()
+        // })
     },
 
     /**
