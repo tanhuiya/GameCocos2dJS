@@ -2,6 +2,10 @@
  * Created by tanhui on 2018/8/21.
  */
 
+/**
+ * 答题限时类型
+ * @type {{Unlimit: number, All: number, Single: number}}
+ */
 var QuestionTimeLimitType = {
     Unlimit: 1,
     All: 2,
@@ -67,8 +71,6 @@ var g_question_layer = cc.Layer.extend({
         // 停止答题按钮
         var stop_btn = geek_lib.f_btn_create(this, res.s_stop, "",g_size.width - 92, g_size.height - 18,1, 3, 3, cc.AncorPointTopMid)
         this.stop_btn_ = stop_btn
-
-
 
         // 提交答案按钮
         this.drawQuestion(this.currentIndex_)
@@ -317,7 +319,6 @@ var g_question_layer = cc.Layer.extend({
      * @param timeout 是否超时
      */
     apiSubmitAnswer: function (timeout) {
-
         this.scheduleStop()
         this.answer_content_.stopPlayAll()
 
@@ -378,6 +379,6 @@ var g_question_layer = cc.Layer.extend({
      * @param msg
      */
     errorHandler: function (msg) {
-
+        geek_lib.g_notice(msg, 2)
     }
 })

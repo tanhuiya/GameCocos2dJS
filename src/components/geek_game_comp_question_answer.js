@@ -110,21 +110,21 @@ var g_comp_question_answer = cc.LayerColor.extend({
      * 设置布局UI
      */
     setUp: function () {
-        var listView = new ccui.ListView();
+        var listView = new ccui.ListView()
         // set list view ex direction
-        listView.setDirection(ccui.ScrollView.DIR_VERTICAL);
-        listView.setTouchEnabled(true);
-        listView.setBounceEnabled(true);
-        listView.setContentSize(cc.size(this.width_, this.height_));
-        listView.x = 0;
-        listView.y = 0;
-        listView.addEventListener(this.selectedItemEvent, this);
-        this.addChild(listView, 2, 2);
-        listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL);
-        this.cells_ = [];
+        listView.setDirection(ccui.ScrollView.DIR_VERTICAL)
+        listView.setTouchEnabled(true)
+        listView.setBounceEnabled(true)
+        listView.setContentSize(cc.size(this.width_, this.height_))
+        listView.x = 0
+        listView.y = 0
+        listView.addEventListener(this.selectedItemEvent, this)
+        this.addChild(listView, 2, 2)
+        listView.setGravity(ccui.ListView.GRAVITY_CENTER_VERTICAL)
+        this.cells_ = []
         for(var i = 0; i < this.answers_.length; i++){
-            var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_, i, this.answers_[i]);
-            var layout=new ccui.Layout();
+            var cell = new g_question_answer_cell(this.width_, this.cellHeight_, this.optionType_, i, this.answers_[i])
+            var layout=new ccui.Layout()
             layout.setTouchEnabled(true)
             layout.setSize(cell.getContentSize())
             layout.addChild(cell)
