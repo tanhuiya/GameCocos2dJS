@@ -89,9 +89,6 @@ var g_finish_layer = cc.Layer.extend({
             if (this.finishData_.background) {
                 res.push(this.finishData_.background)
             }
-            // if (this.finishData_.avatar) {
-            //     res.push(this.finishData_.avatar)
-            // }
             var that = this
             geek_lib.f_load_resource(res, function (err) {
                 that.drawRect(that.finishData_)

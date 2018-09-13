@@ -158,13 +158,10 @@ var g_index_layer = cc.Layer.extend({
      * 解析首页数据
      */
     parserHomeData: function (data) {
-        var that = this
         this.home_data_ = data
 
-        var res = []
         if (data.musicUrl.length) {
             this.effectPath_ = data.musicUrl
-            res.push(this.effectPath_)
             geek_lib.f_set_effect_path(this.effectPath_)
         }
         g_game_info.activityType_ = data.activityType
@@ -172,20 +169,13 @@ var g_index_layer = cc.Layer.extend({
         // 设置背景图
         if (data.homeBack) {
             this.homeBack_ = data.homeBack
-            res.push(data.homeBack)
-        }
-        if (data.introPage.length) {
-            res.push(data.introPage)
         }
         // 设置活动图
         if (data.homeTitle.length > 0) {
-            res.push(data.homeTitle)
             this.activity_img_ = data.homeTitle
         }
 
-        // geek_lib.f_load_resource(res, function (error) {
-        that.setLayout()
-        // })
+        this.setLayout()
     },
 
     /**
