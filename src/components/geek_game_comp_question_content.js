@@ -231,21 +231,6 @@ var g_comp_question_content = cc.Node.extend({
     },
 
     /**
-     * 按钮被点击的回调
-     * @param sender 事件相应者
-     * @param type  事件类型
-     */
-    ctl_button_event: function (sender, type) {
-        if (type == ccui.Widget.TOUCH_ENDED) {
-            switch (sender) {
-                // case this.music_btn_:
-                //     geek_lib.f_toggle_back_music()
-                //     break;
-            }
-        }
-    },
-
-    /**
      * 设置视频隐藏或显示, 视频在最上层，无法遮盖，只能隐藏
      * @param visible
      */

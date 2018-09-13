@@ -101,15 +101,7 @@ var g_question_layer = cc.Layer.extend({
         var container_height = g_size.height - container_top - container_bottom
         var container = cc.LayerColor.create(cc.color(255,255,255, 0), g_size.width , container_height )
         this.addChild(container, 2)
-
-        // if (this.currentIndex_ == 0){
-            container.setPosition(0, container_bottom)
-        // } else {
-        //     container.setPosition(g_size.width, container_bottom)
-        //     var move = cc.moveTo(0.2, cc.p(0, container.getPositionY()));
-        //     container.runAction(move);
-        // }
-
+        container.setPosition(0, container_bottom)
         this.container_ = container
 
         // 设置问题内容
