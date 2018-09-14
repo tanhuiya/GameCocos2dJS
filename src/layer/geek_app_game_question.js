@@ -52,7 +52,7 @@ var g_question_layer = cc.Layer.extend({
         this.resetTime_ = startData.questiontime
         this.questionTimeType_ = startData.questionTimeType
         this.isResolve_ = startData.isResolve
-        geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1)
+        geek_lib.f_img_create_box(this, startData.answerPage ? startData.answerPage : res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
         this.drawRect()
     },
 

@@ -214,6 +214,9 @@ var g_index_layer = cc.Layer.extend({
         g_game_info.setLeftTime(startData.leftTimes)
         g_game_info.setLeftType(startData.leftType)
         if (startData.countState == QuestionStatePermission.StateAllow) {
+            if (this.home_data_.answerPage) {
+                startData.answerPage = this.home_data_.answerPage
+            }
             geek_lib.f_layer_create_data(g_root, g_question_layer, startData, 0, 0)
         } else if (startData.countState == QuestionStatePermission.StateOverTotal) {
             geek_lib.f_show_custom_tip(this, res.s_tip_content_2, "达到游戏次数限制")

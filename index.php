@@ -14,7 +14,7 @@ echo "<html>";
 echo "<head>";
 echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi\" />";
 echo "<meta content='8dsun' name='author'>";
-echo "<title>皖新金智</title>";
+echo "<title></title>";
 echo "</head>";
 
 /**
