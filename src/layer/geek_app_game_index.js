@@ -154,7 +154,9 @@ var g_index_layer = cc.Layer.extend({
             } else {
                 this.music_btn_.loadTextures(res.s_music_off)
             }
+            return true
         }
+        return false
     },
 
 

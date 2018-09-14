@@ -123,11 +123,12 @@ var g_comp_question_header = cc.Node.extend({
      * 切换背景音
      */
     toggleEffect:function () {
-        g_root.indexLayer_.toggleEffects()
-        if (geek_lib.f_isplay_effect()) {
-            this.music_btn_.loadTextures(res.s_music)
-        } else {
-            this.music_btn_.loadTextures(res.s_music_off)
+        if (g_root.indexLayer_.toggleEffects()){
+            if (geek_lib.f_isplay_effect()) {
+                this.music_btn_.loadTextures(res.s_music)
+            } else {
+                this.music_btn_.loadTextures(res.s_music_off)
+            }
         }
     },
 
