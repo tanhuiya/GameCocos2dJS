@@ -107,6 +107,20 @@ if (!$test_env) {
             video.setAttribute("controls", "true")
         }
     }
+
+    function audioPreload(path) {
+        var audio = document.getElementById("backAudio")
+        audio.setAttribute("src", path)
+    }
+    function playBack(play) {
+        var audio = document.getElementById("backAudio")
+        if (play){
+            audio.play()
+        } else {
+            audio.pause()
+        }
+
+    }
 </script>
 
 
@@ -119,6 +133,8 @@ if (!$test_env) {
     }
 
 </style>
+
+<audio id="backAudio" ></audio>
 
 </body>
 </html>

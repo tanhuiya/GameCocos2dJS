@@ -175,7 +175,7 @@ var g_index_layer = cc.Layer.extend({
             this.homeBack_ = data.homeBack
         }
         // 设置活动图
-        if (data.homeTitle.length > 0) {
+        if (data.homeTitle && data.homeTitle.length > 0) {
             this.activity_img_ = data.homeTitle
         }
 

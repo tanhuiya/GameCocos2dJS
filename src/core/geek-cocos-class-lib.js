@@ -824,7 +824,8 @@ var geek_class_lib = cc.Layer.extend({
      * @param path
      */
     f_play_back_music: function (path) {
-        this.audio_ = cc.audioEngine.playEffect(path, true)
+        cc.audioEngine.playMusic(path, true)
+        // this.audio_ = cc.audioEngine.playEffect(path, true)
         this.effect_play_ = true
     },
 
@@ -834,18 +835,25 @@ var geek_class_lib = cc.Layer.extend({
      */
     f_toggle_back_music: function () {
         if (this.music_play_) return false
-        if (!this.audio_ && this.effect_path_) {
-            this.f_play_back_music(this.effect_path_)
+        if (this.effect_play_) {
+            playBack(false)
+            this.effect_play_ = false
         } else {
-            if (this.effect_play_ ) {
-                cc.audioEngine.pauseEffect(this.audio_)
-                this.effect_play_ = false
-            } else {
-                cc.audioEngine.resumeEffect(this.audio_)
-                this.effect_play_ = true
-            }
+            playBack(true)
+            this.effect_play_ = true
         }
         return true
+
+        // if (this.music_play_) return false
+        // if ( this.effect_path_) {
+        //     cc.audioEngine.playMusic(this.effect_path_, true)
+        //     this.effect_play_ = true
+        // } else {
+        //     cc.audioEngine.
+        //     cc.audioEngine.stopMusic(false)
+        //     this.effect_play_ = false
+        // }
+        // return true
     },
 
     /**
@@ -862,7 +870,7 @@ var geek_class_lib = cc.Layer.extend({
     f_set_effect_path: function (path) {
         this.effect_path_ = path
         if (path) {
-            // cc.audioEngine.
+            audioPreload(path)
         }
     },
 
