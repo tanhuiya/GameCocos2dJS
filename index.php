@@ -134,7 +134,7 @@ if (!$test_env) {
 
 </style>
 
-<audio id="backAudio" ></audio>
+<audio id="backAudio" loop="loop"></audio>
 
 </body>
 </html>
