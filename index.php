@@ -12,7 +12,7 @@ header("Content-type:text/html;charset=utf-8");
 echo "<!DOCTYPE html>";
 echo "<html>";
 echo "<head>";
-echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi\" />";
+echo "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi\" metaname=\"x5-orientation\" content=\"portrait\" />";
 echo "<meta content='8dsun' name='author'>";
 echo "<title></title>";
 echo "</head>";
@@ -73,12 +73,16 @@ if (!$test_env) {
 <script type="text/javascript" src="src/data/geek_app_data.js" charset=utf-8></script>
 <script type="text/javascript" src="src/test/geek_mock_data.js" charset=utf-8></script>
 
+
 <script type="text/javascript">
     window.onload = function(){
+        var ua = window.navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf('android') > -1 || ua.indexOf('linux') > -1;
+
         document.title = "<?php echo $activityName ?>"
         var test_env = "<?php echo $test_env ?>"
         if (test_env) {
-            //        var vConsole = new VConsole();
+                    var vConsole = new VConsole();
             g_game_user.userID = MockData.UserID
             g_game_user.channel = MockData.channelID
             g_game_user.channelName = MockData.channelName
@@ -91,27 +95,40 @@ if (!$test_env) {
         }
 
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
-        cc.view.enableRetina(true);
     };
 
     /**
      * 设置video标签样式，小屏播放
      */
-    function geek_game_setup_video() {
+    function geek_game_setup_video(removedCallback) {
         var video = document.getElementsByClassName("cocosVideo")[0]
         if (video) {
             video.setAttribute("x5-playsinline", "true")
             video.setAttribute("webkit-playsinline", "true")
-            video.setAttribute("x5-video-player-type", "h5")
+//            video.setAttribute("x5-video-player-type", "h5")
             video.setAttribute("playsinline", "true")
             video.setAttribute("controls", "true")
         }
+        video.addEventListener("x5videoexitfullscreen", function(){
+            if (removedCallback){
+                removedCallback()
+            }
+        });
     }
 
+    /**
+     * 加载音乐
+     * @param path
+     */
     function audioPreload(path) {
         var audio = document.getElementById("backAudio")
         audio.setAttribute("src", path)
+        audio.setAttribute("preload", "auto")
     }
+    /**
+     * 播放或停止音乐
+     * @param play
+     */
     function playBack(play) {
         var audio = document.getElementById("backAudio")
         if (play){
@@ -119,9 +136,11 @@ if (!$test_env) {
         } else {
             audio.pause()
         }
-
     }
+
+
 </script>
+
 
 
 <style type="text/css">
@@ -133,6 +152,7 @@ if (!$test_env) {
     }
 
 </style>
+
 
 <audio id="backAudio" loop="loop"></audio>
 

@@ -825,7 +825,6 @@ var geek_class_lib = cc.Layer.extend({
      */
     f_play_back_music: function (path) {
         cc.audioEngine.playMusic(path, true)
-        // this.audio_ = cc.audioEngine.playEffect(path, true)
         this.effect_play_ = true
     },
 
@@ -843,17 +842,6 @@ var geek_class_lib = cc.Layer.extend({
             this.effect_play_ = true
         }
         return true
-
-        // if (this.music_play_) return false
-        // if ( this.effect_path_) {
-        //     cc.audioEngine.playMusic(this.effect_path_, true)
-        //     this.effect_play_ = true
-        // } else {
-        //     cc.audioEngine.
-        //     cc.audioEngine.stopMusic(false)
-        //     this.effect_play_ = false
-        // }
-        // return true
     },
 
     /**
@@ -994,7 +982,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
                 if (remote_res && remote_res.length) {
                     m_resources = m_resources.concat(remote_res)
                 }
-                console.log(m_resources)
+                // console.log(m_resources)
                 cc.LoaderScene.preload(m_resources, function () {
 
                     var MyScene = cc.Scene.extend({

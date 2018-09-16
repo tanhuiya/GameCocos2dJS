@@ -47022,7 +47022,7 @@ ccui.VideoPlayer.EventType = {
             video.removeEventListener(polyfill.event, cb);
             video.currentTime = 0;
             video.style["visibility"] = "visible";
-            video.play();
+            // video.play();
             if(!node._played){
                 video.pause();
                 video.currentTime = 0;

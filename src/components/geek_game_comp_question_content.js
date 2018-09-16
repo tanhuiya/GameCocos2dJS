@@ -61,24 +61,10 @@ var g_comp_question_content = cc.Node.extend({
             title.setDimensions(g_size.width - 100, 0)
             this.height_ = title.getContentSize().height + image.getBoundingBox().height + margin
         } else if (this.content_type_ == ContentType.Text_Video) {
-            var player = new ccui.VideoPlayer(question_material_img)
-            this.addChild(player, 1, 1)
-            this.videoPlayer_ = player
-            player.setContentSize(395, 290)
-            player.setFullScreenEnabled(false)
-            player.setPosition(g_size.width * 0.5, -145)
+            this.addVideoPlayer(question_material_img)
             var title = geek_lib.f_label_create(this, text, 36, g_size.width * 0.5, -163 * 2, 1, cc.color.WHITE, 1, 1, cc.AncorPointTopMid)
             title.setDimensions(g_size.width - 100, 0)
-            this.height_ = title.getContentSize().height + player.getBoundingBox().height + margin
-            var that = this
-            player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
-                that.videoPlayOver(player, null)
-            })
-            player.setEventListener(ccui.VideoPlayer.EventType.PLAYING, function () {
-                that.videpPlayBegin()
-            })
-            // 设置video 标签样式
-            geek_game_setup_video()
+            this.height_ = title.getContentSize().height + 300 + margin
         } else {
             var text_label = geek_lib.f_label_create(this, text, 36, g_size.width * 0.5, -(textHeight * 0.5), 1, cc.color.WHITE, 1, 1, cc.AncorPointCenter)
             text_label.setDimensions(g_size.width - 100, 0)
@@ -87,12 +73,40 @@ var g_comp_question_content = cc.Node.extend({
         }
     },
 
+
+    /**
+     * 添加播放器
+     */
+    addVideoPlayer: function (question_material_img) {
+        var player = new ccui.VideoPlayer(question_material_img)
+        this.addChild(player, 1, 1)
+        this.videoPlayer_ = player
+        player.setContentSize(400, 300)
+        player.setFullScreenEnabled(false)
+        player.setPosition(g_size.width * 0.5, -145)
+
+        var that = this
+        player.setEventListener(ccui.VideoPlayer.EventType.COMPLETED, function () {
+            that.videoPlayOver()
+        })
+        player.setEventListener(ccui.VideoPlayer.EventType.STOPPED, function () {
+            that.videoPlayOver()
+        })
+        player.setEventListener(ccui.VideoPlayer.EventType.PLAYING, function () {
+            that.videpPlayBegin()
+        })
+
+        // 设置video 标签样式
+        geek_game_setup_video(function () {
+            player.removeFromParent(true)
+            that.addVideoPlayer(question_material_img)
+        })
+    },
+
     /**
      * 播放音乐
      */
     startMusic: function (videopath) {
-        console.log(videopath)
-        // var url = "http://s2-cdn.oneitfarm.com/njpivllfr63mk8pikayc4uro5gqu0td2/8e009aee4ff0981231325e8fc52e7cad.mp3"
         cc.audioEngine.playMusic(videopath, false)
     },
 
@@ -127,7 +141,7 @@ var g_comp_question_content = cc.Node.extend({
      */
     videpPlayBegin: function () {
         this.background_playing_ = geek_lib.f_isplay_effect()
-        if (this.background_playing_) {
+        if (geek_lib.f_isplay_effect()) {
             geek_lib.f_toggle_back_music()
         }
     },
@@ -164,11 +178,9 @@ var g_comp_question_content = cc.Node.extend({
      * 视频播放结束
      * @param player
      */
-    videoPlayOver: function (player,icon) {
+    videoPlayOver: function () {
         geek_lib.f_play_music(false)
-        // player.setVisible(false)
-        // this.player_image_.setVisible(true)
-        // icon.setVisible(true)
+        console.log("this.background_playing_:", this.background_playing_)
         if (this.background_playing_) {
             this.scheduleOnce(function () {  // 2秒后恢复背景音
                 geek_lib.f_toggle_back_music()
