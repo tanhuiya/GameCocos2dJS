@@ -1011,6 +1011,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
         }
     };
     cc.game.run(canvas);
+    cc.view.enableRetina(true);
 }
 
 function  g_preloadRes(callback) {
