@@ -101,6 +101,8 @@ var g_comp_question_content = cc.Node.extend({
             player.removeFromParent(true)
             that.addVideoPlayer(question_material_img)
         })
+
+        player.setVisible(true)
     },
 
     /**
@@ -150,28 +152,26 @@ var g_comp_question_content = cc.Node.extend({
      * 播放按钮点击回调
      */
     playIconCallback: function (icon, videopath) {
-        if (this.animating_) return
-
-        this.background_playing_ = geek_lib.f_isplay_effect()
-        if (this.background_playing_) {
-            geek_lib.f_toggle_back_music()
-        }
-        if (this.content_type_ == ContentType.Text_Audio) {
+        if (this.animating_) {
+            this.stopAnimate(icon)
+            cc.audioEngine.pauseMusic()
+            this.animating_ = false
+        } else {
             if (!videopath || videopath.length < 1) {
                 geek_lib.g_notice("音频文件为空", 2)
                 return
             }
-            if (!this.animating_) {
-                this.addAnimateFrame(icon)
-                this.startMusic(videopath)
-                geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
+            this.background_playing_ = geek_lib.f_isplay_effect()
+            if (this.background_playing_) {
+                geek_lib.f_toggle_back_music()
             }
-            // else {
-            //     this.stopAnimate(icon)
-            // }
-            this.animating_ = !this.animating_
+            this.addAnimateFrame(icon)
+            this.startMusic(videopath)
+            geek_lib.f_timer_start(this, this.updateTimer, 0.1, true)
+
+            geek_lib.f_play_music(true)
+            this.animating_ = true
         }
-        geek_lib.f_play_music(true)
     },
 
     /**

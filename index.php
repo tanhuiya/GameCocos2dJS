@@ -7,7 +7,19 @@
  */
 header("Content-type:text/html;charset=utf-8");
 
+$root = $_SERVER['DOCUMENT_ROOT'];
+if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信 浏览器访问
+{
+    if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信
+    {
+        include_once($root.'/wx/newgame_jssdk.php');
+    }
+}
 
+else{
+     echo "<h1>请在微信中使用</h1>";
+     exit;
+}
 
 echo "<!DOCTYPE html>";
 echo "<html>";
@@ -30,7 +42,7 @@ fwrite($myfile, "\n");
 /**
  * 是否测试环境
  */
-$test_env = true;
+$test_env = false;
 
 if (!$test_env) {
 	$userID = $_GET["userId"];
@@ -72,7 +84,78 @@ if (!$test_env) {
 <script type="text/javascript" src="src/layer/geek_app_game_root.js" charset=utf-8></script>
 <script type="text/javascript" src="src/data/geek_app_data.js" charset=utf-8></script>
 <script type="text/javascript" src="src/test/geek_mock_data.js" charset=utf-8></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"> </script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '<?php echo $signPackage["appId"];?>',
+        timestamp: <?php echo $signPackage["timestamp"];?>,
+        nonceStr: '<?php echo $signPackage["nonceStr"];?>',
+        signature: '<?php echo $signPackage["signature"];?>',
+        jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem',
+            'translateVoice',
+            'startRecord',
+            'stopRecord',
+            'onRecordEnd',
+            'playVoice',
+            'pauseVoice',
+            'stopVoice',
+            'uploadVoice',
+            'downloadVoice',
+            'chooseImage',
+            'previewImage',
+            'uploadImage',
+            'downloadImage',
+            'getNetworkType',
+            'openLocation',
+            'getLocation',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'closeWindow',
+            'scanQRCode',
+            'chooseWXPay',
+            'openProductSpecificView',
+            'addCard',
+            'chooseCard',
+            'openCard'
+        ]
+    });
 
+    wx.ready(function () {
+        var images = {
+            localId: [],
+            serverId: [],
+            downloadId: []
+        };
+
+
+        var share_url = "http://www.bestudy360.com/GameApp/11.png";
+        var link_url = "http://game.k12c.com/front/wechat/bindH5WeChat?activityId=c28f69f9fa5b401aab21966abaf92095&channelId=<?php echo $channeID;?>";
+        var title_txt = "<?php echo $activityName ?>";
+        var desc_txt = "互动游戏学习平台";
+
+
+        var shareData = {
+            title: title_txt,
+            desc: desc_txt,
+            link: link_url,
+            imgUrl: share_url
+        };
+        wx.onMenuShareAppMessage(shareData);
+        wx.onMenuShareTimeline(shareData);
+
+    });
+
+</script>
 
 <script type="text/javascript">
     window.onload = function(){
