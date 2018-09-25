@@ -87,25 +87,6 @@ var g_activity_record_layer = cc.LayerColor.extend({
         var school_edit = new g_game_comp_select_item(marign_x, size.height - 330 * 2, 656, 57 *2, "学校", null)
         school_edit.setText(g_game_user.channelName)
         this.addChild(school_edit, 1, 8)
-        this.school_edit_ = school_edit
-
-        /**
-         * 年级
-         */
-        var grade_edit = new g_game_comp_select_item(marign_x, size.height - 390 * 2, 656, 57 *2, "年级", function () {
-            that.showSheet(SheetType.SheetGrade)
-        })
-        this.addChild(grade_edit, 1, 9)
-        this.grade_edit_ = grade_edit
-
-        /**
-         * 班级
-         */
-        var class_edit = new g_game_comp_select_item(marign_x, size.height - 450 * 2, 656, 57 *2, "班级", function () {
-            that.showSheet(SheetType.SheetClass)
-        })
-        this.addChild(class_edit, 1, 10)
-        this.class_edit_ = class_edit
 
         /**
          * 保存按钮
@@ -114,132 +95,9 @@ var g_activity_record_layer = cc.LayerColor.extend({
         save_btn.setTitleFontSize(38)
         this.submit_btn_ = save_btn
 
-        this.apiGetClassData()
-        this.apiGetGradeData()
+
     },
 
-    /**
-     * 显示选择框
-     */
-    showSheet:function (type) {
-
-        var sheet = null
-        if (type == SheetType.SheetClass) {
-            sheet = new g_comp_action_sheet(this.classArr_, type, this.lastClassID_)
-        } else {
-            sheet = new g_comp_action_sheet(this.gradeArr_, type, this.lastGradeID_)
-        }
-        sheet.setPosition(0, 0)
-        geek_lib.f_set_anchor_point_type(sheet, cc.AncorPointBottomLeft)
-        this.addChild(sheet, 9, 10)
-        var that = this
-        sheet.setCallback(function (index) {
-            sheet.removeFromParent(true)
-            that.recoverCocosBug()
-            if (index < 0) return
-
-            if (type == SheetType.SheetGrade) {
-                var data = that.gradeArr_[index]
-                if (that.lastGradeID_ == index) return
-                that.apiGetClassData(data.id)
-                that.grade_edit_.setText(data.name)
-                that.lastGradeID_ = index
-                // 重置classid
-                that.class_edit_.setText(null)
-                that.lastClassID_ = -1
-            } else {
-                var data = that.classArr_[index]
-                if (that.lastClassID_ == index) return
-                that.lastClassID_ = index
-                that.class_edit_.setText(data.name)
-            }
-
-        })
-        var move1 = cc.moveTo(0.3, cc.p(0, 0));
-        sheet.runAction(cc.sequence(move1));
-
-        this.fixCocosEditBoxBug(sheet.getRealHeight())
-    },
-
-    /**
-     *恢复EditBox 显示
-     */
-    recoverCocosBug: function () {
-        this.school_edit_.setVisible(true)
-        this.captcha_edit_.setVisible(true)
-        this.phone_edit_.setVisible(true)
-        this.name_edit_.setVisible(true)
-    },
-    /**
-     * EditBox 层级过高， 临时解决方案， 隐藏sheet 下部的editbox
-     * @param belowHeight
-     */
-    fixCocosEditBoxBug:function (belowHeight) {
-        if (this.captcha_edit_.getBoundingBox().y + this.captcha_edit_.getBoundingBox().height * 0.5 < belowHeight) {
-            this.captcha_edit_.setVisible(false)
-        }
-
-        if (this.school_edit_.getBoundingBox().y + this.school_edit_.getBoundingBox().height * 0.5 < belowHeight) {
-            this.school_edit_.setVisible(false)
-        }
-
-        if (this.phone_edit_.getBoundingBox().y + this.phone_edit_.getBoundingBox().height * 0.5 < belowHeight) {
-            this.phone_edit_.setVisible(false)
-        }
-
-        if (this.name_edit_.getBoundingBox().y + this.name_edit_.getBoundingBox().height * 0.5 < belowHeight) {
-            this.name_edit_.setVisible(false)
-        }
-    },
-
-    /**
-     * 获取班级列表
-     */
-    apiGetClassData: function (id) {
-        if (id == null) return
-        var param = {
-            activityGradeId: id
-        }
-        var that = this
-        geek_lib.f_network_post_json(this, uri.classList, param, function (response) {
-            if (response.activityClassList) {
-                var activityClassList = response.activityClassList
-                var arr = []
-                for (var i = 0; i < activityClassList.length; i++) {
-                    var option = activityClassList[i]
-                    arr.push({
-                        name: option.className,
-                        id: option.activityClassId
-                    })
-                }
-                that.classArr_ = arr
-            }
-        })
-    },
-
-    /**
-     * 获取年级列表
-     */
-    apiGetGradeData: function () {
-        var param = {
-            channelId: g_game_user.channelID,
-        }
-        var that = this
-        geek_lib.f_network_post_json(this, uri.gradeList, param, function (response) {
-            if (response.activityGradeList) {
-                var activityGradeList = response.activityGradeList
-                var arr = []
-                for (var i = 0; i < activityGradeList.length; i++) {
-                    var option = activityGradeList[i]
-                    arr.push({
-                        name: option.gradeName,
-                        id: option.activityGradeId
-                    })
-                }
-                that.gradeArr_ = arr
-            }
-        })
-    },
 
     /**
      * 提交用户信息
@@ -259,21 +117,11 @@ var g_activity_record_layer = cc.LayerColor.extend({
             return
         }
 
-        var classname = this.lastClassID_ > -1 ? this.classArr_[this.lastClassID_].name : ""
-        var gradename = this.lastGradeID_ > -1 ? this.gradeArr_[this.lastGradeID_].name : ""
-        if (classname.length < 1){
-            geek_lib.g_notice("请选择班级", 2)
-            return
-        }
-        if (gradename.length < 1){
-            geek_lib.g_notice("请选择年级", 2)
-            return
-        }
         var param = {
             mobile: this.phone_edit_.getString(),
             code: this.captcha_edit_.getString(),
-            gradeName: gradename,
-            className: classname,
+            // gradeName: gradename,
+            // className: classname,
             userName: this.name_edit_.getString(),
             channelId: g_game_user.channelID,
             userId: g_game_user.userID
@@ -438,9 +286,6 @@ var g_game_comp_select_item = cc.LayerColor.extend({
         var label = geek_lib.f_label_create(this, placeholder, 28, 5, size.height * 0.5, 1, DisableColor, 1, 1, cc.AncorPointMidLeft)
         label.height = 57 * 2
         this.label_ = label
-        // var name_edit = geek_lib.f_edit_create(this, 0, 0, size.width, size.height, 28, 28,res.s_edit_box,placeholder,20)
-        // geek_lib.f_set_anchor_point_type(name_edit, cc.AncorPointBottomLeft)
-        geek_lib.f_imageview_create(this, res.s_arrow, size.width - 20, size.height * 0.5, 1, 2, 3, cc.AncorPointCenter)
 
         var that = this
         cc.eventManager.addListener(cc.EventListener.create({
