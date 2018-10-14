@@ -330,6 +330,7 @@ var g_question_layer = cc.Layer.extend({
             this.secondUsed_ = used
         } else if (this.questionTimeType_ == QuestionTimeLimitType.Unlimit) {
             this.secondUsed_ = (Date.parse(new Date()) - this.startSecond_) / 1000
+            var used = this.secondUsed_
         }
         console.log("used: ", used)
         var answers = this.answer_node_.getAnswers()
@@ -353,7 +354,7 @@ var g_question_layer = cc.Layer.extend({
             userId: g_game_user.userID,
             options: JSON.stringify(ids),
             questionId: question.activity_question_id,
-            seconds: this.headNode_.getUsedSeconds()
+            seconds: used
         }
         geek_lib.f_network_post_json(
             this,
