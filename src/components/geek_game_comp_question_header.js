@@ -10,11 +10,13 @@ var g_comp_question_header = cc.Node.extend({
     numberOfQuestion_: 0,
     score_: 0,
     isShowNum_: 0,
+    startSecond_: 0,// 每条题目的开始时间
 
     ctor: function (numberOfQuestion, isShowNum) {
         this._super()
         this.numberOfQuestion_ = numberOfQuestion
         this.isShowNum_ = isShowNum
+        this.startSecond_ = Date.parse(new Date())
     },
 
     /**
@@ -106,7 +108,8 @@ var g_comp_question_header = cc.Node.extend({
      * @returns {number}
      */
     getUsedSeconds: function () {
-        return this.totalSecond_ - this.currentSecond_
+        // return this.totalSecond_ - this.currentSecond_
+        return (Date.parse(new Date()) - this.startSecond_) / 1000
     },
 
 
@@ -117,6 +120,9 @@ var g_comp_question_header = cc.Node.extend({
         var chineseIndex = ArabiSimplified(num)
         var title = "第" + chineseIndex + "题 (" + num + "/" + this.numberOfQuestion_ + ")"
         this.title_label_.setString(title)
+
+        // 更新当前题目开始时间
+        this.startSecond_ = Date.parse(new Date())
     },
 
     /**

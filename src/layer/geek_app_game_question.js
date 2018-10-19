@@ -322,17 +322,9 @@ var g_question_layer = cc.Layer.extend({
         this.scheduleStop()
         this.answer_content_.stopPlayAll()
 
-        var used = this.headNode_.getUsedSeconds()
-        console.log("used: ", used)
-        if (this.questionTimeType_ == QuestionTimeLimitType.Single) {
-            this.secondUsed_ = this.secondUsed_ + used
-        } else if (this.questionTimeType_ == QuestionTimeLimitType.All) {
-            this.secondUsed_ = used
-        } else if (this.questionTimeType_ == QuestionTimeLimitType.Unlimit) {
-            this.secondUsed_ = (Date.parse(new Date()) - this.startSecond_) / 1000
-            var used = this.secondUsed_
-        }
-        console.log("used: ", used)
+        var singleUsed = this.headNode_.getUsedSeconds()
+        this.secondUsed_ = singleUsed + this.secondUsed_
+        console.log("used: ", singleUsed, " second used", this.secondUsed_ )
         var answers = this.answer_node_.getAnswers()
         var ids = []
 
@@ -354,7 +346,7 @@ var g_question_layer = cc.Layer.extend({
             userId: g_game_user.userID,
             options: JSON.stringify(ids),
             questionId: question.activity_question_id,
-            seconds: used
+            seconds: singleUsed
         }
         geek_lib.f_network_post_json(
             this,
