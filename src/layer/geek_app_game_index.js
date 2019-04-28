@@ -26,6 +26,8 @@ var ActivityType = {
  * @type {any}
  */
 var g_index_layer = cc.Layer.extend({
+    // 判断该接口是否再请求，避免同一接口多次请求
+    loading_: false,
 
     requestNumber_: 0,
 
@@ -305,6 +307,10 @@ var g_index_layer = cc.Layer.extend({
      * 获取游戏信息
      */
     apiStartGame: function () {
+        if (this.loading_) {
+            return
+        }
+        this.loading_ = true
         var that = this
 
         geek_lib.f_network_post_json(
@@ -315,12 +321,15 @@ var g_index_layer = cc.Layer.extend({
                 userId: g_game_user.userID
             },
             function (response) {
-                // console.log(response)
+                that.loading_ = false
                 if (response.startData) {
                     that.gotoQuestion(response.startData)
                 } else {
                     that.errorHandler("startData 数据为空")
                 }
+            },
+            function () {
+                that.loading_ = false
             }
         )
     },
