@@ -30,7 +30,7 @@ var g_comp_rank_cell = cc.TableViewCell.extend({
         this.school_label_ = geek_lib.f_label_create(this, "", 24, 88 * 2, this.height_ - 32 * 2, 1, cc.hexToColor("#9B9B9B"), 1, 5, cc.AncorPointTopLeft)
         geek_lib.f_label_create(this, "分", 28, 327 * 2, this.height_ * 0.5, 1, cc.color.BLACK, 1, 6, cc.AncorPointMidLeft)
         this.score_label_ = geek_lib.f_label_create(this, "", 28, 325 * 2, this.height_ * 0.5, 1, cc.hexToColor("#E99305"), 1, 7, cc.AncorPointMidRight)
-
+        this.class_label_ = geek_lib.f_label_create(this, "", 28, 211 * 2, this.height_ - 32 * 2, 1, cc.hexToColor("#9B9B9B"), 1, 7, cc.AncorPointTopLeft)
         var blackline = cc.LayerColor.create(cc.hexToColor("#9B9B9B"), this.width_ - 20, 0.6)
         geek_lib.f_set_anchor_point_type(blackline, cc.AncorPointTopLeft)
         this.addChild(blackline,2)
@@ -52,6 +52,8 @@ var g_comp_rank_cell = cc.TableViewCell.extend({
         geek_lib.f_label_change_txt(this.title_label_, data.user_name)
         geek_lib.f_label_change_txt(this.school_label_, data.channel_name)
         geek_lib.f_label_change_txt(this.score_label_, data.question_sum_score)
+        var classname = (data.grade_name ? data.grade_name : "") + " " + (data.class_name ? data.class_name : "")
+        geek_lib.f_label_change_txt(this.class_label_, classname)
     }
 })
 

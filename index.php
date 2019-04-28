@@ -8,18 +8,18 @@
 header("Content-type:text/html;charset=utf-8");
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信 浏览器访问
-{
-    if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信
-    {
+// if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信 浏览器访问
+// {
+//     if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信
+//     {
         include_once($root.'/wx/newgame_jssdk.php');
-    }
-}
+//     }
+// }
 
-else{
-     echo "<h1>请在微信中使用</h1>";
-     exit;
-}
+// else{
+//      echo "<h1>请在微信中使用</h1>";
+//      exit;
+// }
 
 echo "<!DOCTYPE html>";
 echo "<html>";
@@ -138,8 +138,8 @@ if (!$test_env) {
         };
 
 
-        var share_url = "http://www.bestudy360.com/GameApp/11.png";
-        var link_url = "http://game.k12c.com/front/wechat/bindH5WeChat?activityId=c28f69f9fa5b401aab21966abaf92095&channelId=<?php echo $channeID;?>";
+        var share_url = "https://bestudy360.com/newgame_share.png";
+        var link_url = "http://game.k12c.com/front/wechat/bindH5WeChat?activityId=<?php echo $activityID;?>&channelId=<?php echo $channeID;?>";
         var title_txt = "<?php echo $activityName ?>";
         var desc_txt = "互动游戏学习平台";
 
@@ -172,7 +172,7 @@ if (!$test_env) {
             g_game_user.activity = MockData.Activity
         } else {
             g_game_user.userID = "<?php echo $userID ?>"
-            g_game_user.channel = "<?php echo $channeID ?>"
+            g_game_user.channelID = "<?php echo $channeID ?>"
             g_game_user.channelName = "<?php echo $channeName ?>"
             g_game_user.activity = "<?php echo $activityID ?>"
         }

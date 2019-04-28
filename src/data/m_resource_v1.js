@@ -2,10 +2,10 @@
 var path = "res/";
 var test_path = "res/test/";
 var res = {
-    t_question_bg: test_path + "audio_bg.png",
-    t_home_bg: test_path + "home_bg.png",
-    t_bg: test_path + "background.png",
-    t_option_img: test_path + "question_option.png",
+    // t_question_bg: test_path + "audio_bg.png",
+    // t_home_bg: test_path + "home_bg.png",
+    // t_bg: test_path + "background.png",
+    // t_option_img: test_path + "question_option.png",
 
 
     s_music_off: path + "music_off.png",
@@ -59,10 +59,10 @@ var res = {
 
 
 var m_resources = [
-    res.t_bg,
-    res.t_home_bg,
-    res.t_option_img,
-    res.t_question_bg,
+    // res.t_bg,
+    // res.t_home_bg,
+    // res.t_option_img,
+    // res.t_question_bg,
 
     res.s_music_off,
     res.s_loading,

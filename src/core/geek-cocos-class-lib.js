@@ -964,7 +964,7 @@ function g_start_geek_h5(canvas, width, height, fun, state, type)
     cc.game.onStart = function(){
 
         cc.view.adjustViewPort(true);
-        cc.view.enableAutoFullScreen(false)
+
         var show_model =  cc.ResolutionPolicy.FIXED_WIDTH;
 
         //if(type )
