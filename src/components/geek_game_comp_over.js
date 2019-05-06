@@ -70,10 +70,11 @@ var g_comp_over_question = cc.Node.extend({
         geek_lib.f_label_create(this, "恭喜完成答题", 72, width * 0.5, 282 * 2, 1, cc.hexToColor("#117AF5"), 1, 4, cc.AncorPointTopMid)
 
         var line = geek_lib.f_line_create(this, cc.color(112, 112, 112, 150), 20, 200, width - 40, 2)
-        console.log(line.getBoundingBox())
+        // console.log(line.getBoundingBox())
         var rank_btn = geek_lib.f_btn_create(this, res.s_common_btn, "", width * 0.5, 50 * 2, 1, 2, 3, cc.AncorPointCenter)
         rank_btn.setTitleText("查看排名");
         rank_btn.setTitleFontSize(40)
+        rank_btn.setVisible(false)
         this.rank_btn_ = rank_btn
     },
 
