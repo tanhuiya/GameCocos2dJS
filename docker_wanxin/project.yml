@@ -12,7 +12,7 @@ services:
     volumes:
       - ./nginx/logs:/opt/ci123/www/html/logs
       - ./nginx/conf:/etc/nginx/conf.d
-      - ../../WXGame:/opt/ci123/www/html/wx_game
+      - ../:/opt/ci123/www/html/wx_game
 
 #   mysql:
 #     build: ./mysql-docker

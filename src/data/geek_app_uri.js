@@ -6,8 +6,8 @@
  * 域名
  * @type {string}
  */
-var domain = "http://game.k12c.com"
-
+// var domain = "http://game.k12c.com"
+var domain = "http://www.jsyzk12c.cn"
 /**
  * uri 定义
  * @type {}

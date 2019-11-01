@@ -354,12 +354,12 @@ var g_question_layer = cc.Layer.extend({
             params,
             function (data) {
                 if (data.nextData) {
-                    that.submitParser(data)
                     // 答题类根据服务端返回更新分数
                     if (g_game_info.activityType_ == ActivityType.Answer) {
                         that.score_ = data.nextData.scoreResult
                         that.headNode_.updateScore(that.score_)
                     }
+                    that.submitParser(data)
                 } else {
                     that.errorHandler("缺少nextData数据")
                 }

@@ -63,6 +63,7 @@ var g_index_layer = cc.Layer.extend({
         var rank_btn = geek_lib.f_btn_create(this, res.s_rank, "", g_size.width - 32 - 82 , g_size.height, 1, 1, 3, cc.AncorPointTopLeft)
         rank_btn.setVisible(g_game_info.isAnswer())
         this.rank_btn_ = rank_btn
+        // rank_btn.setVisible(false)
 
         var music_x = g_game_info.isAnswer() ? rank_btn.getBoundingBox().x - 14 - 50 : rank_btn.getBoundingBox().x
         var music_btn = geek_lib.f_btn_create(this, res.s_music_off, "", music_x, g_size.height - 44, 1, 1, 4, cc.AncorPointTopLeft)
