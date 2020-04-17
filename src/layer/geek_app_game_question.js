@@ -179,7 +179,6 @@ var g_question_layer = cc.Layer.extend({
      */
     gotoFinishLayer: function () {
         this.removeFromParent()
-        console.log(this.secondUsed_)
         var data = {
             secondUsed: this.secondUsed_,
             score: this.headNode_.getScore()
@@ -324,7 +323,6 @@ var g_question_layer = cc.Layer.extend({
 
         var singleUsed = this.headNode_.getUsedSeconds()
         this.secondUsed_ = singleUsed + this.secondUsed_
-        console.log("used: ", singleUsed, " second used", this.secondUsed_ )
         var answers = this.answer_node_.getAnswers()
         var ids = []
 
@@ -354,12 +352,12 @@ var g_question_layer = cc.Layer.extend({
             params,
             function (data) {
                 if (data.nextData) {
-                    that.submitParser(data)
                     // 答题类根据服务端返回更新分数
                     if (g_game_info.activityType_ == ActivityType.Answer) {
                         that.score_ = data.nextData.scoreResult
                         that.headNode_.updateScore(that.score_)
                     }
+                    that.submitParser(data)
                 } else {
                     that.errorHandler("缺少nextData数据")
                 }
