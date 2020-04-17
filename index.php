@@ -12,7 +12,7 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 // {
 //     if(stripos($_SERVER['HTTP_USER_AGENT'],"MicroMessenger"))   //微信
 //     {
-        include_once($root.'/wx/newgame_jssdk.php');
+//        include_once($root.'/wx/newgame_jssdk.php');
 //     }
 // }
 
@@ -42,7 +42,7 @@ fwrite($myfile, "\n");
 /**
  * 是否测试环境
  */
-$test_env = false;
+$test_env = true;
 
 if (!$test_env) {
 	$userID = $_GET["userId"];
