@@ -40,6 +40,7 @@ var g_index_layer = cc.Layer.extend({
     home_data_: null,
 
     activity_state_: 0,
+
     /**
      * 页面初始化
      */
@@ -54,7 +55,7 @@ var g_index_layer = cc.Layer.extend({
     },
 
     setLayout: function () {
-        geek_lib.f_img_create_box(this, this.homeBack_ ? this.homeBack_ : res.s_background, g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
+        geek_lib.f_img_create_box(this, this.GetHomeBg(), g_size.width * 0.5, g_size.height* 0.5, g_size.width, g_size.height, 1, 1, cc.AncorPointCenter)
         var bg_y = g_size.height
         // 活动介绍
         var rule_btn = geek_lib.f_btn_create(this, res.s_rule, "活动介绍", 30, bg_y - 32, 1, 1, 2, cc.AncorPointTopLeft)
@@ -86,6 +87,9 @@ var g_index_layer = cc.Layer.extend({
      * 添加富文本，当前参加人数
      */
     addRichLabel: function (num) {
+        if (this.richLabel_) {
+            this.richLabel_.removeFromParent(true)
+        }
         var richText = new ccui.RichText()
         richText.ignoreContentAdaptWithSize(false);
         richText.setContentSize(cc.size(g_size.width, 100));
@@ -100,6 +104,15 @@ var g_index_layer = cc.Layer.extend({
         richText.setPosition(g_size.width * 0.5, this.start_btn_.getBoundingBox().y + 130)
         this.addChild(richText,2,10)
         this.richLabel_ = richText
+    },
+
+    //-------------- exported -----------------
+    needUpdate: function () {
+        this.apiUpdateHomeData()
+    },
+
+    GetHomeBg: function () {
+        return this.homeBack_ ? this.homeBack_ : res.s_background
     },
 
     /**
@@ -160,6 +173,16 @@ var g_index_layer = cc.Layer.extend({
         return false
     },
 
+
+    /**
+     * 解析首页数据
+     */
+    parserUpdateHomeData: function (data) {
+        this.home_data_ = data
+        if (this.home_data_.numOfUser){
+            this.addRichLabel(this.home_data_.numOfUser)
+        }
+    },
 
     /**
      * 解析首页数据
@@ -284,6 +307,23 @@ var g_index_layer = cc.Layer.extend({
             function (data) {
                 that.activity_state_ = data.activityState
                 that.canPlayActivity()
+            })
+    },
+
+    /**
+     * 更新首页数据
+     */
+    apiUpdateHomeData: function () {
+        var that = this
+        var param = {
+            activityId: g_game_user.activity
+        }
+        geek_lib.f_network_post_json(
+            this,
+            uri.home,
+            param,
+            function (data) {
+                that.parserUpdateHomeData(data)
             })
     },
 

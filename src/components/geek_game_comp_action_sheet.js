@@ -88,7 +88,7 @@ var g_comp_action_sheet = cc.LayerColor.extend({
      */
     drawScrollviewItem:function () {
         var tableView = new cc.TableView(this, cc.size(this.width_, SheetScrollHeight))
-        tableView.setBounceable(false)
+        // tableView.setBounceable(false)
         tableView.setDirection(cc.SCROLLVIEW_DIRECTION_VERTICAL)
         tableView.setPosition(0, SheetTailHeigth)
         tableView.setDelegate(this)
@@ -106,6 +106,16 @@ var g_comp_action_sheet = cc.LayerColor.extend({
      * @param cell
      */
     tableCellTouched: function (table, cell) {
+        var index = cell.getIdx()
+        this.lastIndex_ = index
+        if (this.lastCell_) {
+            this.lastCell_.setSelect(false)
+        }
+        cell.setSelect(true)
+        this.lastCell_ = cell
+    },
+
+    tableCellHighlight: function (table, cell) {
         var index = cell.getIdx()
         this.lastIndex_ = index
         if (this.lastCell_) {
@@ -222,7 +232,7 @@ var g_game_comp_scrollview_item = cc.TableViewCell.extend({
      */
     draw:function () {
         this.label_ = geek_lib.f_label_create(this, "", 36, g_size.width * 0.5, this.height_ * 0.5, 1, cc.color(112,112,112), 1, 1, cc.AncorPointCenter)
-        var image_x = this.label_.getBoundingBox().x + this.label_.getBoundingBox().width + 80
+        var image_x = this.label_.getBoundingBox().x + this.label_.getBoundingBox().width + 220
         this.icon_ = geek_lib.f_sprite_create_box(this, res.s_right, image_x, this.height_ * 0.5, 30, 30, 1, 2, cc.AncorPointMidLeft)
         this.icon_.setVisible(false)
 

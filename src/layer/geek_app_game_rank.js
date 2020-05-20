@@ -14,7 +14,7 @@ var g_rank_layer = cc.Layer.extend({
 
     init: function () {
         this._super()
-        geek_lib.f_sprite_create_box(this, res.s_background, g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
+        geek_lib.f_sprite_create_box(this, g_root.indexLayer_.GetHomeBg(), g_size.width * 0.5, g_size.height * 0.5, g_size.width, g_size.height, 1, 1)
         this.drawRect()
         this.apiRankList(1)
         geek_lib.f_swallow_event(this)

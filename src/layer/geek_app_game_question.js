@@ -307,6 +307,7 @@ var g_question_layer = cc.Layer.extend({
             } else if (index == 2){
                 confirm.removeFromParent(true)
                 that.removeFromParent(true)
+                g_root.indexLayer_.needUpdate()
             }
         })
 

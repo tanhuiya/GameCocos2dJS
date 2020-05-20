@@ -72,6 +72,7 @@ var g_finish_layer = cc.Layer.extend({
                     break;
                 case this.back_btn_:
                     this.removeFromParent(true)
+                    g_root.indexLayer_.needUpdate()
                     break;
                 case this.again_btn_:
                     this.removeFromParent(true)

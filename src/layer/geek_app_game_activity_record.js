@@ -114,7 +114,7 @@ var g_activity_record_layer = cc.LayerColor.extend({
         save_btn.setTitleFontSize(38)
         this.submit_btn_ = save_btn
 
-        this.apiGetClassData()
+        // this.apiGetClassData()
         this.apiGetGradeData()
     },
 
@@ -125,6 +125,10 @@ var g_activity_record_layer = cc.LayerColor.extend({
 
         var sheet = null
         if (type == SheetType.SheetClass) {
+            if (this.lastGradeID_ == -1) {
+                geek_lib.g_notice("请先选择年级", 2)
+                return
+            }
             sheet = new g_comp_action_sheet(this.classArr_, type, this.lastClassID_)
         } else {
             sheet = new g_comp_action_sheet(this.gradeArr_, type, this.lastGradeID_)
@@ -190,13 +194,17 @@ var g_activity_record_layer = cc.LayerColor.extend({
         if (this.name_edit_.getBoundingBox().y + this.name_edit_.getBoundingBox().height * 0.5 < belowHeight) {
             this.name_edit_.setVisible(false)
         }
+
     },
 
     /**
      * 获取班级列表
      */
     apiGetClassData: function (id) {
-        if (id == null) return
+        if (id == null) {
+            geek_lib.g_notice("请先选择年级", 2)
+            return
+        }
         var param = {
             activityGradeId: id
         }
@@ -358,11 +366,31 @@ var g_activity_record_layer = cc.LayerColor.extend({
         }
     },
 
-    /**
+
+    windowInnerHeight_:  window.innerHeight,
+    heightScale_: cc.winSize.height / window.innerHeight,
+
+/**
      * 编辑框开始编辑回调函数
      * @param sender
      */
     editBoxEditingDidBegin: function (sender) {
+        var rootNode = sender.getParent();
+        geek_set_rootnode(rootNode);
+        var u = navigator.userAgent;
+        if(u.indexOf('iPhone') > -1 ) {
+            return;
+        }
+        else{
+            rootNode.schedule(function () {
+                console.log(cc.winSize.height, window.innerHeight, this.windowInnerHeight_, this.windowInnerHeight_ - window.innerHeight)
+                if (this.windowInnerHeight_ != window.innerHeight) {
+                    var keboardHeight = this.windowInnerHeight_ - window.innerHeight; //获取弹出android软键盘后的窗口高度
+                    rootNode.setPositionY(-keboardHeight * 2);   //软键盘弹出时，改变场景节点纵坐标的位置
+                }
+            }.bind(rootNode), 0.01, 1000)
+        }
+
         switch (sender) {
             case this.name_edit_:
                 this.name_cancel_.setVisible(true)
@@ -378,6 +406,21 @@ var g_activity_record_layer = cc.LayerColor.extend({
      * @param sender
      */
     editBoxEditingDidEnd: function (sender) {
+        var rootNode = sender.getParent();
+        geek_set_rootnode(null);
+        var u = navigator.userAgent;
+        if(u.indexOf('iPhone') > -1 ) {
+            return;
+        }
+        else{
+            rootNode.schedule(function () {
+                if (this.windowInnerHeight_ == window.innerHeight) {
+                    rootNode.setPositionY(0);   //软键盘隐藏后，把纵坐标重置回来
+                }
+            }.bind(rootNode), 0.01, 1000)
+            //延时必须要设置，因为键盘弹出来有个动画 ，但是因为延时是500毫秒的关系视觉效果很差
+        }
+
         switch (sender) {
             case this.name_edit_:
                 this.name_cancel_.setVisible(false)
