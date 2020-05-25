@@ -1251,6 +1251,8 @@ cc.game = {
         }
         else {
             try {
+                var timestamp=new Date().getTime()
+                var url_path = 'project.json?timestamp=' + timestamp
                 var cocos_script = document.getElementsByTagName('script');
                 for(var i = 0; i < cocos_script.length; i++){
                     var _t = cocos_script[i].getAttribute('cocos');
@@ -1264,12 +1266,12 @@ cc.game = {
                     if(_src){
                         _resPath = /(.*)\//.exec(_src)[0];
                         cc.loader.resPath = _resPath;
-                        _src = cc.path.join(_resPath, 'project.json');
+                        _src = cc.path.join(_resPath, url_path);
                     }
                     txt = cc.loader._loadTxtSync(_src);
                 }
                 if(!txt){
-                    txt = cc.loader._loadTxtSync("project.json");
+                    txt = cc.loader._loadTxtSync(url_path);
                 }
                 var data = JSON.parse(txt);
                 this._initConfig(data || {});

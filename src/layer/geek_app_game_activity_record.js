@@ -252,7 +252,8 @@ var g_activity_record_layer = cc.LayerColor.extend({
     /**
      * 提交用户信息
      */
-    apiSubmitInfo: function () {
+    apiSubmitInfo: function (sender) {
+        sender.enabled = false
         if (this.name_edit_.getString().length < 1){
             console.log("name empty")
             geek_lib.g_notice("姓名非法", 2)
@@ -288,10 +289,17 @@ var g_activity_record_layer = cc.LayerColor.extend({
         }
         var that = this
         geek_lib.f_network_post_json(this, uri.userInfoAdd, param, function (response) {
+            if (sender) {
+                sender.enabled = true
+            }
             g_game_info.setRecord(true)
             if (that.success_call_back) {
                 that.success_call_back()
                 that.removeFromParent()
+            }
+        }, function () {
+            if (sender) {
+                sender.enabled = true
             }
         })
     },
@@ -360,7 +368,7 @@ var g_activity_record_layer = cc.LayerColor.extend({
                     this.removeFromParent()
                     break;
                 case this.submit_btn_:
-                    this.apiSubmitInfo()
+                    this.apiSubmitInfo(this.submit_btn_)
                     break;
             }
         }

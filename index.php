@@ -56,9 +56,7 @@ if (!$test_env) {
 	if (!$channeID) {
 		die("channelId 非法");
 	}
-	if (!$channeName) {
-		die("channelName 非法");
-	}
+
 	if (!$activityID) {
 		die("activityId 非法");
 	}
@@ -79,85 +77,27 @@ if (!$test_env) {
 
 <!--<script type="text/javascript" src="http://8dsun.oss-cn-hangzhou.aliyuncs.com/PubJsLib/geek-cocos-v3.9.1.js" charset="UTF-8"></script>-->
 <script type="text/javascript" src="src/core/vconsole.min.js" charset=utf-8></script>
-<script type="text/javascript" src="src/core/geek-cocos-v3.9.1.js" charset=utf-8></script>
+<script type="text/javascript" src="src/core/geek-cocos-v3.9.1.js?version=1" charset=utf-8></script>
 <script type="text/javascript" src="src/core/geek-cocos-class-lib.js" charset=utf-8></script>
 <script type="text/javascript" src="src/layer/geek_app_game_root.js" charset=utf-8></script>
 <script type="text/javascript" src="src/data/geek_app_data.js" charset=utf-8></script>
 <script type="text/javascript" src="src/test/geek_mock_data.js" charset=utf-8></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"> </script>
-<script>
-    wx.config({
-        debug: false,
-        appId: '<?php echo $signPackage["appId"];?>',
-        timestamp: <?php echo $signPackage["timestamp"];?>,
-        nonceStr: '<?php echo $signPackage["nonceStr"];?>',
-        signature: '<?php echo $signPackage["signature"];?>',
-        jsApiList: [
-            'checkJsApi',
-            'onMenuShareTimeline',
-            'onMenuShareAppMessage',
-            'onMenuShareQQ',
-            'onMenuShareWeibo',
-            'hideMenuItems',
-            'showMenuItems',
-            'hideAllNonBaseMenuItem',
-            'showAllNonBaseMenuItem',
-            'translateVoice',
-            'startRecord',
-            'stopRecord',
-            'onRecordEnd',
-            'playVoice',
-            'pauseVoice',
-            'stopVoice',
-            'uploadVoice',
-            'downloadVoice',
-            'chooseImage',
-            'previewImage',
-            'uploadImage',
-            'downloadImage',
-            'getNetworkType',
-            'openLocation',
-            'getLocation',
-            'hideOptionMenu',
-            'showOptionMenu',
-            'closeWindow',
-            'scanQRCode',
-            'chooseWXPay',
-            'openProductSpecificView',
-            'addCard',
-            'chooseCard',
-            'openCard'
-        ]
-    });
 
-    wx.ready(function () {
-        var images = {
-            localId: [],
-            serverId: [],
-            downloadId: []
-        };
-
-
-        var share_url = "https://bestudy360.com/newgame_share.png";
-        var link_url = "http://game.k12c.com/front/wechat/bindH5WeChat?activityId=<?php echo $activityID;?>&channelId=<?php echo $channeID;?>";
-        var title_txt = "<?php echo $activityName ?>";
-        var desc_txt = "互动游戏学习平台";
-
-
-        var shareData = {
-            title: title_txt,
-            desc: desc_txt,
-            link: link_url,
-            imgUrl: share_url
-        };
-        wx.onMenuShareAppMessage(shareData);
-        wx.onMenuShareTimeline(shareData);
-
-    });
-
-</script>
 
 <script type="text/javascript">
+
+    /**
+     * 监听键盘回落事件
+     */
+    window.addEventListener('resize', function() {
+        if ( window.custom_node ) {
+            window.custom_node.setPositionY(0);
+        }
+    });
+    function geek_set_rootnode(node) {
+        window.custom_node = node
+    }
+
     window.onload = function(){
         var ua = window.navigator.userAgent.toLowerCase();
         var isAndroid = ua.indexOf('android') > -1 || ua.indexOf('linux') > -1;
@@ -176,9 +116,9 @@ if (!$test_env) {
             g_game_user.channelName = "<?php echo $channeName ?>"
             g_game_user.activity = "<?php echo $activityID ?>"
         }
-
         g_start_geek_h5("geekCanvas", 375 * 2, 603 * 2, g_root_layer, true);
     };
+
 
     /**
      * 设置video标签样式，小屏播放
@@ -197,7 +137,7 @@ if (!$test_env) {
                 removedCallback()
             }
         });
-    }
+    };
 
     /**
      * 加载音乐

@@ -199,9 +199,9 @@ var g_comp_question_answer = cc.LayerColor.extend({
     /**
      * 提交答案按钮
      */
-    submit: function () {
+    submit: function (sender) {
         if (this.submitCallback_){
-            this.submitCallback_()
+            this.submitCallback_(sender)
         }
     },
 
@@ -212,7 +212,7 @@ var g_comp_question_answer = cc.LayerColor.extend({
      */
     ctl_button_event: function (sender, type) {
         if (type == ccui.Widget.TOUCH_ENDED) {
-            this.submit()
+            this.submit(sender)
         }
     },
 })

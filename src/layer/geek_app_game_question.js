@@ -85,6 +85,7 @@ var g_question_layer = cc.Layer.extend({
             var local = this.container_
             var move = cc.moveTo(0.2, cc.p(local.getPositionX() - g_size.width, local.getPositionY()));
             local.runAction(cc.sequence(move, cc.callFunc(function () {
+                local.removeAllChildren()
                 local.removeFromParent(true)
             })));
             this.container_ = null
@@ -121,8 +122,8 @@ var g_question_layer = cc.Layer.extend({
         answer_node.setPosition(0, 0)
         var that = this
         // 设置提交答案按钮
-        answer_node.submitCallback_ = function () {
-            that.apiSubmitAnswer()
+        answer_node.submitCallback_ = function (sender) {
+            that.apiSubmitAnswer(false, sender)
         }
     },
 
@@ -318,7 +319,7 @@ var g_question_layer = cc.Layer.extend({
      * 提交答案
      * @param timeout 是否超时
      */
-    apiSubmitAnswer: function (timeout) {
+    apiSubmitAnswer: function (timeout, sender) {
         this.scheduleStop()
         this.answer_content_.stopPlayAll()
 
@@ -347,11 +348,17 @@ var g_question_layer = cc.Layer.extend({
             questionId: question.activity_question_id,
             seconds: singleUsed
         }
+        if (sender) {
+            sender.enabled = false
+        }
         geek_lib.f_network_post_json(
             this,
             uri.questionCommit,
             params,
             function (data) {
+                if (sender) {
+                    sender.enabled = true
+                }
                 if (data.nextData) {
                     // 答题类根据服务端返回更新分数
                     if (g_game_info.activityType_ == ActivityType.Answer) {
@@ -362,8 +369,14 @@ var g_question_layer = cc.Layer.extend({
                 } else {
                     that.errorHandler("缺少nextData数据")
                 }
+            },
+            function () {
+                if (sender) {
+                    sender.enabled = true
+                }
             }
         )
+
     },
 
     /**
